@@ -72,9 +72,17 @@ body {
 	color: black;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	function login_ok(f) {
-		f.action = "";
+		if(f.id.value=="" || f.pw.value==""){
+			alert("아이디/패스워드를 입력하세요");
+			f.id.value="";
+			f.pw.value="";
+			f.id.focus();
+			return;
+		}
+		f.action="login_ok.do";
 		f.submit();
 	}
 </script>

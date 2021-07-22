@@ -103,7 +103,7 @@ table, th, td, tr{
 </style>
 <script type="text/javascript">
 	function pw_find_go(f) {
-		f.action = "";
+		f.action = "pw_find_ok.do";
 		f.submit();
 	}
 </script>

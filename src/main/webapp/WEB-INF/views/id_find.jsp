@@ -101,7 +101,7 @@ table, th, td, tr{
 </style>
 <script type="text/javascript">
 	function id_find_go(f) {
-		f.action = "";
+		f.action = "id_find_ok.do";
 		f.submit();
 	}
 </script>

@@ -133,30 +133,29 @@ body {
 
 	}
 </script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<div id="main_head">
 		<div class="container">
 			<div class="logo">
-				<a href="login_main.jsp"> <h2>Hiscord</h2> </a>
+				<a href="login_main.do"> <img alt="logo" src="resources/images/logo.png" width="100"> </a>
 				<div class="listbox">
 					<div class="option_img">
-						<img alt="옵션" src="../images/option.png" width="45">
+						<img alt="옵션" src="resources/images/option.png" width="45">
 					</div>
 					<div class="visible_menu">
 						<div role="option" class="menu_list" style="pointer-events: all;">
-							<a href="friend.jsp">친구</a>
+							<a href="friend.do">친구</a>
 						</div>
 						<div role="option" class="menu_list">
-							<a href="setting.jsp">설정</a>
+							<a href="setting.do">설정</a>
 						</div>
 						<div role="option" class="menu_list">
-							<a href="suggestion.jsp">건의사항</a>
+							<a href="suggestion.do">건의사항</a>
 						</div>
 						<div role="option" class="menu_list">
-							<a href="#">로그아웃</a>
+							<a href="logout.do">로그아웃</a>
 						</div>
 					</div>
 				</div>
@@ -172,89 +171,25 @@ body {
 			</script>
 			<div class="list">
 				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">공용
-							채팅방</span>
+					<a href="#"> 
+						<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
+						<span style="margin-left: 10px;">공용 채팅방</span>
 					</a>
 				</div>
 			</div>
 			<div class="list">
 				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
-					</a>
-				</div>
-			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> <img alt="디스코드" src="../images/discord.png"
-						style="width: 40px;"> <span style="margin-left: 10px;">
-							채팅방</span>
+					<a href="#"> 
+						<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
+						<span style="margin-left: 10px;">채팅방</span>
 					</a>
 				</div>
 			</div>
 			<div class="chat_room_add">
 				<div class="room_add">
-					<a href="create_chatroom.jsp" onclick="chat_add()"> <span>채팅방 추가</span> <img
-						alt="추가" src="../images/plus.png"
-						style="width: 30px; height: 20px;">
+					<a href="create_chatroom.jsp" onclick="chat_add()">
+						<span>채팅방 추가</span>
+						<img alt="추가" src="resources/images/plus.png"	style="width: 30px; height: 20px;">
 					</a>
 				</div>
 			</div>

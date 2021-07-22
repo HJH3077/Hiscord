@@ -4,7 +4,14 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="hiscord">
+	<select id="login" parameterType="com.ict.vo.MVO" resultType="com.ict.vo.MVO">
+		select * from hiscord_member where id = #{id} and pw = #{pw}	
+	</select>
 	
+	<insert id="join" parameterType="com.ict.vo.MVO">
+		insert into hiscord_member
+		values(hiscord_member_seq.nextval, #{name}, #{id}, #{nickname}, #{email}, #{pw})
+	</insert>
 </mapper>
 
 

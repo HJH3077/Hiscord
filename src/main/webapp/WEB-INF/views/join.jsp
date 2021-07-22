@@ -78,41 +78,38 @@ body {
 		f.submit();
 	}
 
-	function join_ok() {
-
+	function join_ok(f) {
+		f.action = "join_ok.do";
+		f.submit();
 	}
 </script>
 </head>
 <body>
-	<form method="post">
-		<div id="join_container">
+	<div id="join_container">
+		<form method="post">
 			<h1 id="join_head">회원가입</h1>
 			<div class="join">
 				<div class="join_row">
 					<h3>아이디</h3>
 					<p>
-						<input type="text" name="id" placeholder="사용할 아이디를 입력해주세요"
-							required style="float: left; margin-right: 10px;'">
+						<input type="text" name="id" placeholder="사용할 아이디를 입력해주세요" required style="float: left; margin-right: 10px;'">
 					</p>
 					<button style="height: 23px;">중복확인</button>
 				</div>
 				<div class="join_row"> 
 					<h3>닉네임</h3>
 					<p>
-						<input type="text" name="nickname" placeholder="사용할 닉네임을 입력해주세요"
-							required>
+						<input type="text" name="nickname" placeholder="사용할 닉네임을 입력해주세요" required>
 					</p>
 				</div>
 				<div class="join_row">
 					<h3>비밀번호</h3>
 					<p>
-						<input type="password" name="pwd"
-							placeholder="6~16자 영문 대/소문자, 숫자 조합" required>
+						<input type="password" name="pw" placeholder="6~16자 영문 대/소문자, 숫자 조합" required>
 					</p>
 					<p style="font-size: 3px; color: red;"></p>
 					<p>
-						<input type="password" name="re_pwd" placeholder="비밀번호를 재확인해주세요"
-							required>
+						<input type="password" name="re_pw" placeholder="비밀번호를 재확인해주세요" required>
 					</p>
 				</div>
 				<div class="join_row">
@@ -124,12 +121,10 @@ body {
 				<div class="join_row">
 					<h3>이메일</h3>
 					<p>
-						<input type="email" id="email" name="email"
-							placeholder="이메일 아이디를 입력해주세요" required> @ <input
-							type="text" id="email_domain" name="email_domain"
-							placeholder="이메일 선택" style="margin-top: 10px;"> <select
-							class="select" style="height: 26px;">
-							<option value="">-선택-</option>
+						<input type="text" id="email" name="email"	placeholder="이메일 아이디를 입력해주세요" required> @ 
+						<input type="text" id="email_domain" name="email_domain" placeholder="이메일 선택" style="margin-top: 10px;">
+						<select class="select" style="height: 26px;">
+							<option value="">-직접입력-</option>
 							<option value="naver.com">naver.com</option>
 							<option value="gmail.com">gmail.com</option>
 							<option value="daum.net">daum.net</option>
@@ -138,10 +133,10 @@ body {
 					</p>
 				</div>
 				<div id="join_btn">
-					<input type="submit" value="가입하기" onclick="join_ok()">
+					<input type="submit" value="가입하기" onclick="join_ok(this.form)">
 				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </body>
 </html>
