@@ -20,4 +20,19 @@ public class MyDAOImpl implements MyDAO{
 	public int insertJoin(MVO mvo) throws Exception {
 		return sqlSessionTemplate.insert("hiscord.join", mvo);
 	}
+	
+	@Override
+	public MVO selectIdchk(String id) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.id_check", id);
+	}
+	
+	@Override
+	public String selectIdfind(String email) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.id_find", email);
+	}
+	
+	@Override
+	public String selectPwfind(String id) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.pw_find", id);
+	}
 }

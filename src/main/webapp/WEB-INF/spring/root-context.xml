@@ -62,4 +62,23 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.ict" />		
 		
+	<!-- 이메일 인증 처리 -->
+	<!-- 메일은 지메일(Gmail)을 기준 -->
+    <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" /> 
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="wnsgur9903@gmail.com" />
+        <property name="password" value="zxzx" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="email" class="com.ict.email.Email"></bean>
+    <bean id="emailSender" class="com.ict.email.EmailSender"></bean>
+	
 </beans>

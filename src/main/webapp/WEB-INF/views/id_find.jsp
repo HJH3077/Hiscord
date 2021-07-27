@@ -125,11 +125,11 @@ table, th, td, tr{
 						<tbody>
 							<tr>
 								<td style="width: 20%; background-color: #ebeced;" align="center">이름</td>
-								<td><input type="text" class="finding"></td>
+								<td><input type="text" class="finding" id="name" name="name"></td>
 							</tr>
 							<tr>
 								<td style="width: 20%; background-color: #ebeced;" align="center">이메일</td>
-								<td><input type="text" class="finding"></td>
+								<td><input type="text" class="finding" id="email" name="email"></td>
 							</tr>
 						</tbody>
 					</table>
