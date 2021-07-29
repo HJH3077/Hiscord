@@ -48,27 +48,49 @@ body {
 	font-size: 15px;
 	line-height: 1.3;
 }
+
+#sg_box #msg_cancle{
+	margin-top: 5px;
+	width: 80px;
+	font-size: 15px;
+	line-height: 1.3;
+}
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
+	function suggestion_go(f) {
+		if(check()){
+			f.action = "suggestion_ok.do";
+			f.submit();
+		}
+	}
 	
+	function check() {
+		if($("#content").val() == "") {
+		     alert("건의사항을 입력해주세요");
+		     $("#content").focus();
+		     return false;
+	     }
+		return true;
+	}
 </script>
 </head>
 <body>
 	<%@ include file="login_main.jsp"%>
 	<div id="suggestion">
-		<div id="sg_box">
-			<fieldset style="border-radius: 0.3em;">
-				<legend><h3>건의사항을 알려주세요!</h3></legend>
-				<div>
-					<textarea id="sug" name="content" rows="15" cols="55"></textarea>
-				</div>
-				<div>
-					<button id="msg_send">보내기</button>
-				</div>
-			</fieldset>
-		</div>
+		<form method="post">
+			<div id="sg_box">
+				<fieldset style="border-radius: 0.3em;">
+					<legend><h3>건의사항을 알려주세요!</h3></legend>
+					<div>
+						<textarea id="content" name="content" rows="15" cols="55"></textarea>
+					</div>
+					<div>
+						<input type="submit" id="msg_send" value="보내기" onclick="suggestion_go(this.form)">
+					</div>
+				</fieldset>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

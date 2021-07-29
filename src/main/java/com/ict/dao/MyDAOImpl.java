@@ -1,5 +1,8 @@
 package com.ict.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,12 +30,19 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public String selectIdfind(String email) throws Exception {
-		return sqlSessionTemplate.selectOne("hiscord.id_find", email);
+	public String selectIdfind(String email, String name) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("name", name);
+		return sqlSessionTemplate.selectOne("hiscord.id_find", map);
 	}
 	
 	@Override
-	public String selectPwfind(String id) throws Exception {
-		return sqlSessionTemplate.selectOne("hiscord.pw_find", id);
+	public String selectPwfind(String id, String name, String email) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("name", name);
+		map.put("email", email);
+		return sqlSessionTemplate.selectOne("hiscord.pw_find", map);
 	}
 }

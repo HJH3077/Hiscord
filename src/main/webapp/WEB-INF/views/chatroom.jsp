@@ -35,7 +35,7 @@ body {
 	font-size: 15px;
 	padding: 13px 0;
 	background-color: #fff;
-	color: black;
+	color: black; 
 	text-align: center;
 	border-bottom: 1px solid #ebeced;
 	font-family: 'Lato', sans-serif;
@@ -129,10 +129,9 @@ body {
 	<%@ include file="login_head.jsp"%>
 	<div id="chat_container">
 		<div id="chat_place">
-			<div id="chat_header">채팅방이름</div>
+			<div id="chat_header">공용채팅방</div>
 			<div id="chat_box">
 				<div id="chatting">
-					<!-- 동적 생성 -->
 					<div class="chat_content">
 						<div class="ch_avatar">
 							<img alt="디스코드" src="../images/discord.png" style="width: 55px;">
@@ -146,118 +145,27 @@ body {
 			</div>
 			<div id="chat_input">
 				<textarea placeholder="채팅을 입력하세요."></textarea>
+				<button>전송</button>
 			</div>
-			<!-- format -->
-			<!--     <div class="chat format">
-        <ul>
-            <li>
-                <div class="sender">
-                    <span></span>
-                </div>
-                <div class="message">
-                    <span></span>
-                </div>
-            </li>
-        </ul>
-    </div> -->
 		</div>
-		<div id="chat_user">
+		<!-- <div id="chat_user">
 			<div id="list_title">
 				<p>참가자 목록</p>
 			</div>
 			<div class="user_list">
 				<div class="rooms">
-					<img alt="디스코드" src="../images/discord.png" style="width: 40px;">
+					<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
 					<span style="margin-left: 10px;"> 유저1</span>
 
 				</div>
 			</div>
 			<div class="user_list">
 				<div class="rooms">
-					<img alt="디스코드" src="../images/discord.png" style="width: 40px;">
+					<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
 					<span style="margin-left: 10px;"> 유저2</span>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </body>
 </html>
-
-
-<!-- <script type="text/javascript">
-		const Chat = (function() {
-			const myName = "blue";
-
-			// init 함수
-			function init() {
-				// enter 키 이벤트
-				$(document).on('keydown', 'div.chatting textarea', function(e) {
-					if (e.keyCode == 13 && !e.shiftKey) {
-						e.preventDefault();
-						// textarea의 값을 그대로 가져옴
-						const message = $(this).val();
-
-						// 메시지 전송
-						sendMessage(message);
-						// 입력창 clear
-						clearTextarea();
-					}
-				});
-			}
-
-			// 메세지 태그 생성
-			function createMessageTag(LR_className, senderName, message) {
-				// 형식 가져오기
-				let chatLi = $('div.chat.format ul li').clone();
-
-				// 값 채우기
-				chatLi.addClass(LR_className);
-				chatLi.find('.sender span').text(senderName);
-				chatLi.find('.message span').text(message);
-
-				return chatLi;
-			}
-
-			// 메세지 태그 append
-			function appendMessageTag(LR_className, senderName, message) {
-				const chatLi = createMessageTag(LR_className, senderName,
-						message);
-
-				$('div.chat:not(.format) ul').append(chatLi);
-
-				// 스크롤바 아래 고정
-				$('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
-			}
-
-			// 메세지 전송
-			function sendMessage(message) {
-				// 서버에 전송하는 코드로 후에 대체
-				const data = {
-					"senderName" : "blue",
-					"message" : message
-				};
-
-				// 통신하는 기능이 없으므로 여기서 receive
-				resive(data);
-			}
-
-			// 메세지 입력박스 내용 지우기
-			function clearTextarea() {
-				$('div.chatting textarea').val('');
-			}
-
-			// 메세지 수신
-			function resive(data) {
-				const LR = (data.senderName != myName) ? "left" : "right";
-				appendMessageTag("right", data.senderName, data.message);
-			}
-
-			return {
-				'init' : init
-			};
-		})();
-
-		$(function() {
-			Chat.init();
-		}); -->
-</script>

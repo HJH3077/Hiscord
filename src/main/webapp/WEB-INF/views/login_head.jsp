@@ -145,18 +145,26 @@ body {
 						<img alt="옵션" src="resources/images/option.png" width="45">
 					</div>
 					<div class="visible_menu">
-						<div role="option" class="menu_list" style="pointer-events: all;">
-							<a href="friend.do">친구</a>
-						</div>
-						<div role="option" class="menu_list">
-							<a href="setting.do">설정</a>
-						</div>
-						<div role="option" class="menu_list">
-							<a href="suggestion.do">건의사항</a>
-						</div>
-						<div role="option" class="menu_list">
-							<a href="logout.do">로그아웃</a>
-						</div>
+						<a href="friend.do">
+							<div role="option" class="menu_list" style="pointer-events: all;">
+								친구
+							</div>
+						</a>
+						<a href="setting.do">
+							<div role="option" class="menu_list">
+								설정
+							</div>
+						</a>
+						<a href="suggestion.do">
+							<div role="option" class="menu_list">
+							건의사항
+							</div>
+						</a>
+						<a href="logout.do">
+							<div role="option" class="menu_list">
+								로그아웃
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -171,7 +179,7 @@ body {
 			</script>
 			<div class="list">
 				<div class="room">
-					<a href="#"> 
+					<a href="chatroom2.do"> 
 						<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
 						<span style="margin-left: 10px;">공용 채팅방</span>
 					</a>

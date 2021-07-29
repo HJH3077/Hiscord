@@ -59,14 +59,14 @@ body {
 	margin: 4px auto;
 }
 
-#adjust {
+#adjust, #cancle {
 	cursor: pointer; border-radius : 0.3rem; border : none; padding : 0.7em
 	1.5em 0.7em; line-height : 1em; font-style : normal;
 	text-align: center;
 	background-color: #f2711c;
 	color: #fff;
 	float: right;
-	margin: 20px;
+	margin: 20px 5px;
 	border-radius: 0.3rem;
 	border: none;
 	padding: 0.7em 1.5em 0.7em;
@@ -74,10 +74,11 @@ body {
 	font-style: normal;
 }
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	
+	function cancle_go(f) {
+		f.action = "setting.do";
+	}
 </script>
 </head>
 <body>
@@ -88,9 +89,8 @@ body {
 				<div id="profile_update">
 					<div id="p_avatar">
 						<h4>프로필 수정</h4>
-						<img alt="avatar" src="../images/discord.png" /> <input
-							type="file" name="file_name" id="img_change"
-							style="margin-left: 15px;">
+						<img alt="avatar" src="resources/images/discord.png" />
+						<input type="file" name="file_name" id="img_change" style="margin-left: 15px;">
 					</div>
 					<div id="p_nickname">
 						<h4>닉네임 수정</h4>
@@ -102,6 +102,7 @@ body {
 						<input type="text" name="before_email" readonly> <input type="text"
 							name="next_email" placeholder="바꿀 이메일">
 					</div>
+					<button id="cancle" onclick="cancle_go(this.form)">취소</button>
 					<button id="adjust">적용</button>
 				</div>
 			</div>

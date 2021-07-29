@@ -10,7 +10,7 @@ public interface MyService {
 	// id 중복검사
 	MVO selectIdchk(String id) throws Exception;
 	// id찾기
-	String selectIdfind(String email) throws Exception;
+	String selectIdfind(String email, String name) throws Exception;
 	// pw찾기
-	String selectPwfind(String id) throws Exception;
+	String selectPwfind(String id, String name, String email) throws Exception;
 }

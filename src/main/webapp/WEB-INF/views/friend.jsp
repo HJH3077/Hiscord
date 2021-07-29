@@ -123,44 +123,13 @@ tr{
 				<form method="post">
 					<table>
 						<tbody>
-							<%-- 
-								<c:choose>
-									<c:when test="${empty list}">
-										<tr>
-											<td colspan="4"><h2>정보가 존재하지 않습니다.</h2></td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach var="k" items="${list}">
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>${k.name }</td>
-												<td><a href="/MyController?cmd=onelist&idx=${k.idx}">${k.title}</a></td>
-												<td>${k.reg.substring(0,10)}</td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose> 
-								--%>
 							<tr>
 								<th style="width: 5%"><img alt="로고"
 									src="../images/discord.png"></th>
 								<th style="width: 85%; padding-left: 15px;" align="left">김씨</th>
 								<th style="width: 5%"><img alt="대화하기"
 									src="../images/msg.png"></th>
-								<th style="width: 5%"><img alt="삭제하기" src="../images/x.png"></th>
-							</tr>
-							<tr>
-								<th><img alt="로고" src="../images/discord.png"></th>
-								<th align="left" style="padding-left: 15px;">홍씨</th>
-								<th><img alt="수락하기" src="../images/msg.png"></th>
-								<th><img alt="거절하기" src="../images/x.png"></th>
-							</tr>
-							<tr>
-								<th><img alt="로고" src="../images/discord.png"></th>
-								<th align="left" style="padding-left: 15px;">박씨</th>
-								<th><img alt="수락하기" src="../images/msg.png"></th>
-								<th><img alt="거절하기" src="../images/x.png"></th>
+								<th style="width: 5%"><img alt="삭제하기" src="resources/images/x.png"></th>
 							</tr>
 						</tbody>
 					</table>
@@ -171,10 +140,10 @@ tr{
 			<div id="page">
 				<c:choose>
 					<c:when test="false">
-						<a><img alt="왼쪽" src="../images/previous.png"></a>
+						<a><img alt="왼쪽" src="resources/images/previous.png"></a>
 					</c:when>
 					<c:otherwise>
-						<a href="#"><img alt="왼쪽" src="../images/previous.png"></a>
+						<a href="#"><img alt="왼쪽" src="resources/images/previous.png"></a>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach begin="1" end="3" step="1" var="k">
@@ -190,10 +159,10 @@ tr{
 				<!-- 다음 블록 -->
 				<c:choose>
 					<c:when test="false">
-						<a><img alt="오른쪽" src="../images/next.png"></a>
+						<a><img alt="오른쪽" src="resources/images/next.png"></a>
 					</c:when>
 					<c:otherwise>
-						<a href="#""><img alt="오른쪽" src="../images/next.png"></a>
+						<a href="#""><img alt="오른쪽" src="resources/images/next.png"></a>
 					</c:otherwise>
 				</c:choose>
 			</div>

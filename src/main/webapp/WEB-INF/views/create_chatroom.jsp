@@ -65,7 +65,10 @@ body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	
+	function create_do(f) {
+		f.action = "create_chatroom.do";
+		f.submit();
+	}
 </script>
 </head>
 <body>
@@ -75,7 +78,7 @@ body {
 			<h2>채팅방 개설</h2>
 			<p>채팅방 이름</p>
 			<input type="text" id="chat_room" name="room">
-			<button id="create">만들기</button>
+			<button id="create" onclick="create_do(this.form)">만들기</button>
 		</div>
 	</div>
 </body>

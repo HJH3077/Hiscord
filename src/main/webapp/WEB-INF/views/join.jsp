@@ -73,71 +73,153 @@ body {
 }
 
 </style>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	function pw_chk() {
-		var pw = $("#pw").val();
-		var re_pw = $("#re_pw").val();
-		var num = pw.search(/[0-9]/g);
-		var eng = pw.search(/[a-z]/ig);
-		
-		// 비밀번호 유효성 검사
-		if(pw.length < 6 || pw.length > 16){
-			alert("비밀번호는 6자리 ~ 16자리 이내로 입력해주세요.");
-			$("#pw").focus();
-			return false;
-		}else if(pw.search(/\s/) != -1){
-			alert("비밀번호는 공백 없이 입력해주세요.");
-			$("#pw").focus();
-			return false;
-		}else if(num < 0 || eng < 0){
-			alert("영문, 숫자를 혼합하여 입력해주세요.");
-			$("#pw").focus();
-			return false;
-		}
-		
-		if(pw != re_pw){
-			$("#pw").val('');
-			$("#re_pw").val('');
-			$("#pw").focus();
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}
+	function id_check() {
+	     var getCheck= RegExp(/^[a-zA-Z0-9]{4,12}$/);
+	    
+	      // id 유효성 검사
+	      if(!getCheck.test($("#id").val())){
+	        alert("id를 형식에 맞게 입력해주세요");
+	        $("#id").val("");
+	        $("#id").focus();
+	        return false;
+	      }
+	      return true;
 	}
 	
-	function id_chk() {
-		var id = $("#id").val();
-		var num = pw.search(/[0-9]/g);
-		var eng = pw.search(/[a-z]/ig);
-		
-		//아이디 유효성 검사
-		var id = $("#id").val();
-		if(pw.length < 6 || pw.length > 16){
-			alert("아이디는 4자리 ~ 12자리 이내로 입력해주세요.");
-			$("#id").focus();
-			return false;
-		}else if(pw.search(/\s/) != -1){
-			alert("비밀번호는 공백 없이 입력해주세요.");
-			$("#id").focus();
-			return false;
-		}else if(num < 0 || eng < 0){
-			alert("영문, 숫자를 혼합하여 입력해주세요.");
-			$("#id").focus();
-			return false;
-		}
-		
-		if(!id_okchk){
-			alert("아이디 중복확인을 해주세요");
-			return false;
-		}
+	function check() {
+	     var getCheck= RegExp(/^[a-zA-Z0-9]{6,16}$/);
+	     var getName= RegExp(/^[가-힣]+$/);
+	     var getNickname= RegExp(/^[a-zA-Z0-9가-힣]{2,8}$/);
+	     // 비밀번호 유효성 검사
+	     if(!getCheck.test($("#pw").val())) {
+		     alert("pw를 형식에 맞게 입력해주세요");
+		     $("#pw").val("");
+		     $("#re_pw").val("");
+		     $("#pw").focus();
+		     return false;
+	     }
+	 
+	     // 비밀번호와 비밀번호 재확인이 일치하는지
+	     if($("#pw").val() != ($("#re_pw").val())){ 
+		     alert("비밀번호와 비밀번호 재확인이 일치하지 않습니다.");
+		     $("#pw").val("");
+		     $("#re_pw").val("");
+		     $("#pw").focus();
+		     return false;
+	     }
+	     
+	   	// 닉네임 공백 확인
+	    if($("#nickname").val() == ""){
+		    alert("닉네임을 입력해주세요");
+		    $("#nickname").focus();
+		    return false;
+	    }
+	   	
+	  	// 닉네임 유효성 검사
+	    if (!getNickname.test($("#nickname").val())) {
+	    	alert("닉네임은 2~8글자로 써주세요");
+	        $("#nickname").val("");
+	        $("#nickname").focus();
+	        return false;
+	    }
+	   	
+	   	// 이름 공백 확인
+	    if($("#name").val() == ""){
+		    alert("이름을 입력해주세요");
+		    $("#name").focus();
+		    return false;
+	    }
+	   	
+	  	// 이름 유효성 검사
+	    if (!getName.test($("#name").val())) {
+	    	alert("이름을 제대로 써주세요");
+	        $("#name").val("");
+	        $("#name").focus();
+	        return false;
+	    }
+	   	
+	   	// 이메일 공백 확인
+	    if($("#email").val() == ""){
+		    alert("이메일을 입력해주세요");
+		    $("#email").focus();
+		    return false;
+	    }
+	   	// 이메일도메인 공백 확인
+	    if($("#email_domain").val() == ""){
+		    alert("이메일 도메인을 입력/선택해주세요");
+		    $("#email_domain").focus();
+		    return false;
+	    }
+	    return true;
 	}
-	
+
 	function join_ok(f) {
-		id_chk();
-		pw_chk();
-		f.action = "join_ok.do";
-		f.submit();
+		if(check()){
+			f.action = "join_ok.do";
+			f.submit();
+		}
 	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+   $(function() {
+	 	//id 중복체크
+		$("#id_chk").click(function() {
+			if ($("#id").val() == "") {
+				alert("아이디를 입력해주세요."); 
+				$("#id").focus();
+				return false;
+			}
+			$.ajax({
+				url : "idchk.do",
+				method : "post",
+				data : "id=" + $("#id").val(),
+				dataType : "text",
+				success : function(data) {
+					if (data == '1') {
+						alert("중복된 아이디 입니다.");
+						$("#id").val('');
+						$("#id").focus();
+					} else {
+						if(id_check()){
+							alert("사용가능한 아이디 입니다.");
+						}
+					}
+				},
+				error : function() {
+					alert("읽기실패");
+				}
+			});
+			return false;
+		});
+	 	
+		// 비밀번호 재확인
+		$('#pw').keyup(function() {
+			$('#chkNotice').html('');
+		});
+		$('#re_pw').keyup(function() {
+			if ($('#pw').val() != $('#re_pw').val()) {
+				$('#chkNotice').html('비밀번호 불일치<br>');
+				$('#chkNotice').attr('color', '#f82a2aa3');
+			} else {
+				$('#chkNotice').html('비밀번호 일치<br>');
+				$('#chkNotice').attr('color', '#199894b3');
+			}
+
+		});
+		
+		// 이메일 도메인 선택
+		$("select").change(function() {
+			if ($(this).val() == "etc") { //직접입력일때
+				$("#email_domain").val('');
+				$("#email_domain").attr('readonly', false); //직접입력 가능하도록 readonly막기
+			} else {
+				$("#email_domain").val($(this).val());
+				$("#email_domain").attr('readonly', true); //readonly로 직접입력 막기.
+			}
+		});
+   });
 </script>
 </head>
 <body>
@@ -152,42 +234,10 @@ body {
 						<button style="height: 23px;" id="id_chk">중복확인</button>
 					</p>
 				</div>
-				<script type="text/javascript">
-					// id 중복체크
-					function id_okchk() {
-						$("#id_chk").click(function() {
-							if ($("#id").val() == "") {
-								alert("아이디를 입력하세요.");
-								$("#id").focus();
-								return false;
-							}
-							$.ajax({
-								url : "idchk.do",
-								method : "post",
-								data : "id=" + $("#id").val(),
-								dataType : "text",
-								success : function(data) {
-									if (data == '1') {
-										alert("중복된 아이디 입니다.");
-										$("#id").val('');
-										$("#id").focus();
-									} else {
-										alert("사용가능한 아이디 입니다.");
-									}
-									return true;
-								},
-								error : function() {
-									alert("읽기실패");
-								}
-							});
-							return false;
-						});
-					}
-				</script>
 				<div class="join_row">
 					<h3>닉네임</h3>
 					<p>
-						<input type="text" name="nickname" placeholder="사용할 닉네임을 입력해주세요" required>
+						<input type="text" id="nickname" name="nickname" placeholder="사용할 닉네임을 입력해주세요(2~6자)" required>
 					</p>
 				</div>
 				<div class="join_row">
@@ -201,27 +251,10 @@ body {
 						<font id="chkNotice" size="1.5"></font>
 					</p>
 				</div>
-				<script type="text/javascript">
-					$('#pw').keyup(function() {
-						$('#chkNotice').html('');
-					});
-	
-					// 비밀번호 재확인
-					$('#re_pw').keyup(function() {
-						if ($('#pw').val() != $('#re_pw').val()) {
-							$('#chkNotice').html('비밀번호 불일치<br>');
-							$('#chkNotice').attr('color', '#f82a2aa3');
-						} else {
-							$('#chkNotice').html('비밀번호 일치<br>');
-							$('#chkNotice').attr('color', '#199894b3');
-						}
-	
-					});
-				</script>
 				<div class="join_row">
 					<h3>이름</h3>
 					<p>
-						<input type="text" name="name" placeholder="이름을 입력해주세요" required>
+						<input type="text" id="name" name="name" placeholder="이름을 입력해주세요" required>
 					</p>
 				</div>
 				<div class="join_row">
@@ -238,18 +271,6 @@ body {
 						</select>
 					</p>
 				</div>
-				<script type="text/javascript">
-				// 이메일 도메인 선택
-					$("select").change(function() {
-						if ($(this).val() == "etc") { //직접입력일때
-							$("#email_domain").val('');
-							$("#email_domain").attr('readonly', false); //직접입력 가능하도록 readonly막기
-						} else {
-							$("#email_domain").val($(this).val());
-							$("#email_domain").attr('readonly', true); //readonly로 직접입력 막기.
-						}
-					});
-				</script>
 				<div id="join_btn">
 					<input type="submit" id="join_now" value="가입하기"	onclick="join_ok(this.form)">
 				</div>

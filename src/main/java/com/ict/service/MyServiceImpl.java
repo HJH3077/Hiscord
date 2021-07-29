@@ -1,7 +1,5 @@
 package com.ict.service;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +27,12 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public String selectIdfind(String email) throws Exception {
-		return myDAO.selectIdfind(email);
+	public String selectIdfind(String email, String name) throws Exception {
+		return myDAO.selectIdfind(email, name);
 	}
 	
 	@Override
-	public String selectPwfind(String id) throws Exception {
-		return myDAO.selectPwfind(id);
+	public String selectPwfind(String id, String name, String email) throws Exception {
+		return myDAO.selectPwfind(id, name, email);
 	}
 }
