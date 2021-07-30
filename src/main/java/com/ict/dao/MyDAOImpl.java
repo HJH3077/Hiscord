@@ -1,6 +1,7 @@
 package com.ict.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.vo.MVO;
+import com.ict.vo.VO;
 
 @Repository("MyDAOImpl")
 public class MyDAOImpl implements MyDAO{
@@ -44,5 +46,20 @@ public class MyDAOImpl implements MyDAO{
 		map.put("name", name);
 		map.put("email", email);
 		return sqlSessionTemplate.selectOne("hiscord.pw_find", map);
+	}
+	
+	
+	// 관리자
+	@Override
+		public int selectCount() throws Exception {
+			return sqlSessionTemplate.selectOne("hiscord.count");
+	}
+	
+	@Override
+	public List<VO> selectList(int begin, int end) throws Exception {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("begin", begin);
+		map.put("end", end);
+		return sqlSessionTemplate.selectList("hiscord.list", map);
 	}
 }

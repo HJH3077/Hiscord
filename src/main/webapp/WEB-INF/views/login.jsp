@@ -115,6 +115,7 @@ body {
 					<a href="join.do">회원가입</a>
 				</div>
 			</div>
+			<input type="hidden" value="1" name="cPage">
 		</form>
 	</div>
 </body>
