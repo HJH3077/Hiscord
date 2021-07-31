@@ -1,5 +1,7 @@
 package com.ict.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,15 +16,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.email.EmailService;
 import com.ict.service.MyService;
+import com.ict.service.Paging;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
-
+import com.ict.vo.VO;
+ 
 @Controller
 public class MyController {
 	@Autowired
 	private MyService myService;
 	@Inject
     EmailService emailService;
+	@Autowired
+	private Paging paging;
 	
 	@RequestMapping("logout_main.do")
 	public ModelAndView logout_mainCommand() {
@@ -40,22 +46,29 @@ public class MyController {
 	}
 	
 	@RequestMapping("login_ok.do")
-	public ModelAndView loginOkCommand(MVO m_vo, HttpSession session) {
+	public ModelAndView loginOkCommand(MVO m_vo, HttpSession session,
+			@RequestParam("cPage")String cPage){
 		try {
 			// 이미 로그인 한 경우
-			if(session.getAttribute("login") == "ok") {
+			if(session.getAttribute("login") == "1") {
+				// 로그인 했는데 관리자인 경우
+				if(session.getAttribute("admin") == "ok") {
+					return new ModelAndView("redirect:user_mng.do?cPage=" + cPage);
+				}
 				return new ModelAndView("redirect:login_main.do");
-			}
+			} 
+			
 			MVO mvo = myService.selectLogin(m_vo);
 			if(mvo == null) {
+				session.setAttribute("login","0");
 				return new ModelAndView("login_err");
 			} else {
-				session.setAttribute("mvo", mvo);
-				session.setAttribute("login", "ok");
+				session.setAttribute("login_id", mvo.getId());
+				session.setAttribute("login", "1");
 				// 관리자인 경우
 				if(mvo.getId().equals("admin")&&mvo.getPw().equals("admin")) {
 					session.setAttribute("admin", "ok");
-					return new ModelAndView("user_mng");
+					return new ModelAndView("redirect:user_mng.do?cPage=" + cPage);
 				}
 				// 관리자가 아닌 경우
 				return new ModelAndView("redirect:login_main.do");
@@ -160,11 +173,11 @@ public class MyController {
 	public ModelAndView suggestion_okCommand(@ModelAttribute MailVO mailvo, @RequestParam("content")String content,
 			HttpSession session) {
 		try {
-			MVO mvo = (MVO)session.getAttribute("mvo");
+			String id = (String)session.getAttribute("login_id");
 			mailvo.setReceiveMail("wnsgur0657@naver.com");
-			mailvo.setSenderName(mvo.getId());
+			mailvo.setSenderName(id);
 			mailvo.setSenderMail("wnsgur0657@gmail.com");
-			mailvo.setSubject(mvo.getId() + "님의 건의사항입니다.");
+			mailvo.setSubject(id + "님의 건의사항입니다.");
 			mailvo.setMessage(content);
 			emailService.sendMail(mailvo);
 			return new ModelAndView("redirect:login_ok.do");
@@ -192,4 +205,58 @@ public class MyController {
 	public ModelAndView chatCommand() {
 		return new ModelAndView("chatroom2");
 	}
+	
+	// 관리자 페이지
+	@RequestMapping("user_mng.do")
+	public ModelAndView listCommand(@ModelAttribute("cPage")String cPage) {
+		try {
+			ModelAndView mv = new ModelAndView("user_mng");
+			// 전체 게시물의 수
+			int count = myService.selectCount();
+			paging.setTotalRecord(count);
+
+			// 전체 페이지의 수
+			if (paging.getTotalRecord() <= paging.getNumPerPage()) {
+				paging.setTotalPage(1);
+			} else {
+				// 전체 페이지의 수 계산하기
+				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				// 나머지가 존재하면 전체 페이지 수에 +1
+				if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+					paging.setTotalPage(paging.getTotalPage() + 1);
+				}
+			}
+			// 현재 페이지 구하기
+			paging.setNowPage(Integer.parseInt(cPage));
+			
+			// 시작번호, 끝번호
+			paging.setBegin((paging.getNowPage() - 1) * paging.getNumPerPage() + 1);
+			paging.setEnd((paging.getBegin() - 1) + paging.getNumPerPage());
+
+			// 시작블록, 끝블록
+			paging.setBeginBlock(
+					(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+			// 주의사항 : endBlock 이 totalPage 보다 클 경우 이 경우 endBlock를 totalPage에 맞춰줌.
+			if (paging.getEndBlock() > paging.getTotalPage()) {
+				paging.setEndBlock(paging.getTotalPage());
+			}
+			List<VO> list = myService.selectList(paging.getBegin(), paging.getEnd());
+			
+			mv.addObject("list", list);
+			mv.addObject("pvo", paging);
+			return mv;
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ModelAndView("login_err");
+		}
+	}
+	
+	@RequestMapping("prohibited_word.do")
+	public ModelAndView wordCommand() {
+		return new ModelAndView("prohibited_word");
+	}
+	
 }

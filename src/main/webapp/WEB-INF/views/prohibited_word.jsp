@@ -16,17 +16,17 @@ body {
 }
 #ban_info {
 	width: 1500px;
-	height: 100vh;
-	margin-left: 50px;
+	text-align: center;
+	margin: auto;
 	background-color: #fff;
 }
 #admin_head {
 	border-bottom: 1px solid #f1f3f5;
 	box-sizing: border-box;
+	width: 1500px;
 }
 #admin_logo {
 	text-align: center;
-	width: 100%;
 	color: black;
 	font-weight: bold;
 	font-size: 45px;
@@ -39,9 +39,9 @@ body {
 	width: 1300px;
 	padding: 20px;
 	display: flex;
-	justify-content: center;
+	margin: auto;
 }
-.nav_bar a:visited, a:disabled {
+.nav_bar a{
 	color: white;
 }
 #nav .nav_bar {
@@ -84,15 +84,16 @@ table {
 	width: 1300px;
 }
 table, tr, td, th {
-	padding: 2px;
 	margin: auto;
 	font-size: 18px;
 	border: 1px solid black;
 }
+
 tr {
 	font-size: 20px;
 	line-height: 2.5;
 }
+
 /* 페이징 */
 #paging {
 	margin: 45px auto;
@@ -108,7 +109,7 @@ tr {
 	width: 30px;
 	height: 20px;
 }
-#paging button {
+#de_btn {
 	height: 41px;
 	width: 80px;
 	float: right;
@@ -136,16 +137,15 @@ tr {
 </script>
 </head>
 <body>
-	<%@ include file="login_head.jsp"%>
 	<div id="ban_info">
 		<div id="admin_head">
 			<h1 id="admin_logo">금지어관리</h1>
 			<div id="nav">
 				<div class="nav_bar">
-					<a href="prohibited_word.jsp">금지어 관리</a>
+					<a href="user_mng.do">회원정보 관리</a>
 				</div>
 				<div class="nav_bar">
-					<a href="user_mng.jsp">회원정보 관리</a>
+					<a href="prohibited_word.do">금지어 관리</a>
 				</div>
 			</div>
 		</div>
@@ -160,32 +160,11 @@ tr {
 							<tr id="ban_title">
 								<th style="width: 5%"><input type="checkbox" name="chkall"
 									onclick="chk_all()"></th>
-								<th colspan="9">금지어</th>
-							</tr>
+								<th colspan="7">금지어</th>  
+							</tr> 
 						</thead>
 						<tbody>
-							<%-- 
-								<c:choose>
-									<c:when test="${empty list}">
-										<tr>
-											<td colspan="4"><h2>정보가 존재하지 않습니다.</h2></td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach var="k" items="${list}">
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>${k.name }</td>
-												<td><a href="/MyController?cmd=onelist&idx=${k.idx}">${k.title}</a></td>
-												<td>${k.reg.substring(0,10)}</td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose> 
-								--%>
 							<tr>
-								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
 								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
 								<td>kim</td>
 								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
@@ -196,8 +175,6 @@ tr {
 								<td>kim</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
 								<td><input type="checkbox" name="chk" value=""></td>
 								<td>kim</td>
 								<td><input type="checkbox" name="chk" value=""></td>
@@ -212,37 +189,46 @@ tr {
 				</form>
 			</div>
 			<div id="paging">
-				<div id="page">
-					<c:choose>
-						<c:when test="false">
-							<a><img alt="왼쪽" src="../images/previous.png"></a>
-						</c:when>
-						<c:otherwise>
-							<a href="#"><img alt="왼쪽" src="../images/previous.png"></a>
-						</c:otherwise>
-					</c:choose>
-					<c:forEach begin="1" end="3" step="1" var="k">
+					<div id="page">
+						<!-- 이전 페이지 -->
 						<c:choose>
-							<c:when test="false">
-								<a>${k}</a>
+							<c:when test="${pvo.beginBlock <= pvo.pagePerBlock }">
+								<a><img alt="이전" src="resources/images/previous.png"></a>
 							</c:when>
 							<c:otherwise>
-								<a href="#">${k}</a>
+								<a href="user_mng.do?cPage=${pvo.beginBlock-pvo.pagePerBlock}">
+									<img alt="이전" src="resources/images/previous.png">
+								</a>
 							</c:otherwise>
 						</c:choose>
-					</c:forEach>
-					<!-- 다음 블록 -->
-					<c:choose>
-						<c:when test="false">
-							<a><img alt="오른쪽" src="../images/next.png"></a>
-						</c:when>
-						<c:otherwise>
-							<a href="#""><img alt="오른쪽" src="../images/next.png"></a>
-						</c:otherwise>
-					</c:choose>
+						<!-- 번호 -->
+						<c:forEach begin="${pvo.beginBlock }" end="${pvo.endBlock }"
+							step="1" var="k">
+							<c:choose>
+								<c:when test="${k==pvo.nowPage}">
+									<a id="now">${k}</a>
+								</c:when>
+								<c:otherwise>
+									<a id="page_now" a href="user_mng.do?cPage=${k}">${k}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<!-- 다음 페이지 -->
+						<c:choose>
+							<c:when test="${pvo.endBlock >= pvo.totalPage }">
+								<a><img alt="다음" src="resources/images/next.png"></a>
+							</c:when>
+							<c:otherwise>
+								<a href="user_mng.do?cPage=${pvo.beginBlock+pvo.pagePerBlock}">
+									<img alt="다음" src="resources/images/next.png">
+								</a>  
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div>
+						<input type="button" id="de_btn" value="삭제하기" onclick="delete_go()">
+					</div>
 				</div>
-				<button onclick="delete_go()">삭제하기</button>
-			</div>
 		</div>
 	</div>
 </body>

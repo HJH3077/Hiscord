@@ -133,24 +133,23 @@ td input {
 					<tbody>
 						<tr>
 							<th>이름 :</th>
-							<td align="left"><input type="text" value="${vo.writer }"
-								readonly></td>
+							<td align="left"><input type="text" value="" ></td>
 						</tr>
 						<tr>
 							<th>ID :</th>
-							<td align="left"><input type="text" value="" readonly></td>
+							<td align="left"><input type="text" value="" ></td>
 						</tr>
 						<tr>
 							<th>닉네임 :</th>
-							<td align="left"><input type="text" value="" readonly></td>
+							<td align="left"><input type="text" value="" ></td>
 						</tr>
 						<tr>
 							<th>이메일 :</th>
-							<td align="left"><input type="text" value="" readonly></td>
+							<td align="left"><input type="text" value="" ></td>
 						</tr>
 						<tr>
 							<th>가입일 :</th>
-							<td align="left"><input type="text" value="" readonly></td>
+							<td align="left"><input type="text" value="" ></td>
 						</tr>
 					</tbody>
 				</table>
