@@ -14,7 +14,7 @@ body {
 	padding: 0;
 	margin: 0;
 }
-
+ 
 a{text-decoration: none;}
 
 #user_info {
@@ -88,9 +88,7 @@ a{text-decoration: none;}
 	font-family: 'fontAwesome';
 }
 
-#user_title {
-	color: white;
-}
+#user_title {color: white;}
 
 table {
 	border-collapse: collapse;
@@ -105,10 +103,7 @@ table, tr, td, th {
 	border: 1px solid black;
 }
 
-tr {
-	font-size: 20px;
-	line-height: 2.5;
-}
+tr {font-size: 20px; line-height: 2.5;}
 
 /* 페이징 */
 #paging {
@@ -118,16 +113,11 @@ tr {
 	text-align: center;
 }
 
-#page a {
-	margin-left: 25px;
-}
+#page a {margin-left: 25px;}
 
-#page img {
-	width: 30px;
-	height: 20px;
-}
+#page img {	width: 30px; height: 20px;}
 
-#paging #d_btn {
+#paging #del_btn {
 	height: 41px;
 	width: 80px;
 	float: right;
@@ -138,11 +128,8 @@ tr {
 	margin-right: 50px;
 } 
 
-#page_now:hover {
-	font-weight: bold;
-	text-decoration: underline;
-}
-
+#page_now:hover {font-weight: bold;	text-decoration: underline;}
+ 
 #now {color: red; text-decoration: underline;}
 </style>
 <script type="text/javascript">
@@ -177,7 +164,7 @@ tr {
 					<a href="#">회원정보 관리</a>
 				</div>
 				<div class="nav_bar">
-					<a href="prohibited_word.do">금지어 관리</a>
+					<a href="prohibited_word.do?pPage=${1}">금지어 관리</a>
 				</div>
 			</div>
 		</div>
@@ -260,7 +247,7 @@ tr {
 						</c:choose>
 					</div>
 					<div>
-						<input type="button" id="d_btn" value="삭제하기" onclick="delete_go()">
+						<input type="button" id="del_btn" value="삭제하기" onclick="delete_go()">
 					</div>
 				</div>
 			</div>

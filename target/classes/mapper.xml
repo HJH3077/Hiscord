@@ -36,7 +36,13 @@
 	</select>
 	
 	<!-- 시작번호와 끝번호를 받아서 전체 유저 리스트 출력   -->
-	<select id="list" parameterType="Map" resultType="com.ict.vo.MVO">
+	<select id="userlist" parameterType="Map" resultType="com.ict.vo.MVO">
+		select * from(
+			select ROWNUM r_num, a.* from(select * from hiscord_member order by idx desc) a) 
+		where r_num between #{begin} and #{end}
+	</select>
+	
+	<select id="banlist" parameterType="Map" resultType="com.ict.vo.WVO">
 		select * from(
 			select ROWNUM r_num, a.* from(select * from hiscord_member order by idx desc) a) 
 		where r_num between #{begin} and #{end}

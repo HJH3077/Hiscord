@@ -14,6 +14,9 @@ body {
 	padding: 0;
 	margin: 0;
 }
+
+a{text-decoration: none;}
+
 #ban_info {
 	width: 1500px;
 	text-align: center;
@@ -41,9 +44,11 @@ body {
 	display: flex;
 	margin: auto;
 }
-.nav_bar a{
-	color: white;
-}
+
+#nav .nav_bar a:link { color: white; text-decoration: none;}
+#nav .nav_bar a:visited { color: white; text-decoration: none;}
+#nav .nav_bar a:hover { color: red; text-decoration: underline;}
+
 #nav .nav_bar {
 	border: 1px solid black;
 	text-align: center;
@@ -75,9 +80,8 @@ body {
 	border-radius: 7px;
 	font-family: 'fontAwesome';
 }
-#ban_title {
-	color: white;
-}
+#ban_title {color: white;}
+
 table {
 	border-collapse: collapse;
 	text-align: center;
@@ -89,10 +93,7 @@ table, tr, td, th {
 	border: 1px solid black;
 }
 
-tr {
-	font-size: 20px;
-	line-height: 2.5;
-}
+tr {font-size: 20px; line-height: 2.5;}
 
 /* 페이징 */
 #paging {
@@ -101,15 +102,11 @@ tr {
 	width: 1300px;
 	text-align: center;
 }
-#page a {
-	color: #000080;
-	margin-left: 25px;
-}
-#page img {
-	width: 30px;
-	height: 20px;
-}
-#de_btn {
+#page a { color: #000080; margin-left: 25px;}
+
+#page img { width: 30px; height: 20px;}
+
+#del_btn {
 	height: 41px;
 	width: 80px;
 	float: right;
@@ -123,6 +120,7 @@ tr {
 	function delete_go() {
 		location.href = "";
 	}
+	
 	function chk_all() {
 		if (chk_form.chkall.checked == true) {
 			for (i = 0; i < chk_form.chk.length; i++) {
@@ -142,10 +140,10 @@ tr {
 			<h1 id="admin_logo">금지어관리</h1>
 			<div id="nav">
 				<div class="nav_bar">
-					<a href="user_mng.do">회원정보 관리</a>
+					<a href="user_mng.do?cPage=${1}">회원정보 관리</a>
 				</div>
 				<div class="nav_bar">
-					<a href="prohibited_word.do">금지어 관리</a>
+					<a href="#">금지어 관리</a>
 				</div>
 			</div>
 		</div>
@@ -164,31 +162,27 @@ tr {
 							</tr> 
 						</thead>
 						<tbody>
-							<tr>
-								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td style="width: 5%"><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-								<td><input type="checkbox" name="chk" value=""></td>
-								<td>kim</td>
-							</tr>
+							<c:choose>
+								<c:when test="${empty list}">
+									<tr>
+										<td colspan="8"><h3>원하시는 자료가 존재하지 않습니다.</h3></td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach begin="1" end="4">
+											<tr>
+										        <c:forEach var="k" items="${list}" begin="1" end="5">
+											     	<td style="width: 5%"><input type="checkbox" name="chk"></td>
+													<td>${k.word }</td>
+										        </c:forEach>
+									        </tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</form>
-			</div>
-			<div id="paging">
+				<div id="paging">
 					<div id="page">
 						<!-- 이전 페이지 -->
 						<c:choose>
@@ -196,20 +190,19 @@ tr {
 								<a><img alt="이전" src="resources/images/previous.png"></a>
 							</c:when>
 							<c:otherwise>
-								<a href="user_mng.do?cPage=${pvo.beginBlock-pvo.pagePerBlock}">
+								<a href="prohibited_word?pPage=${pvo.beginBlock-pvo.pagePerBlock}">
 									<img alt="이전" src="resources/images/previous.png">
 								</a>
 							</c:otherwise>
 						</c:choose>
 						<!-- 번호 -->
-						<c:forEach begin="${pvo.beginBlock }" end="${pvo.endBlock }"
-							step="1" var="k">
+						<c:forEach begin="${pvo.beginBlock }" end="${pvo.endBlock }" step="1" var="k">
 							<c:choose>
 								<c:when test="${k==pvo.nowPage}">
 									<a id="now">${k}</a>
 								</c:when>
 								<c:otherwise>
-									<a id="page_now" a href="user_mng.do?cPage=${k}">${k}</a>
+									<a id="page_now" a href="prohibited_word.do?pPage=${k}">${k}</a>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -219,16 +212,17 @@ tr {
 								<a><img alt="다음" src="resources/images/next.png"></a>
 							</c:when>
 							<c:otherwise>
-								<a href="user_mng.do?cPage=${pvo.beginBlock+pvo.pagePerBlock}">
+								<a href="prohibited_word.do?pPage=${pvo.beginBlock+pvo.pagePerBlock}">
 									<img alt="다음" src="resources/images/next.png">
-								</a>  
+								</a>
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div>
-						<input type="button" id="de_btn" value="삭제하기" onclick="delete_go()">
+						<input type="button" id="del_btn" value="삭제하기" onclick="delete_go()">
 					</div>
 				</div>
+			</div>
 		</div>
 	</div>
 </body>

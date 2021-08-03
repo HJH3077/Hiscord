@@ -19,5 +19,7 @@ public interface MyService {
 	// 유저관리 게시판	// 유저 수
 	int selectCount() throws Exception;
 	// 유저 리스트 // 페이징때문에 begin, end 인자로 사용(begin에서 end까지만 DB에서 읽어옴)
-	List<VO> selectList(int begin, int end) throws Exception;
+	List<VO> selectUserList(int begin, int end) throws Exception;
+	// 금지어 리스트
+	List<VO> selectBanList(int begin, int end) throws Exception;
 }

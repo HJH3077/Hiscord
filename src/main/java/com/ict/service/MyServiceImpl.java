@@ -47,7 +47,12 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public List<VO> selectList(int begin, int end) throws Exception {
-		return myDAO.selectList(begin, end);
+	public List<VO> selectUserList(int begin, int end) throws Exception {
+		return myDAO.selectUserList(begin, end);
+	}
+	
+	@Override
+	public List<VO> selectBanList(int begin, int end) throws Exception {
+		return myDAO.selectBanList(begin, end);
 	}
 }

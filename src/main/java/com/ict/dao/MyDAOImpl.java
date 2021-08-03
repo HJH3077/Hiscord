@@ -56,10 +56,18 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public List<VO> selectList(int begin, int end) throws Exception {
+	public List<VO> selectUserList(int begin, int end) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("begin", begin);
 		map.put("end", end);
-		return sqlSessionTemplate.selectList("hiscord.list", map);
+		return sqlSessionTemplate.selectList("hiscord.userlist", map);
+	}
+	
+	@Override
+	public List<VO> selectBanList(int begin, int end) throws Exception {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("begin", begin);
+		map.put("end", end);
+		return sqlSessionTemplate.selectList("hiscord.banlist", map);
 	}
 }
