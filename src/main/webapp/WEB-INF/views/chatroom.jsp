@@ -126,7 +126,7 @@ body {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<%@ include file="login_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div id="chat_container">
 		<div id="chat_place">
 			<div id="chat_header">공용채팅방</div>

@@ -106,7 +106,7 @@ tr{
 </style>
 </head>
 <body>
-	<%@ include file="login_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div id="friend">
 		<div id="friend_head">
 			<div id="f_nav">

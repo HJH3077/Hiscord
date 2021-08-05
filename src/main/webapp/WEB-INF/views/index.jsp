@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:redirect url="logout_main.do" />
+	<c:redirect url="main.do" />
 </body>
 </html>

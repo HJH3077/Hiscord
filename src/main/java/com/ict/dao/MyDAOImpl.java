@@ -48,6 +48,10 @@ public class MyDAOImpl implements MyDAO{
 		return sqlSessionTemplate.selectOne("hiscord.pw_find", map);
 	}
 	
+	@Override
+	public MVO selectUser(String id) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.user", id);
+	}
 	
 	// 관리자
 	@Override
@@ -61,6 +65,11 @@ public class MyDAOImpl implements MyDAO{
 		map.put("begin", begin);
 		map.put("end", end);
 		return sqlSessionTemplate.selectList("hiscord.userlist", map);
+	}
+	
+	@Override
+	public int selectWordCount() throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.word_count");
 	}
 	
 	@Override

@@ -107,7 +107,7 @@ table, th, td, tr{
 </script>
 </head>
 <body>
-	<%@ include file="logout_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div id="find_container">
 		<form method="post">
 			<div id="find">

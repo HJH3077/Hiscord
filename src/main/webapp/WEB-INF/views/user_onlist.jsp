@@ -113,7 +113,7 @@ td input {
 </head>
 <body>
 	<!-- ajax의 ex05폴더의 ex06인 text읽기를 이용해서 관리하는 것도 고려 -->
-	<%@ include file="login_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div id="onelist">
 		<div id="admin_head">
 			<h1 id="admin_logo">회원정보 관리</h1>

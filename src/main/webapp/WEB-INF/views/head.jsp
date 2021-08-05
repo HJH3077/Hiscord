@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,34 +140,41 @@ body {
 	<div id="main_head">
 		<div class="container">
 			<div class="logo">
-				<a href="login_main.do"> <img alt="logo" src="resources/images/logo.png" width="100"> </a>
-				<div class="listbox">
-					<div class="option_img">
-						<img alt="옵션" src="resources/images/option.png" width="45">
-					</div>
-					<div class="visible_menu">
-						<a href="friend.do">
-							<div role="option" class="menu_list" style="pointer-events: all;">
-								친구
+				<a href="main.do"> <img alt="logo" src="resources/images/logo.png" width="100"> </a>
+				<c:choose>
+			  		<c:when test="${login=='1' }">
+						<div class="listbox">
+							<div class="option_img">
+								<img alt="옵션" src="resources/images/option.png" width="45">
 							</div>
-						</a>
-						<a href="setting.do">
-							<div role="option" class="menu_list">
-								설정
+							<div class="visible_menu">
+								<a href="friend.do">
+									<div role="option" class="menu_list" style="pointer-events: all;">
+										친구
+									</div>
+								</a>
+								<a href="setting.do">
+									<div role="option" class="menu_list">
+										설정
+									</div>
+								</a>
+								<a href="suggestion.do">
+									<div role="option" class="menu_list">
+									건의사항
+									</div>
+								</a>
+								<a href="logout.do">
+									<div role="option" class="menu_list">
+										로그아웃
+									</div>
+								</a>
 							</div>
-						</a>
-						<a href="suggestion.do">
-							<div role="option" class="menu_list">
-							건의사항
-							</div>
-						</a>
-						<a href="logout.do">
-							<div role="option" class="menu_list">
-								로그아웃
-							</div>
-						</a>
-					</div>
-				</div>
+						</div>
+			  		</c:when>
+			  		<c:otherwise>
+			  			<a href="login.do">로그인</a>
+			  		</c:otherwise>
+		  		</c:choose>
 			</div>
 			<script type="text/javascript">
 				$(".option_img").click(function() {

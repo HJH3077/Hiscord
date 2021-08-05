@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,7 +15,6 @@ body {
 	overflow-x: hidden;
 	box-sizing: border-box;
 }
-
 .main_container {
 	margin-left: 50px;
 	width: 1500px;
@@ -24,7 +24,6 @@ body {
 	border-left: 1px solid #ebeced;
 	border-right: 1px solid #ebeced;
 }
-
 .main_container .main_intro {
 	text-align: center;
 	font-size: 18px;
@@ -32,13 +31,12 @@ body {
 	padding: auto;
 	border-bottom: 1px solid #fafafa;
 }
-
 .main_container .main_content {
 	padding-left: 45px;
 	padding-top: 20px;
 }
 
-iframe{
+iframe {
 	width: 90%;
 	height: 100%;
 	min-height: 550px;
@@ -50,7 +48,7 @@ iframe{
 </style>
 </head>
 <body>
-	<%@ include file="logout_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div class="main_container">
 		<div class="main_intro">
 			<h1>이런 장소가 있다면 어떨까요?</h1>

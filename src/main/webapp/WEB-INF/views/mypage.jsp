@@ -31,7 +31,7 @@ body {
 	width: 450px;
 	position: absolute;
 	left: 40%;
-	top: 30%;
+	top: 20%;
 	border: 1px solid black;
 	border-radius: 0.5em;
 	padding: 0 15px;
@@ -60,8 +60,12 @@ body {
 }
 
 #adjust, #cancle {
-	cursor: pointer; border-radius : 0.3rem; border : none; padding : 0.7em
-	1.5em 0.7em; line-height : 1em; font-style : normal;
+	cursor: pointer;
+	border-radius: 0.3rem;
+	border: none;
+	padding: 0.7em 1.5em 0.7em;
+	line-height: 1em;
+	font-style: normal;
 	text-align: center;
 	background-color: #f2711c;
 	color: #fff;
@@ -74,36 +78,82 @@ body {
 	font-style: normal;
 }
 </style>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
+	function check() {
+		var getCheck = RegExp(/^[a-zA-Z0-9]{6,16}$/);
+		var getName = RegExp(/^[가-힣]+$/);
+		var getNickname = RegExp(/^[a-zA-Z0-9가-힣]{2,8}$/);
+		// 닉네임 공백 확인
+		if ($("#nickname").val() == "") {
+			alert("닉네임을 입력해주세요");
+			$("#nickname").focus();
+			return false;
+		}
+
+		// 닉네임 유효성 검사
+		if (!getNickname.test($("#next_nickname").val())) {
+			alert("닉네임은 2~8글자로 써주세요");
+			$("#next_nickname").val("");
+			$("#next_nickname").focus();
+			return false;
+		}
+
+		// 이메일 공백 확인
+		if ($("#next_email").val() == "") {
+			alert("이메일을 입력해주세요");
+			$("#next_email").focus();
+			return false;
+		}
+		return true;
+	}
+
 	function cancle_go(f) {
 		f.action = "setting.do";
+	}
+	
+	function adjust_go(f) {
+		if(check()){
+			f.action = "adjust.do";
+			f.submit();
+		}
+		// ajax 사용해야 겠네 적용시키고 돌아옴
 	}
 </script>
 </head>
 <body>
-	<%@ include file="login_main.jsp"%>
+	<%@ include file="main.jsp"%>
 	<div id="info_update">
 		<form method="post">
 			<div id="profile">
 				<div id="profile_update">
 					<div id="p_avatar">
 						<h4>프로필 수정</h4>
-						<img alt="avatar" src="resources/images/discord.png" />
-						<input type="file" name="file_name" id="img_change" style="margin-left: 15px;">
+						<img alt="avatar" src="resources/images/discord.png" /> <input
+							type="file" name="file_name" id="img_change"
+							style="margin-left: 15px;">
 					</div>
 					<div id="p_nickname">
 						<h4>닉네임 수정</h4>
-						<input type="text" name="before_name" readonly> <input type="text"
-							name="next_name" placeholder="바꿀 닉네임">
+						<p>
+							변경 전 닉네임 : <input type="text" name="before_name"
+								value="${nickname}" readonly style="background-color: #02E7FC;">
+						</p>
+						<p>
+							변경 후 닉네임 : <input type="text" name="next_nickname" id="next_nickname"
+								value="${nickname}">
+						</p>
 					</div>
 					<div id="p_email">
 						<h4>이메일 수정</h4>
-						<input type="text" name="before_email" readonly> <input type="text"
-							name="next_email" placeholder="바꿀 이메일">
+						<p style="font-size: 7px; margin: 0;">기존 이메일</p>
+						<input type="text" name="before_email" value="${email}" readonly
+							style="background-color: #02E7FC;">
+						<p style="font-size: 7px; margin: 0;">변경할 이메일</p>
+						<input type="text" name="next_email" id="next_email" value="${email}">
 					</div>
 					<button id="cancle" onclick="cancle_go(this.form)">취소</button>
-					<button id="adjust">적용</button>
+					<button id="adjust" onclick="adjust_go(this.form)">적용</button>
 				</div>
 			</div>
 		</form>

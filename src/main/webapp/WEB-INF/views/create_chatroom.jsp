@@ -72,7 +72,7 @@ body {
 </script>
 </head>
 <body>
-	<%@ include file="login_main.jsp"%>
+	<%@ include file="main.jsp"%>
 	<div id="create_chatroom">
 		<div id="make">
 			<h2>채팅방 개설</h2>

@@ -30,6 +30,11 @@
 		select pw from hiscord_member where id = #{id} and name = #{name} and email = #{email}
 	</select>
 	
+	<!-- 유저 1명 검색 -->
+	<select id="user" parameterType="com.ict.vo.MVO" resultType="com.ict.vo.MVO">
+		select * from hiscord_member where id = #{id}
+	</select>
+	
 	<!-- 전체 유저의 수 -->
 	<select id="count" resultType="int">
 		select count(*) from hiscord_member
@@ -42,9 +47,14 @@
 		where r_num between #{begin} and #{end}
 	</select>
 	
+	<!-- 전체 금지어 수 -->
+	<select id="word_count" resultType="int">
+		select count(*) from hiscord_ban_word
+	</select>
+	
 	<select id="banlist" parameterType="Map" resultType="com.ict.vo.WVO">
 		select * from(
-			select ROWNUM r_num, a.* from(select * from hiscord_member order by idx desc) a) 
+			select ROWNUM r_num, a.* from(select * from hiscord_ban_word order by idx desc) a) 
 		where r_num between #{begin} and #{end}
 	</select>
 </mapper>

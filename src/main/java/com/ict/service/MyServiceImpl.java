@@ -39,6 +39,10 @@ public class MyServiceImpl implements MyService{
 		return myDAO.selectPwfind(id, name, email);
 	}
 	
+	@Override
+	public MVO selectUser(String id) throws Exception {
+		return myDAO.selectUser(id);
+	}
 	
 	// 관리자
 	@Override
@@ -49,6 +53,11 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public List<VO> selectUserList(int begin, int end) throws Exception {
 		return myDAO.selectUserList(begin, end);
+	}
+	
+	@Override
+	public int selectWordCount() throws Exception {
+		return myDAO.selectWordCount();
 	}
 	
 	@Override

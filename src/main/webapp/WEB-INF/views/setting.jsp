@@ -109,7 +109,7 @@ body {
 </script>
 </head>
 <body>
-	<%@ include file="login_main.jsp"%>
+	<%@ include file="main.jsp"%>
 	<div id="setting">
 		<div id="setbox">
 			<div id="sethead">설정</div>

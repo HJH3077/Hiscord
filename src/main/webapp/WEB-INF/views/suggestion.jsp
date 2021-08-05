@@ -76,7 +76,7 @@ body {
 </script>
 </head>
 <body>
-	<%@ include file="login_main.jsp"%>
+	<%@ include file="main.jsp"%>
 	<div id="suggestion">
 		<form method="post">
 			<div id="sg_box">

@@ -169,13 +169,17 @@ tr {font-size: 20px; line-height: 2.5;}
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach begin="1" end="4">
+								    <c:forEach var="k" items="${list}" varStatus="status">
+										<c:when test="${status.index%5 == 0}">
 											<tr>
-										        <c:forEach var="k" items="${list}" begin="1" end="5">
-											     	<td style="width: 5%"><input type="checkbox" name="chk"></td>
-													<td>${k.word }</td>
-										        </c:forEach>
-									        </tr>
+												<td style="width: 5%"><input type="checkbox" name="chk"></td>
+												<td>${k.word }</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<td style="width: 5%"><input type="checkbox" name="chk"></td>
+											<td>${k.word }</td>
+										</c:otherwise>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>

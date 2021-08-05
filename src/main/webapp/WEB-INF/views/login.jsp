@@ -88,7 +88,7 @@ body {
 </script>
 </head>
 <body>
-	<%@ include file="logout_head.jsp"%>
+	<%@ include file="head.jsp"%>
 	<div id="login_container">  
 		<h1 id="login_title">
 			<a href="logout_main.do"><img src="resources/images/logo.png" width="350" height="130"></a>

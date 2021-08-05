@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.email.EmailService;
 import com.ict.service.MyService;
 import com.ict.service.Paging;
+import com.ict.service.Paging2;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
 import com.ict.vo.VO;
@@ -29,15 +30,12 @@ public class MyController {
     EmailService emailService;
 	@Autowired
 	private Paging paging;
+	@Autowired
+	private Paging2 paging2;
 	
-	@RequestMapping("logout_main.do")
-	public ModelAndView logout_mainCommand() {
-		return new ModelAndView("logout_main");
-	}
-	
-	@RequestMapping("login_main.do")
+	@RequestMapping("main.do")
 	public ModelAndView login_mainCommand() {
-		return new ModelAndView("login_main");
+		return new ModelAndView("main");
 	}
 	
 	@RequestMapping("login.do")
@@ -49,15 +47,6 @@ public class MyController {
 	public ModelAndView loginOkCommand(MVO m_vo, HttpSession session,
 			@RequestParam("cPage")String cPage){
 		try {
-			// 이미 로그인 한 경우
-			if(session.getAttribute("login") == "1") {
-				// 로그인 했는데 관리자인 경우
-				if(session.getAttribute("admin") == "ok") {
-					return new ModelAndView("redirect:user_mng.do?cPage=" + cPage);
-				}
-				return new ModelAndView("redirect:login_main.do");
-			} 
-			
 			MVO mvo = myService.selectLogin(m_vo);
 			if(mvo == null) {
 				session.setAttribute("login","0");
@@ -71,7 +60,7 @@ public class MyController {
 					return new ModelAndView("redirect:user_mng.do?cPage=" + cPage);
 				}
 				// 관리자가 아닌 경우
-				return new ModelAndView("redirect:login_main.do");
+				return new ModelAndView("redirect:main.do");
 			}
 		} catch (Exception e) {
 		}
@@ -81,7 +70,7 @@ public class MyController {
 	@RequestMapping("logout.do")
 	public ModelAndView logoutCommand(HttpSession session) {
 		session.invalidate(); // 세션을 완전히 삭제
-		return new ModelAndView("redirect:logout_main.do");
+		return new ModelAndView("redirect:main.do");
 	}
 	
 	@RequestMapping("id_find.do")
@@ -103,7 +92,7 @@ public class MyController {
 			return new ModelAndView("redirect:login.do");
 		} catch (Exception e) {
 			System.out.println(e);
-			return new ModelAndView("redirect:logout_main.do");
+			return new ModelAndView("redirect:main.do");
 		}
 	}
 	
@@ -125,7 +114,7 @@ public class MyController {
 			emailService.sendMail(mailvo);
 			return new ModelAndView("redirect:login.do");
 		} catch (Exception e) {
-			return new ModelAndView("redirect:logout_main.do");
+			return new ModelAndView("redirect:main.do");
 		}
 	}
 	
@@ -180,9 +169,9 @@ public class MyController {
 			mailvo.setSubject(id + "님의 건의사항입니다.");
 			mailvo.setMessage(content);
 			emailService.sendMail(mailvo);
-			return new ModelAndView("redirect:login_ok.do");
+			return new ModelAndView("redirect:main.do");
 		} catch (Exception e) {
-			return new ModelAndView("redirect:logout_main.do");
+			return new ModelAndView("redirect:main.do");
 		}
 	}
 	
@@ -192,8 +181,26 @@ public class MyController {
 	}
 	
 	@RequestMapping("mypage.do")
-	public ModelAndView mypageCommand() {
-		return new ModelAndView("mypage");
+	public ModelAndView mypageCommand(HttpSession session) {
+		try {
+			ModelAndView mv = new ModelAndView("mypage");
+			String id = (String)session.getAttribute("login_id");
+			System.out.println(id);
+			MVO mvo = myService.selectUser(id);
+			String nickname = mvo.getNickname();
+			String email = mvo.getEmail();
+			mv.addObject("nickname", nickname);
+			mv.addObject("email", email);
+			return mv;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
+	@RequestMapping("adjust.do")
+	public ModelAndView adjustCommand() {
+		
+		return null;
 	}
 	
 	@RequestMapping("friend.do")
@@ -213,7 +220,9 @@ public class MyController {
 			ModelAndView mv = new ModelAndView("user_mng");
 			// 전체 게시물의 수
 			int count = myService.selectCount();
+			System.out.println(paging.getTotalRecord() + "!");
 			paging.setTotalRecord(count);
+			System.out.println(paging.getTotalRecord() + "@");
 
 			// 전체 페이지의 수
 			if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -259,40 +268,38 @@ public class MyController {
 		try {
 			ModelAndView mv = new ModelAndView("prohibited_word");
 			// 전체 게시물의 수
-			int count = myService.selectCount();
-			paging.setTotalRecord(count);
-
+			int word_count = myService.selectWordCount();
+			paging2.setTotalRecord(word_count);
 			// 전체 페이지의 수
-			if (paging.getTotalRecord() <= paging.getNumPerPage()) {
-				paging.setTotalPage(1);
+			if (paging2.getTotalRecord() <= paging2.getNumPerPage()) {
+				paging2.setTotalPage(1);
 			} else {
 				// 전체 페이지의 수 계산하기
-				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				paging2.setTotalPage(paging2.getTotalRecord() / paging2.getNumPerPage());
 				// 나머지가 존재하면 전체 페이지 수에 +1
-				if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-					paging.setTotalPage(paging.getTotalPage() + 1);
+				if (paging2.getTotalRecord() % paging2.getNumPerPage() != 0) {
+					paging2.setTotalPage(paging2.getTotalPage() + 1);
 				}
 			}
 			// 현재 페이지 구하기
-			paging.setNowPage(Integer.parseInt(pPage));
+			paging2.setNowPage(Integer.parseInt(pPage));
 			
 			// 시작번호, 끝번호
-			paging.setBegin((paging.getNowPage() - 1) * paging.getNumPerPage() + 1);
-			paging.setEnd((paging.getBegin() - 1) + paging.getNumPerPage());
+			paging2.setBegin((paging.getNowPage() - 1) * (paging2.getNumPerPage() * 5) + 1);
+			paging2.setEnd((paging.getBegin() - 1) + (paging2.getNumPerPage() * 5));
 
 			// 시작블록, 끝블록
-			paging.setBeginBlock(
-					(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+			paging2.setBeginBlock(
+					(int) ((paging2.getNowPage() - 1) / paging2.getPagePerBlock()) * paging2.getPagePerBlock() + 1);
+			paging2.setEndBlock(paging2.getBeginBlock() + paging2.getPagePerBlock() - 1);
 
 			// 주의사항 : endBlock 이 totalPage 보다 클 경우 이 경우 endBlock를 totalPage에 맞춰줌.
-			if (paging.getEndBlock() > paging.getTotalPage()) {
-				paging.setEndBlock(paging.getTotalPage());
+			if (paging2.getEndBlock() > paging2.getTotalPage()) {
+				paging2.setEndBlock(paging2.getTotalPage());
 			}
-			List<VO> list = myService.selectBanList(paging.getBegin(), paging.getEnd());
-			
+			List<VO> list = myService.selectBanList(paging2.getBegin(), paging2.getEnd());
 			mv.addObject("list", list);
-			mv.addObject("pvo", paging);
+			mv.addObject("pvo", paging2);
 			return mv;
 		} catch (Exception e) {
 			System.out.println(e);
