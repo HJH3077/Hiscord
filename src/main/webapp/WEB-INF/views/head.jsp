@@ -142,7 +142,7 @@ body {
 			<div class="logo">
 				<a href="main.do"> <img alt="logo" src="resources/images/logo.png" width="100"> </a>
 				<c:choose>
-			  		<c:when test="${login=='1' }">
+			  		<c:when test="${login=='1'}">
 						<div class="listbox">
 							<div class="option_img">
 								<img alt="옵션" src="resources/images/option.png" width="45">

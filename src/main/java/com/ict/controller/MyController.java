@@ -1,6 +1,7 @@
 package com.ict.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +55,7 @@ public class MyController {
 			} else {
 				session.setAttribute("login_id", mvo.getId());
 				session.setAttribute("login", "1");
+				
 				// 관리자인 경우
 				if(mvo.getId().equals("admin")&&mvo.getPw().equals("admin")) {
 					session.setAttribute("admin", "ok");
@@ -185,7 +187,6 @@ public class MyController {
 		try {
 			ModelAndView mv = new ModelAndView("mypage");
 			String id = (String)session.getAttribute("login_id");
-			System.out.println(id);
 			MVO mvo = myService.selectUser(id);
 			String nickname = mvo.getNickname();
 			String email = mvo.getEmail();
@@ -198,8 +199,18 @@ public class MyController {
 	}
 	
 	@RequestMapping("adjust.do")
-	public ModelAndView adjustCommand() {
-		
+	public ModelAndView adjustCommand(HttpSession session, @RequestParam("next_nickname")String nickname,
+			@RequestParam("next_email")String email) {
+		try {
+			String id = (String)session.getAttribute("login_id");
+			MVO mvo = new MVO();
+			mvo.setId(id);
+			mvo.setNickname(nickname);
+			mvo.setEmail(email);
+			myService.updateUser(mvo);
+			return new ModelAndView("redirect:mypage.do");
+		} catch (Exception e) {
+		}
 		return null;
 	}
 	
@@ -220,9 +231,7 @@ public class MyController {
 			ModelAndView mv = new ModelAndView("user_mng");
 			// 전체 게시물의 수
 			int count = myService.selectCount();
-			System.out.println(paging.getTotalRecord() + "!");
 			paging.setTotalRecord(count);
-			System.out.println(paging.getTotalRecord() + "@");
 
 			// 전체 페이지의 수
 			if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -263,6 +272,49 @@ public class MyController {
 		}
 	}
 	
+	@RequestMapping("user_onelist.do")
+	public ModelAndView onelistCommand(@RequestParam("id")String id, @ModelAttribute("cPage")String cPage) {
+		try {
+			ModelAndView mv = new ModelAndView("user_onelist");
+			MVO mvo = myService.selectUser(id);
+			mv.addObject("mvo", mvo);
+			return mv;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
+	@RequestMapping("user_update.do")
+	public ModelAndView user_updateCommand(@RequestParam("nickname")String nickname,
+			@RequestParam("email")String email, @ModelAttribute("id")String id, @ModelAttribute("cPage")String cPage) {
+		try {
+			MVO mvo = new MVO();
+			mvo.setId(id);
+			mvo.setNickname(nickname);
+			mvo.setEmail(email);
+			myService.updateUser(mvo);
+			return new ModelAndView("redirect:user_onelist.do");
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "chkbox_user_delete.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String chk_user_delCommand(@RequestParam("id[]")String[] id) {
+		try {
+			int result = 0;
+			for(int i=0; i<id.length; i++) {
+				result = myService.deleteUser(id[i]);
+			}
+			return String.valueOf(result);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	
 	@RequestMapping("prohibited_word.do")
 	public ModelAndView prohibitCommand(@ModelAttribute("pPage")String pPage) {
 		try {
@@ -271,13 +323,13 @@ public class MyController {
 			int word_count = myService.selectWordCount();
 			paging2.setTotalRecord(word_count);
 			// 전체 페이지의 수
-			if (paging2.getTotalRecord() <= paging2.getNumPerPage()) {
+			if (paging2.getTotalRecord() <= (paging2.getNumPerPage() * 4)) {
 				paging2.setTotalPage(1);
 			} else {
 				// 전체 페이지의 수 계산하기
-				paging2.setTotalPage(paging2.getTotalRecord() / paging2.getNumPerPage());
+				paging2.setTotalPage(paging2.getTotalRecord() / (paging2.getNumPerPage() * 4));
 				// 나머지가 존재하면 전체 페이지 수에 +1
-				if (paging2.getTotalRecord() % paging2.getNumPerPage() != 0) {
+				if (paging2.getTotalRecord() % (paging2.getNumPerPage() * 4) != 0) {
 					paging2.setTotalPage(paging2.getTotalPage() + 1);
 				}
 			}
@@ -285,8 +337,8 @@ public class MyController {
 			paging2.setNowPage(Integer.parseInt(pPage));
 			
 			// 시작번호, 끝번호
-			paging2.setBegin((paging.getNowPage() - 1) * (paging2.getNumPerPage() * 5) + 1);
-			paging2.setEnd((paging.getBegin() - 1) + (paging2.getNumPerPage() * 5));
+			paging2.setBegin((paging2.getNowPage() - 1) * (paging2.getNumPerPage() * 4) + 1);
+			paging2.setEnd((paging2.getBegin() - 1) + (paging2.getNumPerPage() * 4));
 
 			// 시작블록, 끝블록
 			paging2.setBeginBlock(
@@ -297,14 +349,29 @@ public class MyController {
 			if (paging2.getEndBlock() > paging2.getTotalPage()) {
 				paging2.setEndBlock(paging2.getTotalPage());
 			}
-			List<VO> list = myService.selectBanList(paging2.getBegin(), paging2.getEnd());
-			mv.addObject("list", list);
-			mv.addObject("pvo", paging2);
+			List<VO> list2 = myService.selectBanList(paging2.getBegin(), paging2.getEnd());
+			mv.addObject("list2", list2);
+			mv.addObject("pvo2", paging2);
 			return mv;
 		} catch (Exception e) {
 			System.out.println(e);
 			return new ModelAndView("login_err");
 		}
+	}
+	
+	@RequestMapping(value = "chkbox_word_delete.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String chk_word_delCommand(@RequestParam("word[]")String[] word) {
+		try {
+			int result = 0;
+			for(int i=0; i<word.length; i++) {
+				result = myService.deleteWord(word[i]);
+			}
+			return String.valueOf(result);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 }

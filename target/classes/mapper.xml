@@ -35,6 +35,17 @@
 		select * from hiscord_member where id = #{id}
 	</select>
 	
+	<update id="user_update" parameterType="com.ict.vo.MVO">
+		update hiscord_member set nickname = #{nickname}, email = #{email} where id=#{id}
+	</update>	
+	
+	<delete id="user_delete" parameterType="com.ict.vo.MVO">
+		delete from hiscord_member where id=#{id}
+	</delete>
+	
+	
+	
+	<!-- 관리자 -->
 	<!-- 전체 유저의 수 -->
 	<select id="count" resultType="int">
 		select count(*) from hiscord_member
@@ -51,6 +62,10 @@
 	<select id="word_count" resultType="int">
 		select count(*) from hiscord_ban_word
 	</select>
+	
+	<delete id="word_delete" parameterType="com.ict.vo.WVO">
+		delete from hiscord_ban_word where word=#{word}
+	</delete>
 	
 	<select id="banlist" parameterType="Map" resultType="com.ict.vo.WVO">
 		select * from(

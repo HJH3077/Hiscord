@@ -44,6 +44,16 @@ public class MyServiceImpl implements MyService{
 		return myDAO.selectUser(id);
 	}
 	
+	@Override
+	public int updateUser(MVO mvo) throws Exception {
+		return myDAO.updateUser(mvo);
+	}
+	
+	@Override
+	public int deleteUser(String id) throws Exception {
+		return myDAO.deleteUser(id);
+	}
+	
 	// 관리자
 	@Override
 	public int selectCount() throws Exception {
@@ -58,6 +68,11 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public int selectWordCount() throws Exception {
 		return myDAO.selectWordCount();
+	}
+	
+	@Override
+	public int deleteWord(String word) throws Exception {
+		return myDAO.deleteWord(word);
 	}
 	
 	@Override

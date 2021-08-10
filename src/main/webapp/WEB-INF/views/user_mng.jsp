@@ -14,8 +14,8 @@ body {
 	padding: 0;
 	margin: 0;
 }
- 
-a{text-decoration: none;}
+  
+a{text-decoration: none;} 
 
 #user_info {
 	width: 1500px;
@@ -23,21 +23,30 @@ a{text-decoration: none;}
 	text-align: center;
 	margin: auto;
 }
-
+  
 #admin_head {
 	border-bottom: 1px solid #f1f3f5;
 	box-sizing: border-box;
 	width: 1500px;
+	margin-top: 20px;
 }
-
+ 
 #admin_logo {
 	text-align: center;
-	width: 100%;
+	width: 1300px;   
 	color: black;
 	font-weight: bold;
 	font-size: 45px;
 	padding: 10px;
 	margin: auto;
+}
+
+#logout{
+	color: black;
+	background-color: #fff;
+	font-size: 15px; 
+	border-radius: 0.5em;
+	margin-left: 79%; 
 }
 
 #nav {
@@ -132,15 +141,8 @@ tr {font-size: 20px; line-height: 2.5;}
  
 #now {color: red; text-decoration: underline;}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	function delete_go() {
-		// ajax 사용
-	}
-
-	function search_go() {
-		//ajax 사용
-	}
-	
 	// 체크박스 전체 활성화
 	function chk_all() {
 		if (chk_form.chkall.checked == true) {
@@ -153,12 +155,45 @@ tr {font-size: 20px; line-height: 2.5;}
 			}
 		}
 	}
+	
+	$(function() {
+		$("#del_btn").click(function() {
+			var chk = [] ;
+			var id = [] ;
+			$("input[name='chk']:checked").each(function() {
+				chk.push($(this).val());
+				id.push($(this).attr("id"));
+			});
+			
+			if(chk.length == 0){
+				alert("삭제할 유저를 선택 후 눌러 주세요");
+				return false;
+			}
+			
+			$.ajax({
+				url : "chkbox_user_delete.do",
+				method : "post",
+				data :{"id": id},
+				dataType : "text",
+				success : function(data) {
+					if(data == '1'){
+					   alert("삭제 성공");
+					   location.href = "user_mng.do?cPage=" + 1;
+					}
+				},
+				error: function() {
+					alert("삭제 실패");
+				}
+			});
+		});
+	});
 </script>
 </head>
 <body>
 	<div id="user_info">
 		<div id="admin_head">
-			<h1 id="admin_logo">회원정보관리</h1>
+			<h1 id="admin_logo">회원정보관리</h1>  
+			<button id="logout">로그아웃</button> 
 			<div id="nav">
 				<div class="nav_bar">
 					<a href="#">회원정보 관리</a>
@@ -186,7 +221,7 @@ tr {font-size: 20px; line-height: 2.5;}
 								<th style="width: 20%">가입날짜</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:choose>
 								<c:when test="${empty list}">
 									<tr>
@@ -196,9 +231,9 @@ tr {font-size: 20px; line-height: 2.5;}
 								<c:otherwise>
 									<c:forEach var="k" items="${list}" varStatus="vs">
 										<tr>
-											<td><input type="checkbox" name="chk"></td>
+											<td><input type="checkbox" name="chk" class="chk" id="${k.id}"></td>
 											<td>${pvo.totalRecord-((pvo.nowPage-1)*pvo.numPerPage+vs.index)}</td>
-											<td><a href="user_onlist.do?idx=${k.idx}&cPage=${cPage}">${k.id}</a></td>
+											<td><a href="user_onelist.do?id=${k.id}&cPage=${cPage}">${k.id}</a></td>
 											<td>${k.nickname }</td>
 											<td>${k.email }</td>
 											<td>${k.reg.substring(0,10) }</td>
@@ -214,7 +249,7 @@ tr {font-size: 20px; line-height: 2.5;}
 						<!-- 이전 페이지 -->
 						<c:choose>
 							<c:when test="${pvo.beginBlock <= pvo.pagePerBlock }">
-								<a><img alt="이전" src="resources/images/previous.png"></a>
+								<a><img alt="이전" src="resources/images/previous.png" style="opacity: 0.1;"></a>
 							</c:when>
 							<c:otherwise>
 								<a href="user_mng.do?cPage=${pvo.beginBlock-pvo.pagePerBlock}">
@@ -230,14 +265,14 @@ tr {font-size: 20px; line-height: 2.5;}
 									<a id="now">${k}</a>
 								</c:when>
 								<c:otherwise>
-									<a id="page_now" a href="user_mng.do?cPage=${k}">${k}</a>
+									<a id="page_now"  href="user_mng.do?cPage=${k}">${k}</a>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<!-- 다음 페이지 -->
 						<c:choose>
 							<c:when test="${pvo.endBlock >= pvo.totalPage }">
-								<a><img alt="다음" src="resources/images/next.png"></a>
+								<a><img alt="다음" src="resources/images/next.png" style="opacity: 0.1;"></a>
 							</c:when>
 							<c:otherwise>
 								<a href="user_mng.do?cPage=${pvo.beginBlock+pvo.pagePerBlock}">
@@ -247,7 +282,8 @@ tr {font-size: 20px; line-height: 2.5;}
 						</c:choose>
 					</div>
 					<div>
-						<input type="button" id="del_btn" value="삭제하기" onclick="delete_go()">
+						<input type="button" id="del_btn" value="삭제하기">
+						<input type="hidden" value="cPage" name="cPage">
 					</div>
 				</div>
 			</div>

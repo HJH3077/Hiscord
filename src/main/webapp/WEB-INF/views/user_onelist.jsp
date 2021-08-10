@@ -12,40 +12,49 @@ body {
 	margin: 0;
 }
 
+a{text-decoration: none;}
+
 #onelist {
 	width: 1500px;
-	height: 100vh;
-	margin-left: 50px;
 	background-color: #fff;
+	margin: auto;
 }
 
 #admin_head {
 	border-bottom: 1px solid #f1f3f5;
 	box-sizing: border-box;
+	width: 1500px;
 }
 
 #admin_logo {
 	text-align: center;
-	width: 100%;
 	color: black;
 	font-weight: bold;
 	font-size: 45px;
 	padding: 10px;
+	margin: auto; 
+}
+
+#logout{
+	color: black;
+	background-color: #fff;
+	font-size: 15px; 
+	border-radius: 0.5em;
+	margin-left: 83%; 
+}
+
+#nav { 
+	box-sizing: border-box;
+	background-color: #fff;
+	width: 1200px;  
+	padding: 20px;
+	display: flex;
 	margin: auto;
 }
 
-#nav {
-	box-sizing: border-box;
-	background-color: #fff;
-	width: 1300px;
-	padding: 20px;
-	display: flex;
-	justify-content: center;
-}
-
-#nav .nav_bar a:visited, a:disabled {
-	color: white;
-}
+#nav .nav_bar a:link { color: white; text-decoration: none;}
+#nav .nav_bar a:visited { color: white; text-decoration: none;}
+#nav .nav_bar a:hover { color: red; text-decoration: underline;}
 
 #nav .nav_bar {
 	border: 1px solid black;
@@ -102,27 +111,22 @@ td input {
 </style>
 <script type="text/javascript">
 	function update_go(f) {
-		f.action = "user_update.jsp";
-		f.submit();
-	}
-	function delete_go(f) {
-		f.action = "";
+		f.action = "user_update.do";
 		f.submit();
 	}
 </script>
 </head>
 <body>
-	<!-- ajax의 ex05폴더의 ex06인 text읽기를 이용해서 관리하는 것도 고려 -->
-	<%@ include file="head.jsp"%>
 	<div id="onelist">
 		<div id="admin_head">
 			<h1 id="admin_logo">회원정보 관리</h1>
+			<button id="logout">로그아웃</button> 
 			<div id="nav">
 				<div class="nav_bar">
-					<a href="prohibited_word.jsp">금지어 관리</a>
+					<a href="user_mng.do?cPage=${cPage}">회원정보 관리</a>
 				</div>
 				<div class="nav_bar">
-					<a href="user_mng.jsp">회원정보 관리</a>
+					<a href="prohibited_word.do?pPage=${1}">금지어 관리</a>
 				</div>
 			</div>
 		</div>
@@ -133,29 +137,29 @@ td input {
 					<tbody>
 						<tr>
 							<th>이름 :</th>
-							<td align="left"><input type="text" value="" ></td>
+							<td align="left"><input type="text" value="${mvo.name}" readonly></td>
 						</tr>
 						<tr>
 							<th>ID :</th>
-							<td align="left"><input type="text" value="" ></td>
+							<td align="left"><input type="text" name="id" value="${mvo.id}" readonly></td>
 						</tr>
 						<tr>
 							<th>닉네임 :</th>
-							<td align="left"><input type="text" value="" ></td>
+							<td align="left"><input type="text" name="nickname" value="${mvo.nickname}"></td>
 						</tr>
 						<tr>
 							<th>이메일 :</th>
-							<td align="left"><input type="text" value="" ></td>
+							<td align="left"><input type="text" name="email" value="${mvo.email}"></td>
 						</tr>
 						<tr>
 							<th>가입일 :</th>
-							<td align="left"><input type="text" value="" ></td>
+							<td align="left"><input type="text" value="${mvo.reg.substring(0,10)}" readonly></td>
 						</tr>
 					</tbody>
 				</table>
 				<div id="onelist_button">
 					<input type="button" value="수정" onclick="update_go(this.form)" />
-					<input type="button" value="삭제" onclick="delete_go(this.form)" />
+					<input type="button" value="취소" onclick="history.go(-1)" /> 
 				</div>
 			</form>
 		</div>

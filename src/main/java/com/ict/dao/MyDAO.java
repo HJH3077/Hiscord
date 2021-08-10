@@ -18,6 +18,14 @@ public interface MyDAO {
 	String selectPwfind(String id, String name, String email) throws Exception;
 	// 유저 검색
 	MVO selectUser(String id) throws Exception;
+	// 유저 정보 업데이트
+	int updateUser(MVO mvo) throws Exception;
+	
+	
+	// 유저 삭제
+	int deleteUser(String id) throws Exception;
+	// 금지어 삭제
+	int deleteWord(String word) throws Exception;
 	// 유저관리 게시판	// 유저 수
 	int selectCount() throws Exception;
 	// 금지어 게시판	// 금지어 수

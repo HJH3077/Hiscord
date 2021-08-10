@@ -71,7 +71,7 @@ body {
 	margin-left: 5px;
 }
 
-.save {
+.btn1 {
 	cursor: pointer;
 	border-radius: 0.3rem;
 	border: none;
@@ -82,7 +82,21 @@ body {
 	background-color: #f2711c;
 	color: #fff;
 	float: right;
-	margin: 20px;
+	margin: 15px;
+}
+
+.btn2 {
+	cursor: pointer; 
+	border-radius: 0.3rem;
+	border: none;
+	padding: 0.7em 1.5em 0.7em;
+	line-height: 1em;
+	font-style: normal;
+	text-align: center;
+	background-color: #f2711c;
+	color: #fff;
+	float: right;
+	margin-top: 15px;
 }
 </style>
 <script
@@ -106,6 +120,10 @@ body {
 			}
 		});
 	});
+	
+	function btn1_cancle(f) {
+		f.action = "main.do";
+	}
 </script>
 </head>
 <body>
@@ -143,7 +161,8 @@ body {
 						<div class="radio">
 							<input name="font" type="radio" value="big"> big
 						</div>
-						<button class="save">저장</button>
+						<button class="btn1" onclick="btn1_cancle(this.form)">취소</button>
+						<button class="btn2">저장</button>
 					</form>
 				</div>
 			</div>

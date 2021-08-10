@@ -53,6 +53,16 @@ public class MyDAOImpl implements MyDAO{
 		return sqlSessionTemplate.selectOne("hiscord.user", id);
 	}
 	
+	@Override
+	public int updateUser(MVO mvo) throws Exception {
+		return sqlSessionTemplate.update("hiscord.user_update", mvo);
+	}
+	
+	@Override
+	public int deleteUser(String id) throws Exception {
+		return sqlSessionTemplate.delete("hiscord.user_delete", id);
+	}
+	
 	// 관리자
 	@Override
 		public int selectCount() throws Exception {
@@ -70,6 +80,11 @@ public class MyDAOImpl implements MyDAO{
 	@Override
 	public int selectWordCount() throws Exception {
 		return sqlSessionTemplate.selectOne("hiscord.word_count");
+	}
+	
+	@Override
+	public int deleteWord(String word) throws Exception {
+		return sqlSessionTemplate.delete("hiscord.word_delete", word);
 	}
 	
 	@Override

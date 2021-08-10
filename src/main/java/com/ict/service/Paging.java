@@ -10,7 +10,7 @@ public class Paging {
 	private int totalPage = 0;		// 전체 페이지의 수
 	private int totalBlock = 0;		// 전체 블록의 수
 	private int numPerPage = 2;		// 한 페이지에 존재하는 줄의 수(원글의 수)
-	private int pagePerBlock = 2;	// 한 블록안에 존재하는 블록의 수 (1 ~ n 까지) => 즉, 한 페이지에 보여주는 블록의 수
+	private int pagePerBlock = 4;	// 한 블록안에 존재하는 블록의 수 (1 ~ n 까지) => 즉, 한 페이지에 보여주는 블록의 수
 	
 	private int begin = 0;			// 시작번호 (현재 페이지의 글 시작 번호)
 	private int end = 0;			// 끝번호 (현재 페이지의 글 끝 번호)

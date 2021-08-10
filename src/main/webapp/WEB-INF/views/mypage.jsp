@@ -78,7 +78,8 @@ body {
 	font-style: normal;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	function check() {
 		var getCheck = RegExp(/^[a-zA-Z0-9]{6,16}$/);
@@ -111,13 +112,12 @@ body {
 	function cancle_go(f) {
 		f.action = "setting.do";
 	}
-	
+
 	function adjust_go(f) {
-		if(check()){
+		if (check()) {
 			f.action = "adjust.do";
 			f.submit();
 		}
-		// ajax 사용해야 겠네 적용시키고 돌아옴
 	}
 </script>
 </head>
@@ -136,21 +136,22 @@ body {
 					<div id="p_nickname">
 						<h4>닉네임 수정</h4>
 						<p>
-							변경 전 닉네임 : <input type="text" name="before_name"
+							&nbsp;&nbsp;현재 닉네임 &nbsp;: <input type="text" name="before_name"
 								value="${nickname}" readonly style="background-color: #02E7FC;">
 						</p>
 						<p>
-							변경 후 닉네임 : <input type="text" name="next_nickname" id="next_nickname"
-								value="${nickname}">
+							변경할 닉네임 : <input type="text" name="next_nickname"
+								id="next_nickname" value="${nickname}">
 						</p>
 					</div>
 					<div id="p_email">
 						<h4>이메일 수정</h4>
-						<p style="font-size: 7px; margin: 0;">기존 이메일</p>
+						<p style="font-size: 7px; margin: 0;">현재 이메일</p>
 						<input type="text" name="before_email" value="${email}" readonly
 							style="background-color: #02E7FC;">
 						<p style="font-size: 7px; margin: 0;">변경할 이메일</p>
-						<input type="text" name="next_email" id="next_email" value="${email}">
+						<input type="text" name="next_email" id="next_email"
+							value="${email}">
 					</div>
 					<button id="cancle" onclick="cancle_go(this.form)">취소</button>
 					<button id="adjust" onclick="adjust_go(this.form)">적용</button>
