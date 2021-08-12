@@ -25,12 +25,9 @@
 	
 	<context:component-scan base-package="com.ict.controller" />
 	
-	  <!-- 웹 소켓 핸들러 -->
-    <websocket:handlers>
-        <websocket:mapping path="/websocket/echo.do" handler="myHandler"/>
-        <websocket:sockjs />
-    </websocket:handlers>
- 
-    <beans:bean id="myHandler" class="com.ict.IO.WebSocketHandler"/>
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/chatting"/>
+	</websocket:handlers>
 	
+	<beans:bean id="echoHandler" class="com.ict.server.EchoHandler" />
 </beans:beans>

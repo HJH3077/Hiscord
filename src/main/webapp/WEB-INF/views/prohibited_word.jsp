@@ -201,6 +201,10 @@ tr {
 				}
 			});
 		});
+		
+		$("#logout").click(function() {
+			location.href = "logout.do";
+		});
 	});
 </script>
 </head>
@@ -219,7 +223,7 @@ tr {
 			</div>
 		</div>
 		<div id="searchbar">
-			<input id="search" type="search" name="input" placeholder="&#61442;">
+			<input id="search" type="search" name="input" placeholder="&#61442">
 		</div>
 		<div id="ban">
 			<div>

@@ -186,6 +186,10 @@ tr {font-size: 20px; line-height: 2.5;}
 				}
 			});
 		});
+		
+		$("#logout").click(function() {
+			location.href = "logout.do";
+		});
 	});
 </script>
 </head>
@@ -204,7 +208,7 @@ tr {font-size: 20px; line-height: 2.5;}
 			</div>
 		</div>
 		<div id="searchbar">
-			<input id="search" type="search" name="input" placeholder="&#61442;" onclick="search_go()">
+			<input id="search" type="search" name="input" placeholder="&#61442">
 		</div>
 		<div id="user">
 			<div>

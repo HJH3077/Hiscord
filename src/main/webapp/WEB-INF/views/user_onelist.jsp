@@ -109,11 +109,18 @@ td input {
 	border-radius: 0.5em;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	function update_go(f) {
 		f.action = "user_update.do";
 		f.submit();
 	}
+	
+	$(function() {
+		$("#logout").click(function() {
+			location.href = "logout.do";
+		});
+	});
 </script>
 </head>
 <body>
