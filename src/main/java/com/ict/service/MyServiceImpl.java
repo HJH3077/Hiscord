@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.dao.MyDAO;
 import com.ict.vo.MVO;
-import com.ict.vo.VO;
+import com.ict.vo.WVO;
 
 @Service("MyServiceImpl")
 public class MyServiceImpl implements MyService{
@@ -61,7 +61,7 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public List<VO> selectUserList(int begin, int end) throws Exception {
+	public List<MVO> selectUserList(int begin, int end) throws Exception {
 		return myDAO.selectUserList(begin, end);
 	}
 	
@@ -76,7 +76,7 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public List<VO> selectBanList(int begin, int end) throws Exception {
+	public List<WVO> selectBanList(int begin, int end) throws Exception {
 		return myDAO.selectBanList(begin, end);
 	}
 }

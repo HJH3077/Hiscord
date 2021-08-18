@@ -20,7 +20,7 @@ import com.ict.service.Paging;
 import com.ict.service.Paging2;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
-import com.ict.vo.VO;
+import com.ict.vo.WVO;
  
 @Controller
 public class MyController {
@@ -34,7 +34,7 @@ public class MyController {
 	private Paging2 paging2;
 	
 	@RequestMapping("main.do")
-	public ModelAndView login_mainCommand() {
+	public ModelAndView login_mainCommand(HttpSession session) {
 		return new ModelAndView("main");
 	}
 	
@@ -54,7 +54,6 @@ public class MyController {
 			} else {
 				session.setAttribute("login_id", mvo.getId());
 				session.setAttribute("login", "1");
-				
 				// 관리자인 경우
 				if(mvo.getId().equals("admin")&&mvo.getPw().equals("admin")) {
 					session.setAttribute("admin", "ok");
@@ -218,9 +217,17 @@ public class MyController {
 		return new ModelAndView("friend");
 	}
 	
-	@RequestMapping("chatroom2.do")
-	public ModelAndView chatCommand() {
-		return new ModelAndView("chatroom2");
+	@RequestMapping("open_chat.do")
+	public ModelAndView chatCommand(HttpSession session) {
+		ModelAndView mv = new ModelAndView("open_chatroom");
+		String id = (String)session.getAttribute("login_id");
+		mv.addObject("id", id);
+		return mv;
+	}
+	
+	@RequestMapping("create_chatroom.do")
+	public ModelAndView create_chatCommand() {
+		return new ModelAndView("create_chatroom");
 	}
 	
 	// 관리자 페이지
@@ -259,7 +266,7 @@ public class MyController {
 			if (paging.getEndBlock() > paging.getTotalPage()) {
 				paging.setEndBlock(paging.getTotalPage());
 			}
-			List<VO> list = myService.selectUserList(paging.getBegin(), paging.getEnd());
+			List<MVO> list = myService.selectUserList(paging.getBegin(), paging.getEnd());
 			
 			mv.addObject("list", list);
 			mv.addObject("pvo", paging);
@@ -348,7 +355,7 @@ public class MyController {
 			if (paging2.getEndBlock() > paging2.getTotalPage()) {
 				paging2.setEndBlock(paging2.getTotalPage());
 			}
-			List<VO> list2 = myService.selectBanList(paging2.getBegin(), paging2.getEnd());
+			List<WVO> list2 = myService.selectBanList(paging2.getBegin(), paging2.getEnd());
 			mv.addObject("list2", list2);
 			mv.addObject("pvo2", paging2);
 			return mv;

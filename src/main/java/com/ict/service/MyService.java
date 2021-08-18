@@ -3,7 +3,7 @@ package com.ict.service;
 import java.util.List;
 
 import com.ict.vo.MVO;
-import com.ict.vo.VO;
+import com.ict.vo.WVO;
 
 public interface MyService {
 	// 로그인
@@ -30,7 +30,7 @@ public interface MyService {
 	// 금지어 삭제
 	int deleteWord(String word) throws Exception;
 	// 유저 리스트 // 페이징때문에 begin, end 인자로 사용(begin에서 end까지만 DB에서 읽어옴)
-	List<VO> selectUserList(int begin, int end) throws Exception;
+	List<MVO> selectUserList(int begin, int end) throws Exception;
 	// 금지어 리스트
-	List<VO> selectBanList(int begin, int end) throws Exception;
+	List<WVO> selectBanList(int begin, int end) throws Exception;
 }

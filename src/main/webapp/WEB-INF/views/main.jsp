@@ -12,14 +12,14 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #fafafa;
-	overflow-x: hidden;
-	box-sizing: border-box;
+	overflow: auto;
 }
+
 .main_container {
-	margin-left: 50px;
-	width: 1500px;
+	margin-left: 70px;
+	width: 1200px;
 	background-color: #fff;
-	min-width: 1000px;
+	min-width: 1200px;
 	height: 100vh;
 	border-left: 1px solid #ebeced;
 	border-right: 1px solid #ebeced;
@@ -34,6 +34,7 @@ body {
 .main_container .main_content {
 	padding-left: 45px;
 	padding-top: 20px;
+	text-align: center;
 }
 
 iframe {

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.vo.MVO;
-import com.ict.vo.VO;
+import com.ict.vo.WVO;
 
 @Repository("MyDAOImpl")
 public class MyDAOImpl implements MyDAO{
@@ -70,7 +70,7 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public List<VO> selectUserList(int begin, int end) throws Exception {
+	public List<MVO> selectUserList(int begin, int end) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("begin", begin);
 		map.put("end", end);
@@ -88,7 +88,7 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public List<VO> selectBanList(int begin, int end) throws Exception {
+	public List<WVO> selectBanList(int begin, int end) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("begin", begin);
 		map.put("end", end);

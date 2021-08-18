@@ -187,10 +187,20 @@ body {
 			</script>
 			<div class="list">
 				<div class="room">
-					<a href="chatroom2.do"> 
-						<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
-						<span style="margin-left: 10px;">공용 채팅방</span>
-					</a>
+					<c:choose>
+						<c:when test="${login=='1'}">
+							<a href="open_chat.do"> 
+								<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
+								<span style="margin-left: 10px;">공용 채팅방</span>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="login.do"> 
+								<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
+								<span style="margin-left: 10px;">공용 채팅방</span>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<div class="list">

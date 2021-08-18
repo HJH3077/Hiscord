@@ -14,15 +14,15 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #fafafa;
-	overflow-x: hidden;
 	box-sizing: border-box;
 	width: 100%;
+	overflow: auto;
 }
 
 #login_container{
-	margin-left: 50px!important;
-	width: 50%;
-	min-width: 1000px;
+	margin-left: 70px;
+	width: 1200px;
+	min-width: 1200px;
 	height: 100vh;
 	background-color: #fff;
 	border-left: 1px solid #ebeced;
@@ -41,7 +41,7 @@ body {
 }
 
 #login {
-	width: 80%;
+	width: 960px;  
 	text-align: center;
 	margin: auto;
 	padding: 25px;
@@ -91,7 +91,7 @@ body {
 	<%@ include file="head.jsp"%>
 	<div id="login_container">  
 		<h1 id="login_title">
-			<a href="logout_main.do"><img src="resources/images/logo.png" width="350" height="130"></a>
+			<a href="main.do"><img src="resources/images/logo.png" width="350" height="130"></a>
 		</h1>
 		<form method="post">
 			<div id="login">
