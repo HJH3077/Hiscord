@@ -71,11 +71,6 @@ body {
 	color: #fff;
 	float: right;
 	margin: 20px 5px;
-	border-radius: 0.3rem;
-	border: none;
-	padding: 0.7em 1.5em 0.7em;
-	line-height: 1em;
-	font-style: normal;
 }
 </style>
 <script

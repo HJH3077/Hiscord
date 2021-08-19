@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.dao.MyDAO;
+import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.WVO;
 
@@ -52,6 +53,11 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public int deleteUser(String id) throws Exception {
 		return myDAO.deleteUser(id);
+	}
+	
+	@Override
+	public int insertChatroom(ChatRVO crvo) throws Exception {
+		return myDAO.insertChatroom(crvo);
 	}
 	
 	// 관리자

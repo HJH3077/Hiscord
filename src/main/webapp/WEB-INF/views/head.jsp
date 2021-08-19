@@ -130,9 +130,7 @@ body {
 }
 </style>
 <script type="text/javascript">
-	function chat_add() {
 
-	}
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -213,10 +211,20 @@ body {
 			</div>
 			<div class="chat_room_add">
 				<div class="room_add">
-					<a href="create_chatroom.jsp" onclick="chat_add()">
-						<span>채팅방 추가</span>
-						<img alt="추가" src="resources/images/plus.png"	style="width: 30px; height: 20px;">
-					</a>
+					<c:choose>
+						<c:when test="${login=='1'}">
+							<a href="create_chatroom.do">
+								<span>채팅방 추가</span>
+								<img alt="추가" src="resources/images/plus.png"	style="width: 30px; height: 20px;">
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="login.do">
+								<span>채팅방 추가</span>
+								<img alt="추가" src="resources/images/plus.png"	style="width: 30px; height: 20px;">
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

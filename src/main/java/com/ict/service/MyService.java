@@ -2,6 +2,7 @@ package com.ict.service;
 
 import java.util.List;
 
+import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.WVO;
 
@@ -22,6 +23,9 @@ public interface MyService {
 	int updateUser(MVO mvo) throws Exception;
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;
+	
+	// 채팅방 추가
+	int insertChatroom(ChatRVO crvo) throws Exception;
 	
 	// 유저관리 게시판	// 유저 수
 	int selectCount() throws Exception;

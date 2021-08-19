@@ -11,21 +11,22 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #fafafa;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #Wrap{
 	margin-left: 70px;
-	width: 1200px;
+	width: 1200px;  
 	background-color: #fff;
 	height: 100vh;
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
+	display: flex;
 }
 
 #container{
 	width: 750px;
-	margin: 0 auto;
+	margin-left: 10%;
 	padding: 25px;
 	height: 93%;
 }
@@ -44,6 +45,8 @@ body {
 	margin-top: 5px;
 }
 
+#outBtn:hover{ background-color: #00FFFF; text-decoration: underline; color: white;}
+
 #contentCover{ height: 90%;}
 
 #chatWrap {
@@ -56,6 +59,7 @@ body {
     overflow: auto;
     padding: 10px;
     height: 87%;
+    border-radius: 5px;
 }
 
 #chatLog span {	color: #fff;}
@@ -91,6 +95,7 @@ body {
     width: 748px;
     height: 50px;
     border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 #chatting {
@@ -112,6 +117,36 @@ body {
     color: #0084FF;
     font-size: 17px;
 }
+
+#memberWrap{
+    width: 150px;
+    margin-top: 105px;
+    height: 80%;
+}
+
+#memberList {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 100%;   
+    overflow: auto; 
+}
+
+#memberHeader {
+    height: 30px;
+    font-size: 18px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    text-align: center;
+}
+
+.memberSelect{
+	border-bottom: 1px solid #f0f0f0;
+    padding: 12px 20px;
+    font-size: 15px;
+    text-align: center;
+    overflow: auto;
+}
+
 </style>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -124,23 +159,29 @@ body {
 
 	function wsEvt() {
 		ws.onopen = function(data) {
-			var id = "${id}";
-			$("#chatLog").append(id + "님이 입장하셨습니다.").css('text-align', 'center');
-		}
-
+			var nickname = "${nickname}";
+			ws.send("a" + " : " + nickname);
+		}	
+		
 		ws.onmessage = function(data) {
 			var msg = data.data;
 			var m = msg.split(":"); 
 			var m0 = m[0];
 			var m1 = m[1];
-			if (msg != null && msg.trim() != '') {
-				if(m0.trim() == "${id}"){
-					$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
-				} else {
-					$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+			if(m0.trim() == "a"){
+				$("#chatLog").append("<p>" + m1 + "님이 입장하셨습니다." + "</p>").css('text-align', 'center');
+			} else if(m0.trim() == "z"){
+				$("#chatLog").append("<p>" + m1 + "님이 퇴장하셨습니다." + "</p>").css('text-align', 'center');
+			} else{
+				if (msg != null && msg.trim() != '') {
+					if(m0.trim() == "${nickname}"){
+						$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
+					} else {
+						$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+					}
 				}
+				$("#chatLog").scrollTop($("#chatLog")[0].scrollHeight - $("#chatLog")[0].clientHeight);
 			}
-			$("#chatLog").scrollTop($("#chatLog")[0].scrollHeight - $("#chatLog")[0].clientHeight);
 		}
 
 		document.addEventListener("keypress", function(e) {
@@ -153,43 +194,50 @@ body {
 	$(document).ready(function() {
 		wsOpen();
 	});
-
+	
+	function exit() {
+		var nickname = "${nickname}";
+		ws.send("z" + " : " + nickname);
+		ws.close();
+		location.href = 'main.do';
+	}
+	
 	function send() {
-		var id = "${id}";
+		var nickname = "${nickname}";
 		var msg = $("#chatting").val();
-		ws.send(id + " : " + msg);
+		ws.send(nickname + " : " + msg);
 		$('#chatting').val("");
 	}
 </script>
 <body>
-<%@ include file="head.jsp"%>
-<div id="Wrap">
-	<div id="container">
-	    <nav>
-	        <div id="outBtn">나가기</div>
-			<h1 id="nav-header">
-	            공용 채팅방
-	        </h1>
-	    </nav>
-	    <div id="contentCover">
-	        <div id="chatWrap">
-	            <div id="chatLog">
-	                <div id="yourChat"></div>
-	                <div id="myChat"></div>
-	            </div>
-		        <div id="chat_input">
-		        	<input type="text" size="30" id="chatting" placeholder="메시지를 입력하세요">
-		            <button onclick="send()">보내기</button>
-		        </div>
-	        </div> 
-	        <!-- <div id="memberWrap">
-	            <div id="memberList">
-	                <div id="memberHeader">사람</div>
-	                <div id="memberSelect"></div>
-	            </div>
-	        </div> -->
-	    </div>
+	<%@ include file="head.jsp"%>
+	<div id="Wrap">
+		<div id="container">
+		    <nav>
+		        <div id="outBtn" onclick="exit()">나가기</div>
+				<h1 id="nav-header">
+		            공용 채팅방
+		        </h1>
+		    </nav>
+		    <div id="contentCover">
+		        <div id="chatWrap">
+		            <div id="chatLog">
+		                <div id="yourChat"></div>
+		                <div id="myChat"></div>
+		            </div>
+			        <div id="chat_input">
+			        	<input type="text" size="30" id="chatting" placeholder="메시지를 입력하세요">
+			            <button onclick="send()">보내기</button>
+			        </div>
+		        </div> 
+		    </div>
+		</div>
+		<!-- 리스트는 아마도 db가 필요해보임 ajax로 그냥 해도되나? -->
+		<div id="memberWrap">
+			<div id="memberList">
+				<div id="memberHeader">참가자</div>
+			</div>
+		</div>
 	</div>
-</div>
 </body>
 </html>

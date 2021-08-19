@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.WVO;
 
@@ -61,6 +62,11 @@ public class MyDAOImpl implements MyDAO{
 	@Override
 	public int deleteUser(String id) throws Exception {
 		return sqlSessionTemplate.delete("hiscord.user_delete", id);
+	}
+	
+	@Override
+	public int insertChatroom(ChatRVO crvo) throws Exception {
+		return sqlSessionTemplate.insert("hiscord.chatroom_insert", crvo);
 	}
 	
 	// 관리자

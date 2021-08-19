@@ -1,5 +1,6 @@
 package com.ict.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,16 +9,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.email.EmailService;
 import com.ict.service.MyService;
 import com.ict.service.Paging;
 import com.ict.service.Paging2;
+import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
 import com.ict.vo.WVO;
@@ -53,6 +58,7 @@ public class MyController {
 				return new ModelAndView("login_err");
 			} else {
 				session.setAttribute("login_id", mvo.getId());
+				session.setAttribute("login_nickname", mvo.getNickname());
 				session.setAttribute("login", "1");
 				// 관리자인 경우
 				if(mvo.getId().equals("admin")&&mvo.getPw().equals("admin")) {
@@ -221,13 +227,40 @@ public class MyController {
 	public ModelAndView chatCommand(HttpSession session) {
 		ModelAndView mv = new ModelAndView("open_chatroom");
 		String id = (String)session.getAttribute("login_id");
+		String nickname = (String)session.getAttribute("login_nickname");
 		mv.addObject("id", id);
+		mv.addObject("nickname", nickname);
 		return mv;
 	}
 	
 	@RequestMapping("create_chatroom.do")
-	public ModelAndView create_chatCommand() {
+	public ModelAndView create_chatCommand(HttpSession session) {
 		return new ModelAndView("create_chatroom");
+	}
+	
+	@RequestMapping(value = "create_chatroom_ok.do", method = RequestMethod.POST)
+	public ModelAndView create_chatOkCommand(ChatRVO crvo, HttpServletRequest request,HttpSession session) {
+		try {
+			String id = (String)session.getAttribute("login_id");
+			String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+			// MultipartFile file = crvo.;
+			/* if (file.isEmpty()) { 
+				crvo.setFile_name(""); 
+			} else {
+				crvo.setFile_name(file.getOriginalFilename()); 
+			}
+			int result = myService.insertChatroom(crvo);
+			if (result > 0) {
+				if (!crvo.getFile_name().isEmpty()) { // DB에 넣을 파일 이름이 있으면 upload
+					byte[] in = file.getBytes();
+					File out = new File(path, crvo.getFile_name());
+					FileCopyUtils.copy(in, out);
+				}
+			} */
+			return new ModelAndView("redirect:main.do");
+		} catch (Exception e) {
+		}
+		return null;
 	}
 	
 	// 관리자 페이지

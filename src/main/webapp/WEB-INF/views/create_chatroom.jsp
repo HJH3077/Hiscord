@@ -61,25 +61,34 @@ body {
 	float: right; 
 	width: 70px;
 }
-</style>
+</style> 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	function create_do(f) {
-		f.action = "create_chatroom.do";
+	function create(f) {
+		f.action = "create_chatroom_ok.do";
 		f.submit();
+	}
+	
+	function cancle(f) {
+		f.action = "main.do";
 	}
 </script>
 </head>
 <body>
 	<%@ include file="main.jsp"%>
 	<div id="create_chatroom">
-		<div id="make">
-			<h2>채팅방 개설</h2>
-			<p>채팅방 이름</p>
-			<input type="text" id="chat_room" name="room">
-			<button id="create" onclick="create_do(this.form)">만들기</button>
-		</div>
+		<form method="post" enctype="multipart/form-data" >
+			<div id="make">
+				<h2>채팅방 개설</h2>
+				<p>채팅방 이름</p>
+				<input type="text" name="room_name">
+				<p>채팅방 이미지</p>
+				<input type="file" name="r_logo">
+				<button class="create" onclick="cancle(this.form)">취소</button>
+				<button class="create" onclick="create(this.form)">만들기</button>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

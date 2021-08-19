@@ -2,6 +2,7 @@ package com.ict.dao;
 
 import java.util.List;
 
+import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.WVO;
 
@@ -21,6 +22,8 @@ public interface MyDAO {
 	// 유저 정보 업데이트
 	int updateUser(MVO mvo) throws Exception;
 	
+	// 채팅방 추가
+	int insertChatroom(ChatRVO crvo) throws Exception;
 	
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;
