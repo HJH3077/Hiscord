@@ -124,6 +124,10 @@ body {
 	function btn1_cancle(f) {
 		f.action = "main.do";
 	}
+	
+	function btn2_cancle(f) {
+		f.action = "set_font.do";
+	}
 </script>
 </head>
 <body>
@@ -162,7 +166,7 @@ body {
 							<input name="font" type="radio" value="big"> big
 						</div>
 						<button class="btn1" onclick="btn1_cancle(this.form)">취소</button>
-						<button class="btn2">저장</button>
+						<button class="btn2" onclick="btn2_cancle(this.form)">저장</button>
 					</form>
 				</div>
 			</div>

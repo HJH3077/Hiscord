@@ -3,7 +3,7 @@ package com.ict.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ChatRVO {
-	private String room_id, room_name, user, room_logo;
+	private String room_id, room_name, chat_user, room_logo;
 	private MultipartFile r_logo;
 	
 	public MultipartFile getR_logo() {
@@ -31,12 +31,12 @@ public class ChatRVO {
 		this.room_name = room_name;
 	}
 
-	public String getUser() {
-		return user;
+	public String getChat_user() {
+		return chat_user;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setChat_user(String chat_user) {
+		this.chat_user = chat_user;
 	}
 
 	public String getRoom_logo() {
@@ -46,7 +46,5 @@ public class ChatRVO {
 	public void setRoom_logo(String room_logo) {
 		this.room_logo = room_logo;
 	}
-	
-	
 	
 }

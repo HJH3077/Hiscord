@@ -87,10 +87,24 @@ body {
 	      return true;
 	}
 	
+	function nick_check() {
+		 var getNickname= RegExp(/^[a-zA-Z0-9가-힣]{2,8}$/);
+	    
+	      // id 유효성 검사
+	      if(!getNickname.test($("#nickname").val())){
+	        alert("닉네임을 형식에 맞게 입력해주세요");
+	        $("#nickname").val("");
+	        $("#nickname").focus();
+	        return false;
+	      }
+	      return true;
+	}
+	
+	
+	
 	function check() {
 	     var getCheck= RegExp(/^[a-zA-Z0-9]{6,16}$/);
 	     var getName= RegExp(/^[가-힣]+$/);
-	     var getNickname= RegExp(/^[a-zA-Z0-9가-힣]{2,8}$/);
 	     // 비밀번호 유효성 검사
 	     if(!getCheck.test($("#pw").val())) {
 		     alert("pw를 형식에 맞게 입력해주세요");
@@ -109,21 +123,6 @@ body {
 		     return false;
 	     }
 	     
-	   	// 닉네임 공백 확인
-	    if($("#nickname").val() == ""){
-		    alert("닉네임을 입력해주세요");
-		    $("#nickname").focus();
-		    return false;
-	    }
-	   	
-	  	// 닉네임 유효성 검사
-	    if (!getNickname.test($("#nickname").val())) {
-	    	alert("닉네임은 2~8글자로 써주세요");
-	        $("#nickname").val("");
-	        $("#nickname").focus();
-	        return false;
-	    }
-	   	
 	   	// 이름 공백 확인
 	    if($("#name").val() == ""){
 		    alert("이름을 입력해주세요");
@@ -194,6 +193,35 @@ body {
 			return false;
 		});
 	 	
+		$("#nick_chk").click(function() {
+			if ($("#nickname").val() == "") {
+				alert("닉네임을 입력해주세요."); 
+				$("#nickname").focus();
+				return false;
+			}
+			$.ajax({
+				url : "nickchk.do",
+				method : "post",
+				data : "nickname=" + $("#nickname").val(),
+				dataType : "text",
+				success : function(data) {
+					if (data == '1') {
+						alert("중복된 닉네임 입니다.");
+						$("#nickname").val('');
+						$("#nickname").focus();
+					} else {
+						if(nick_check()){
+							alert("사용가능한 닉네임 입니다.");
+						}
+					}
+				},
+				error : function() {
+					alert("읽기실패");
+				}
+			});
+			return false;
+		});
+	 	
 		// 비밀번호 재확인
 		$('#pw').keyup(function() {
 			$('#chkNotice').html('');
@@ -238,7 +266,7 @@ body {
 					<h3>닉네임</h3>
 					<p>
 						<input type="text" id="nickname" name="nickname" placeholder="사용할 닉네임을 입력해주세요(2~6자)" required>
-					</p>
+						<button style="height: 23px;" id="nick_chk">중복확인</button>
 				</div>
 				<div class="join_row">
 					<h3>비밀번호</h3>

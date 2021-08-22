@@ -50,9 +50,9 @@ body {
 	margin: 5px auto;
 }
 
-#make input {
+#chat_make input[type="text"] {
 	width: 440px;
-	height: 25px;
+	height: 18px;
 }
 
 #make button{
@@ -60,6 +60,25 @@ body {
 	margin-right: 2px;
 	float: right; 
 	width: 70px;
+}
+
+#send{
+	margin-top: 15px;
+	text-align: right;
+}
+
+#send input{
+	width: 80px;
+	border-radius: 0.3em;  
+	border: none;
+	height: 25px;  
+	background-color: lightgray; 
+}
+
+#send input:hover {
+	background-color: black;
+	color: white;
+	text-decoration: underline;
 }
 </style> 
 <script
@@ -72,6 +91,7 @@ body {
 	
 	function cancle(f) {
 		f.action = "main.do";
+		f.submit();
 	}
 </script>
 </head>
@@ -81,12 +101,16 @@ body {
 		<form method="post" enctype="multipart/form-data" >
 			<div id="make">
 				<h2>채팅방 개설</h2>
-				<p>채팅방 이름</p>
-				<input type="text" name="room_name">
-				<p>채팅방 이미지</p>
-				<input type="file" name="r_logo">
-				<button class="create" onclick="cancle(this.form)">취소</button>
-				<button class="create" onclick="create(this.form)">만들기</button>
+				<div id="chat_make">
+					<p>채팅방 이름</p>
+					<input type="text" name="room_name">
+					<p>채팅방 로고</p>
+					<input type="file" name="r_logo">
+				</div>
+				<div id="send">
+					<input type="button" value="만들기" onclick="create(this.form)">
+					<input type="button" value="취소" onclick="cancle(this.form)">
+				</div>
 			</div>
 		</form>
 	</div>

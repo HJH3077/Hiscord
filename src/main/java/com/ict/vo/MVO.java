@@ -1,7 +1,15 @@
 package com.ict.vo;
 
 public class MVO {
-	private String idx, name, id, nickname, email, pw, reg;
+	private String idx, name, id, nickname, email, pw, reg, font;
+
+	public String getFont() {
+		return font;
+	}
+
+	public void setFont(String font) {
+		this.font = font;
+	}
 
 	public String getIdx() {
 		return idx;

@@ -33,6 +33,11 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
+	public MVO selecNickchk(String nickname) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.nick_check", nickname);
+	}
+	
+	@Override
 	public String selectIdfind(String email, String name) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("email", email);
@@ -65,8 +70,18 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
+	public int updateFont(String id) throws Exception {
+		return sqlSessionTemplate.update("hiscord.font_update", id);
+	}
+	
+	@Override
 	public int insertChatroom(ChatRVO crvo) throws Exception {
 		return sqlSessionTemplate.insert("hiscord.chatroom_insert", crvo);
+	}
+	
+	@Override
+	public List<ChatRVO> selectChatList(String id) throws Exception {
+		return sqlSessionTemplate.selectList("hiscord.chatroom_list", id);
 	}
 	
 	// 관리자

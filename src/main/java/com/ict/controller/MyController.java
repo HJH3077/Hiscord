@@ -44,7 +44,7 @@ public class MyController {
 	}
 	
 	@RequestMapping("login.do")
-	public ModelAndView loginCommand() {
+	public ModelAndView loginCommand(HttpSession session) {
 		return new ModelAndView("login");
 	}
 	
@@ -60,6 +60,7 @@ public class MyController {
 				session.setAttribute("login_id", mvo.getId());
 				session.setAttribute("login_nickname", mvo.getNickname());
 				session.setAttribute("login", "1");
+				session.setAttribute("font", mvo.getFont());
 				// 관리자인 경우
 				if(mvo.getId().equals("admin")&&mvo.getPw().equals("admin")) {
 					session.setAttribute("admin", "ok");
@@ -145,6 +146,22 @@ public class MyController {
 		return null;
 	}
 	
+	@RequestMapping(value = "nickchk.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String nickchkCommand(@RequestParam("nickname") String nickname){
+		try {
+			MVO mvo = myService.selecNickchk(nickname);
+			if(mvo==null) {
+				return "0";
+			}else {
+				return "1";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 	@RequestMapping("join_ok.do")
 	public ModelAndView joinOkCommand(MVO m_vo, HttpServletRequest request) {
 		try {
@@ -160,7 +177,7 @@ public class MyController {
 	}
 	
 	@RequestMapping("suggestion.do")
-	public ModelAndView suggestionCommand() {
+	public ModelAndView suggestionCommand(HttpSession session) {
 		return new ModelAndView("suggestion");
 	}
 	
@@ -182,8 +199,20 @@ public class MyController {
 	}
 	
 	@RequestMapping("setting.do")
-	public ModelAndView settingCommand() {
+	public ModelAndView settingCommand(HttpSession session) {
 		return new ModelAndView("setting");
+	}
+	
+	@RequestMapping("set_font.do.do")
+	public ModelAndView set_fontCommand(HttpSession session) {
+		try {
+			String id = (String)session.getAttribute("login_id");
+			myService.updateFont(id);
+			return new ModelAndView("redirect:main.do");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	@RequestMapping("mypage.do")
@@ -228,8 +257,11 @@ public class MyController {
 		ModelAndView mv = new ModelAndView("open_chatroom");
 		String id = (String)session.getAttribute("login_id");
 		String nickname = (String)session.getAttribute("login_nickname");
+		String font = (String)session.getAttribute("font");
+		System.out.println(font);
 		mv.addObject("id", id);
 		mv.addObject("nickname", nickname);
+		mv.addObject("font", font);
 		return mv;
 	}
 	
@@ -242,23 +274,38 @@ public class MyController {
 	public ModelAndView create_chatOkCommand(ChatRVO crvo, HttpServletRequest request,HttpSession session) {
 		try {
 			String id = (String)session.getAttribute("login_id");
-			String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-			// MultipartFile file = crvo.;
-			/* if (file.isEmpty()) { 
-				crvo.setFile_name(""); 
+			String path = request.getSession().getServletContext().getRealPath("/resources/images");
+			MultipartFile file = crvo.getR_logo();
+			if (file.isEmpty()) { 
+				crvo.setRoom_logo("discord.png");
 			} else {
-				crvo.setFile_name(file.getOriginalFilename()); 
+				crvo.setRoom_logo(file.getOriginalFilename());
 			}
+			crvo.setChat_user(id);
 			int result = myService.insertChatroom(crvo);
 			if (result > 0) {
-				if (!crvo.getFile_name().isEmpty()) { // DB에 넣을 파일 이름이 있으면 upload
+				if (!crvo.getRoom_logo().isEmpty()) { // DB에 넣을 파일 이름이 있으면 upload
 					byte[] in = file.getBytes();
-					File out = new File(path, crvo.getFile_name());
+					File out = new File(path, crvo.getRoom_logo());
 					FileCopyUtils.copy(in, out);
 				}
-			} */
+			}
 			return new ModelAndView("redirect:main.do");
 		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "chatList.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<ChatRVO> chatListCommand(HttpSession session) {
+		try {
+			String id = (String)session.getAttribute("login_id");
+			List<ChatRVO> chatList = myService.selectChatList(id);
+			return chatList;
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		return null;
 	}

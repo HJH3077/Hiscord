@@ -13,17 +13,23 @@ public interface MyDAO {
 	int insertJoin(MVO mvo) throws Exception;
 	// id 중복검사
 	MVO selectIdchk(String id) throws Exception;
+	// nickname 중복검사
+	MVO selecNickchk(String nickname) throws Exception;
 	// id찾기
 	String selectIdfind(String email, String name) throws Exception;
 	// pw찾기
 	String selectPwfind(String id, String name, String email) throws Exception;
 	// 유저 검색
-	MVO selectUser(String id) throws Exception;
+	MVO selectUser(String id) throws Exception; 
 	// 유저 정보 업데이트
 	int updateUser(MVO mvo) throws Exception;
+	// 폰트 변경
+	int updateFont(String id) throws Exception;
 	
 	// 채팅방 추가
 	int insertChatroom(ChatRVO crvo) throws Exception;
+	// 채팅방 리스트
+	List<ChatRVO> selectChatList(String id) throws Exception;
 	
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-* {
+* { 
 	text-decoration: none;
 }
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@1&display=swap');
@@ -103,9 +103,9 @@ body {
 
 .logo a:visited, a:active {
 	color: black;
-}
+} 
 
-.list {
+.list, #open_list {
 	padding: auto;
 	height: 80px;
 	border-bottom: 1px solid #f1f3f5;
@@ -113,6 +113,11 @@ body {
 }
 
 .list .room {
+	padding: 13px;
+	margin-top: 7px;
+}
+
+#open_list #open_room {
 	padding: 13px;
 	margin-top: 7px;
 }
@@ -129,10 +134,38 @@ body {
 	font-size: 20px;
 }
 </style>
-<script type="text/javascript">
-
-</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		function chatList() {
+			$("#listWrap").empty();
+			$.ajax({
+				url : "chatList.do",
+				method : "post",
+				dataType : "json",
+				success : function(data) {
+					var rooms = "";
+					$.each(data, function() {
+						rooms += "<div class='list'>";
+						rooms += "<div class='room'>";
+						rooms += "<a href='personal_chat.do?room_id=' + " + this["room_id"] +">";
+						console.log(this['room_id']);
+						rooms += "<img alt='dis' src='resources/images/" + this["room_logo"] +" style='width: 40px;'>";
+						console.log(this["room_logo"]);
+						rooms += "<span style='margin-left: 10px;'>" + this["room_name"] + "</span>";
+						rooms += "</a>";
+						rooms += "</div>";
+						rooms += "</div>";
+					});
+					$("#listWrap").append(rooms);
+				},
+				error : function() { alert("읽기실패");	}
+			});
+		}
+		
+		chatList();
+	});
+</script>
 </head>
 <body>
 	<div id="main_head">
@@ -183,8 +216,8 @@ body {
 					}
 				})
 			</script>
-			<div class="list">
-				<div class="room">
+			<div id="open_list">
+				<div id="open_room">
 					<c:choose>
 						<c:when test="${login=='1'}">
 							<a href="open_chat.do"> 
@@ -201,13 +234,7 @@ body {
 					</c:choose>
 				</div>
 			</div>
-			<div class="list">
-				<div class="room">
-					<a href="#"> 
-						<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
-						<span style="margin-left: 10px;">채팅방</span>
-					</a>
-				</div>
+			<div id="listWrap">
 			</div>
 			<div class="chat_room_add">
 				<div class="room_add">

@@ -195,6 +195,21 @@ body {
 		wsOpen();
 	});
 	
+	$(document).ready(function() {
+		var font = "${font}";
+		if (font == "mini") {  
+			$("#chatLog").css("font-size", "10px");
+		} else if (font == "small") {
+			$("#chatLog").css("font-size", "15px");
+		} else if (font == "middle") {
+			$("#chatLog").css("font-size", "20px");
+		} else if (font == "large") {
+			$("#chatLog").css("font-size", "30px");
+		} else if (font == "big") {
+			$("#chatLog").css("font-size", "40px");
+		}
+	});
+	
 	function exit() {
 		var nickname = "${nickname}";
 		ws.send("z" + " : " + nickname);
@@ -218,6 +233,7 @@ body {
 				<h1 id="nav-header">
 		            공용 채팅방
 		        </h1>
+		        <div id="big">커짐</div>
 		    </nav>
 		    <div id="contentCover">
 		        <div id="chatWrap">

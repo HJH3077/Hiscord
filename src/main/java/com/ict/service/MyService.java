@@ -13,6 +13,8 @@ public interface MyService {
 	int insertJoin(MVO mvo) throws Exception;
 	// id 중복검사
 	MVO selectIdchk(String id) throws Exception;
+	// nickname 중복검사
+	MVO selecNickchk(String nickname) throws Exception;
 	// id찾기
 	String selectIdfind(String email, String name) throws Exception;
 	// pw찾기
@@ -23,9 +25,13 @@ public interface MyService {
 	int updateUser(MVO mvo) throws Exception;
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;
+	// 폰트 변경
+	int updateFont(String id) throws Exception;
 	
 	// 채팅방 추가
 	int insertChatroom(ChatRVO crvo) throws Exception;
+	// 채팅방 리스트
+	List<ChatRVO> selectChatList(String id) throws Exception;
 	
 	// 유저관리 게시판	// 유저 수
 	int selectCount() throws Exception;

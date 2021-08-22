@@ -31,6 +31,11 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
+	public MVO selecNickchk(String nickname) throws Exception {
+		return myDAO.selecNickchk(nickname);
+	}
+	
+	@Override
 	public String selectIdfind(String email, String name) throws Exception {
 		return myDAO.selectIdfind(email, name);
 	}
@@ -56,8 +61,18 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
+	public int updateFont(String id) throws Exception {
+		return myDAO.updateFont(id);
+	}
+	
+	@Override
 	public int insertChatroom(ChatRVO crvo) throws Exception {
 		return myDAO.insertChatroom(crvo);
+	}
+	
+	@Override
+	public List<ChatRVO> selectChatList(String id) throws Exception {
+		return myDAO.selectChatList(id);
 	}
 	
 	// 관리자
