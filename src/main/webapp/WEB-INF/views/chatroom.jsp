@@ -200,8 +200,7 @@ body {
 	});
 	
 	$(document).ready(function() {
-		var font = "${font}";
-		console.log(font);
+		var font = "${font}";   
 		if (font == "mini") {  
 			$("#chatLog").css("font-size", "8px");
 		} else if (font == "small") {
@@ -248,21 +247,27 @@ body {
 		}
 	}
 	
-	/* $(function() {
-		$.ajax({
-			url : "personal_user.do",
-			method : "post",
-			dataType : "json",
-			success : function(data) {
-				var list = "";
-				$.each(data, function() {
-					list += "<div class='memberSelect'>" + this["nickname"] + "</div>"
-				});
-				$("#memberList").append(list);
-			},
-			error : function() { alert("읽기실패");	}
-		});
-	}); */
+	$(function() {
+		function userList() {
+			$.ajax({
+				url : "user_list.do",
+				method : "post",
+				dataType : "json",
+				data : "room_id="+$(this).attr("room_id"),
+				success : function(data) {
+					var list = "";
+					$.each(data, function() {
+						list += "<div class='memberSelect'>" + this["chat_user"] + "</div>"
+					});
+					$("#memberList").append(list);
+					console.log(data);
+				},
+				error : function() { alert("읽기실패");	}
+			});
+		}
+		
+		userList();
+	});
 	
 	var room_id = "${room_id}";
 	console.log(room_id);

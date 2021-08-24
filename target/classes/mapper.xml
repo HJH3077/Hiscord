@@ -48,9 +48,13 @@
 		delete from hiscord_member where id=#{id}
 	</delete>
 	
-	<update id="font_update" parameterType="String">
-		update hiscord_member set font = #{font}
+	<update id="font_update" parameterType="Map">
+		update hiscord_member set font = #{font} where id = #{id}
 	</update>
+	
+	<select id="total_banlist" resultType="com.ict.vo.WVO">
+		select * from hiscord_ban_word
+	</select>
 	
 	<insert id="chatroom_insert" parameterType="com.ict.vo.ChatRVO">
 		insert into hiscord_chat_room
@@ -59,6 +63,10 @@
 	
 	<select id="chatroom_list" parameterType="String" resultType="com.ict.vo.ChatRVO">
 		select * from hiscord_chat_room where chat_user = #{id} order by room_id desc
+	</select>
+	
+	<select id="user_list" parameterType="String" resultType="com.ict.vo.ChatRVO">
+		select * from hiscord_chat_room where room_id = #{room_id}
 	</select>
 	
 	

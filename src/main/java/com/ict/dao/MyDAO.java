@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
+import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 public interface MyDAO {
@@ -32,6 +33,14 @@ public interface MyDAO {
 	int insertChatroom(ChatRVO crvo) throws Exception;
 	// 채팅방 리스트
 	List<ChatRVO> selectChatList(String id) throws Exception;
+	// 채팅방 유저 리스트
+	List<ChatRVO> selectChatUserList(String room_id) throws Exception;
+	// 오픈 채팅방 유저 검색
+	List<OpenVO> selectOpenChatList() throws Exception;
+	// 오픈 채팅방 유저 삽입
+	int insertOpenChat(String nickname) throws Exception;
+	// 오픈 채팅방 유저 삭제
+	int deleteOpenChat(String nickname) throws Exception;
 	
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;

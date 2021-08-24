@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ict.dao.MyDAO;
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
+import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 @Service("MyServiceImpl")
@@ -78,6 +79,26 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public List<ChatRVO> selectChatList(String id) throws Exception {
 		return myDAO.selectChatList(id);
+	}
+	
+	@Override
+	public List<ChatRVO> selectChatUserList(String room_id) throws Exception {
+		return myDAO.selectChatUserList(room_id);
+	}
+	
+	@Override
+	public List<OpenVO> selectOpenChatList() throws Exception {
+		return myDAO.selectOpenChatList();
+	}
+	
+	@Override
+	public int insertOpenChat(String nickname) throws Exception {
+		return myDAO.insertOpenChat(nickname);
+	}
+	
+	@Override
+	public int deleteOpenChat(String nickname) throws Exception {
+		return myDAO.insertOpenChat(nickname);
 	}
 	
 	// 관리자

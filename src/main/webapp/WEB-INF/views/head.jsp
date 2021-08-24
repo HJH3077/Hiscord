@@ -133,6 +133,9 @@ body {
 	text-align: center;
 	font-size: 20px;
 }
+
+#pesonal:hover { cursor: pointer;}
+#open_room div:hover { cursor: pointer;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -148,14 +151,13 @@ body {
 					$.each(data, function() {
 						rooms += "<div class='list'>";
 						rooms += "<div class='room'>";
-						rooms += "<a href='personal_chat.do?room_id=' " + this["room_id"] + ">";
-						console.log(this['room_id']);
-						rooms += "<img alt='dis' src='/resources/images/" + this["room_logo"] + "' style='width: 40px;'>";
+						rooms += "<div id='pesonal' room_id='" + this["room_id"] + "'>"
+						rooms += "<img alt='dis' src='resources/images/" + this["room_logo"] + "' style='width: 40px;'>";
 						console.log(this["room_logo"]);
 						rooms += "<span style='margin-left: 10px;'>" + this["room_name"] + "</span>";
-						rooms += "</a>";
 						rooms += "</div>";
 						rooms += "</div>";
+						rooms += "</div>";   
 					});
 					$("#listWrap").append(rooms);
 				},
@@ -167,7 +169,19 @@ body {
 		if(login == 1){
 			chatList();
 		}
+		
+		$("#listWrap").on("click","#pesonal",function() {
+			location.href="personal_chat.do?room_id="+$(this).attr("room_id");
+		});
 	});
+	
+	function open_chat() {
+		location.href = "open_chat.do";
+	}
+	
+	function login_page() {
+		location.href = "login.do";
+	}
 </script>
 </head>
 <body>
@@ -223,16 +237,16 @@ body {
 				<div id="open_room">
 					<c:choose>
 						<c:when test="${login=='1'}">
-							<a href="open_chat.do"> 
+							<div onclick="open_chat()"> 
 								<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
 								<span style="margin-left: 10px;">공용 채팅방</span>
-							</a>
+							</div>
 						</c:when>
 						<c:otherwise>
-							<a href="login.do"> 
+							<div onclick="login_page()"> 
 								<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
 								<span style="margin-left: 10px;">공용 채팅방</span>
-							</a>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</div>

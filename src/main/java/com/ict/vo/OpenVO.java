@@ -1,13 +1,14 @@
 package com.ict.vo;
 
 public class OpenVO {
-	private String user;
+	private String users;
 
-	public String getUser() {
-		return user;
+	public String getUsers() {
+		return users;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsers(String users) {
+		this.users = users;
 	}
+
 }

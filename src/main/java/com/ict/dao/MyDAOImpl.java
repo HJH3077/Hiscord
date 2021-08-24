@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
+import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 @Repository("MyDAOImpl")
@@ -90,6 +91,26 @@ public class MyDAOImpl implements MyDAO{
 	@Override
 	public List<ChatRVO> selectChatList(String id) throws Exception {
 		return sqlSessionTemplate.selectList("hiscord.chatroom_list", id);
+	}
+	
+	@Override
+	public List<ChatRVO> selectChatUserList(String room_id) throws Exception {
+		return sqlSessionTemplate.selectList("hiscord.user_list", room_id);
+	}
+	
+	@Override
+	public List<OpenVO> selectOpenChatList() throws Exception {
+		return sqlSessionTemplate.selectList("hiscord.open_list");
+	}
+	
+	@Override
+	public int insertOpenChat(String nickname) throws Exception {
+		return sqlSessionTemplate.insert("hiscord.open_insert", nickname);
+	}
+	
+	@Override
+	public int deleteOpenChat(String nickname) throws Exception {
+		return sqlSessionTemplate.delete("hiscord.open_delete", nickname);
 	}
 	
 	// 관리자

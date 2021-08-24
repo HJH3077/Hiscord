@@ -25,6 +25,7 @@ import com.ict.service.Paging2;
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
+import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
  
 @Controller
@@ -321,9 +322,31 @@ public class MyController {
 		return null;
 	}
 	
+	
 	@RequestMapping("personal_chat.do")
-	public ModelAndView personal_chatCommand(@ModelAttribute("room_id")String room_id) {
-		return new ModelAndView("chatroom");
+	public ModelAndView personal_chatCommand(@ModelAttribute("room_id")String room_id, HttpSession session) {
+		ModelAndView mv = new ModelAndView("chatroom");
+		String id = (String)session.getAttribute("login_id");
+		String nickname = (String)session.getAttribute("login_nickname");
+		String font = (String)session.getAttribute("font");
+		mv.addObject("id", id);
+		mv.addObject("nickname", nickname);
+		mv.addObject("font", font);
+		return mv;
+	}
+	
+	@RequestMapping(value = "user_list.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<ChatRVO> user_listCommand(HttpSession session, @ModelAttribute("room_id")String room_id) {
+		try {
+			List<ChatRVO> userList = myService.selectChatUserList(room_id);
+			System.out.println(room_id);
+			System.out.println("되고는 있니?");
+			return userList;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	@RequestMapping("invite.do")
