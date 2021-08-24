@@ -26,7 +26,9 @@ public interface MyService {
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;
 	// 폰트 변경
-	int updateFont(String id) throws Exception;
+	int updateFont(String id, String font) throws Exception;
+	// 금지어 리스트(전체)
+	List<WVO> selectTotalBanList() throws Exception;
 	
 	// 채팅방 추가
 	int insertChatroom(ChatRVO crvo) throws Exception;

@@ -6,166 +6,296 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<style type="text/css">
-@import
-	url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
+<style>
 body {
 	margin: 0;
 	padding: 0;
 	background: #fafafa;
+	overflow: hidden;
 }
 
-#chat_container {
-	display: flex;
-	width: 100%;
-	max-height: 100%;
-}
+#nav{display: flex;}   
 
-#chat_place {
-	background: #fff;
-	border-left: 1px solid #ebeced;
-	border-right: 1px solid #ebeced;
-	margin-left: 50px;
-	width: 1000px;
-	min-width: 1000px;
-}
-
-#chat_header {
-	font-size: 15px;
-	padding: 13px 0;
+#Wrap{
+	margin-left: 70px;
+	width: 1200px;  
+	min-width: 1200px;
 	background-color: #fff;
-	color: black; 
-	text-align: center;
-	border-bottom: 1px solid #ebeced;
-	font-family: 'Lato', sans-serif;
-	font-weight: bold;
-	line-height: 2em;
-	height: 32px;
-}
-
-#chat_container #chat_box {
-	position: sticky;
-	padding: 0 22px;
-	background-color: #fff;
-	box-sizing: border-box;
-	height: 85%;
-}
-
-#chatting {
-	height: 85vh;
-	overflow: scroll;
+	height: 100vh;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 	display: flex;
-	flex-direction: column-reverse;
-	flex: 1 1;
+}
+
+#container{
+	width: 750px;
+	min-width: 750px;
+	margin-left: 10%;
+	padding: 25px;
+	height: 93%;
+}
+
+#container #nav-header{
+	text-align: left;
+	padding: 5px 5px 5px 15px;
+	color: #00FFFF;     
+	border-left: 3px solid #00FFFF;
+	margin-bottom: 20px;
+	width: 570px;
+}
+
+#outBtn{
+	float: right;
+	font-size: 18px;  
+	margin-top: 5px;
+}
+
+#outBtn:hover{ background-color: #00FFFF; text-decoration: underline; color: white;}
+
+#contentCover{ height: 90%;}
+
+#chatWrap {
+    width: 750px;
+    min-width: 750px;
+    height: 97%;
+}
+
+#chatLog {
+	border: 1px solid #ddd;
+    overflow: auto;
+    padding: 10px;
+    height: 87%;
+    border-radius: 5px;
+}
+
+#chatLog span {	color: #fff;}
+
+#myChat{ text-align: right;}
+
+#yourChat{
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+.msg {
+    display: inline-block;
+    border-radius: 15px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+#yourChat > .msg {
+    background-color: #f1f0f0;
+    color: #000;
+}
+
+#myChat > .msg {
+    background-color: #00BFFF;
+    color: #fff;
 }
 
 #chat_input {
-	margin-top: 20px;
+    display: block;
+    width: 748px;
+    min-width: 748px;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-#chat_input textarea {
-	width: 1000px;
-	height: 45px;
-	box-sizing: border-box;
-	border-radius: 0.4em;
-	font-size: 18px;
-	border-radius: 0.4em;
+#chatting {
+    width: 85%;
+    height: calc(100% - 1px);
+    border: none;     
+    font-size: 20px;
+    padding-bottom: 0; 
 }
 
-#chat_user {
-	background-color: #fff;
-	margin-left: 10px;
-	width: 200px;
-	max-height: 100%;
-	height: 100vh;
-	overflow: hidden auto;
+#chatting:focus {
+    outline: none;
 }
 
-#list_title {
-	text-align: center;
-	height: 42px;
-	border-bottom: 1px solid #f1f3f5;
-	font-size: 15px;
-	font-family: 'Lato', sans-serif;
-	font-weight: bold;
+#chat_input button {
+    border: none;
+    height: 50px;
+    background: none;
+    color: #0084FF;
+    font-size: 17px;
 }
 
-.user_list {
-	padding: auto;
-	height: 80px;
-	border-bottom: 1px solid #f1f3f5;
-	font-size: 20px;
+#memberWrap{
+    width: 150px;
+    min-width: 150px;
+    margin-top: 105px;
+    height: 80%;
 }
 
-.user_list .rooms {
-	padding: 13px;
-	margin-top: 7px;
+#memberList {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 100%;   
+    overflow: auto; 
 }
 
-.chat_content {
-	display: flex;
-	height: auto;
-}
-.chat_content .ch_avatar{
+#memberHeader {
+    height: 30px;
+    font-size: 18px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
     text-align: center;
 }
-.chat_content .ch_avatar img{
-    width: 3.5em;
-    height: 3.5em;
-    border-radius: 1.75em;
+
+.memberSelect{
+	border-bottom: 1px solid #f0f0f0;
+    padding: 12px 20px;
+    font-size: 15px;
+    text-align: center;
+    overflow: auto;
 }
 
-.chat_content .comment p{
-	padding: 0;
-	margin: auto;
-	margin-left: 15px;
-}
+#option{font-size: 17px; font-weight: 600; font-style: inherit; margin-top: 25px;}        
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var ws;
+
+	function wsOpen() {
+		ws = new WebSocket("ws://" + location.host + "/echo.do");
+		wsEvt();
+	}
+
+	function wsEvt() {
+		ws.onmessage = function(data) {
+			var msg = data.data;
+			var m = msg.split(":"); 
+			var m0 = m[0];
+			var m1 = m[1];
+			if(m0.trim() == "a"){
+				$("#chatLog").append("<p>" + m1 + "님을 초대하였습니다." + "</p>").css('text-align', 'center');
+			} else if(m0.trim() == "z"){
+				$("#chatLog").append("<p>" + m1 + "님이 나가셨습니다." + "</p>").css('text-align', 'center');
+			} else{
+				if (msg != null && msg.trim() != '') {
+					if(m0.trim() == "${nickname}"){
+						$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
+					} else {
+						$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+					}
+				}
+				$("#chatLog").scrollTop($("#chatLog")[0].scrollHeight - $("#chatLog")[0].clientHeight);
+			}
+		}
+
+		document.addEventListener("keypress", function(e) {
+			if (e.keyCode == 13) { //enter press
+				send();
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		wsOpen();
+	});
+	
+	$(document).ready(function() {
+		var font = "${font}";
+		console.log(font);
+		if (font == "mini") {  
+			$("#chatLog").css("font-size", "8px");
+		} else if (font == "small") {
+			$("#chatLog").css("font-size", "12px");
+		} else if (font == "middle") {
+			$("#chatLog").css("font-size", "16px");
+		} else if (font == "large") {
+			$("#chatLog").css("font-size", "25px");
+		} else if (font == "big") {
+			$("#chatLog").css("font-size", "40px");
+		}
+	});
+	
+	function exit() {
+		var nickname = "${nickname}";
+		ws.send("z" + " : " + nickname);
+		ws.close();
+		location.href = 'main.do';
+	}
+	
+	function send() {
+		var nickname = "${nickname}";
+		var msg = $("#chatting").val();
+		$.ajax({
+			url : "chat_check.do",
+			method : "post",
+			dataType : "json",
+			success : function(data) {
+				$.each(data, function() {
+					msg = msg.replaceAll(this["word"], "**");
+				});
+				ws.send(nickname + " : " + msg);
+				$('#chatting').val("");
+			},
+			error : function() { alert("읽기실패");	}
+		});
+	}
+	
+	function out_room() {
+		if (confirm("정말 채팅방을 나가시겠습니까??") == true){  
+			alert("나가셨습니다.");
+		}else{   
+		    return;
+		}
+	}
+	
+	/* $(function() {
+		$.ajax({
+			url : "personal_user.do",
+			method : "post",
+			dataType : "json",
+			success : function(data) {
+				var list = "";
+				$.each(data, function() {
+					list += "<div class='memberSelect'>" + this["nickname"] + "</div>"
+				});
+				$("#memberList").append(list);
+			},
+			error : function() { alert("읽기실패");	}
+		});
+	}); */
+	
+	var room_id = "${room_id}";
+	console.log(room_id);
+</script>
 <body>
 	<%@ include file="head.jsp"%>
-	<div id="chat_container">
-		<div id="chat_place">
-			<div id="chat_header">공용채팅방</div>
-			<div id="chat_box">
-				<div id="chatting">
-					<div class="chat_content">
-						<div class="ch_avatar">
-							<img alt="디스코드" src="../images/discord.png" style="width: 55px;">
-						</div>
-						<div class="comment">
-							<p style="font-size: 20px;">홍길동</p>
-							<p style="margin-top: 5px;">안녕하세요1234</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="chat_input">
-				<textarea placeholder="채팅을 입력하세요."></textarea>
-				<button>전송</button>
+	<div id="Wrap">
+		<div id="container">
+		    <nav id="nav">
+		   		<h1 id="nav-header">채팅방</h1>
+		   		<div id="option">
+			   		<a href="invite.do">초대하기</a> / 
+			  		<a href='javascript:void(0);' onclick="out_room();">나가기</a>
+		   		</div>
+		    </nav>   
+		    <div id="contentCover">
+		        <div id="chatWrap">
+		            <div id="chatLog">
+		                <div id="yourChat"></div>
+		                <div id="myChat"></div>
+		            </div>
+			        <div id="chat_input">
+			        	<input type="text" size="30" id="chatting" placeholder="메시지를 입력하세요">
+			            <button onclick="send()">보내기</button>
+			        </div>
+		        </div> 
+		    </div>
+		</div>
+		<div id="memberWrap">
+			<div id="memberList">
+				<div id="memberHeader">참가자</div>
 			</div>
 		</div>
-		<!-- <div id="chat_user">
-			<div id="list_title">
-				<p>참가자 목록</p>
-			</div>
-			<div class="user_list">
-				<div class="rooms">
-					<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
-					<span style="margin-left: 10px;"> 유저1</span>
-
-				</div>
-			</div>
-			<div class="user_list">
-				<div class="rooms">
-					<img alt="디스코드" src="resources/images/discord.png" style="width: 40px;">
-					<span style="margin-left: 10px;"> 유저2</span>
-				</div>
-			</div>
-		</div> -->
 	</div>
 </body>
 </html>

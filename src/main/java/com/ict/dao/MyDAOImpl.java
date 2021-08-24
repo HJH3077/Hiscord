@@ -70,8 +70,16 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public int updateFont(String id) throws Exception {
-		return sqlSessionTemplate.update("hiscord.font_update", id);
+	public int updateFont(String id, String font) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("font", font);
+		return sqlSessionTemplate.update("hiscord.font_update", map);
+	}
+	
+	@Override
+	public List<WVO> selectTotalBanList() throws Exception {
+		return sqlSessionTemplate.selectList("hiscord.total_banlist");
 	}
 	
 	@Override

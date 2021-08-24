@@ -197,14 +197,15 @@ body {
 	
 	$(document).ready(function() {
 		var font = "${font}";
+		console.log(font);
 		if (font == "mini") {  
-			$("#chatLog").css("font-size", "10px");
+			$("#chatLog").css("font-size", "8px");
 		} else if (font == "small") {
-			$("#chatLog").css("font-size", "15px");
+			$("#chatLog").css("font-size", "12px");
 		} else if (font == "middle") {
-			$("#chatLog").css("font-size", "20px");
+			$("#chatLog").css("font-size", "16px");
 		} else if (font == "large") {
-			$("#chatLog").css("font-size", "30px");
+			$("#chatLog").css("font-size", "25px");
 		} else if (font == "big") {
 			$("#chatLog").css("font-size", "40px");
 		}
@@ -220,8 +221,19 @@ body {
 	function send() {
 		var nickname = "${nickname}";
 		var msg = $("#chatting").val();
-		ws.send(nickname + " : " + msg);
-		$('#chatting').val("");
+		$.ajax({
+			url : "chat_check.do",
+			method : "post",
+			dataType : "json",
+			success : function(data) {
+				$.each(data, function() {
+					msg = msg.replaceAll(this["word"], "**");
+				});
+				ws.send(nickname + " : " + msg);
+				$('#chatting').val("");
+			},
+			error : function() { alert("읽기실패");	}
+		});
 	}
 </script>
 <body>
@@ -233,8 +245,7 @@ body {
 				<h1 id="nav-header">
 		            공용 채팅방
 		        </h1>
-		        <div id="big">커짐</div>
-		    </nav>
+		    </nav>   
 		    <div id="contentCover">
 		        <div id="chatWrap">
 		            <div id="chatLog">
@@ -248,7 +259,6 @@ body {
 		        </div> 
 		    </div>
 		</div>
-		<!-- 리스트는 아마도 db가 필요해보임 ajax로 그냥 해도되나? -->
 		<div id="memberWrap">
 			<div id="memberList">
 				<div id="memberHeader">참가자</div>

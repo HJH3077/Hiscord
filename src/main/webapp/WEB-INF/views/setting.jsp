@@ -71,7 +71,7 @@ body {
 	margin-left: 5px;
 }
 
-.btn1 {
+#btn1 {
 	cursor: pointer;
 	border-radius: 0.3rem;
 	border: none;
@@ -85,7 +85,7 @@ body {
 	margin: 15px;
 }
 
-.btn2 {
+#btn2 {
 	cursor: pointer; 
 	border-radius: 0.3rem;
 	border: none;
@@ -107,15 +107,15 @@ body {
 			if ($(this).is(":checked")) {
 				var msg = $(this).val();
 				if (msg == "mini") {
-					$(".comment").css("font-size", "10px");
+					$(".comment").css("font-size", "8px");
 				} else if (msg == "small") {
-					$(".comment").css("font-size", "15px");
+					$(".comment").css("font-size", "12px");
 				} else if (msg == "middle") {
-					$(".comment").css("font-size", "20px");
+					$(".comment").css("font-size", "16px");
 				} else if (msg == "large") {
-					$(".comment").css("font-size", "30px");
+					$(".comment").css("font-size", "25px");
 				} else if (msg == "big") {
-					$(".comment").css("font-size", "40px");
+					$(".comment").css("font-size", "36px");
 				}
 			}
 		});
@@ -126,7 +126,8 @@ body {
 	}
 	
 	function btn2_cancle(f) {
-		f.action = "set_font.do";
+		f.action = "set_font.do"; 
+		f.submit();
 	}
 </script>
 </head>
@@ -144,7 +145,7 @@ body {
 					<form class="form">
 						<div class="radio">
 							<h3 class="radio_head"
-								style="line-height: 0.1px; padding-left: 10px;">채팅 사이즈</h3>
+								style="line-height: 0.1px; padding-left: 10px; text-decoration: underline;">채팅 사이즈</h3>
 						</div>
 						<div class="radio">
 							<p class="comment"
@@ -157,7 +158,7 @@ body {
 							<input name="font" type="radio" value="small"> small
 						</div>
 						<div class="radio">
-							<input name="font" type="radio" value="middle"> middle
+							<input name="font" type="radio" value="middle" checked> middle
 						</div>
 						<div class="radio">
 							<input name="font" type="radio" value="large"> large
@@ -165,8 +166,8 @@ body {
 						<div class="radio">
 							<input name="font" type="radio" value="big"> big
 						</div>
-						<button class="btn1" onclick="btn1_cancle(this.form)">취소</button>
-						<button class="btn2" onclick="btn2_cancle(this.form)">저장</button>
+						<button id="btn1" onclick="btn1_cancle(this.form)">취소</button>
+						<button id="btn2" onclick="btn2_cancle(this.form)">저장</button>
 					</form>
 				</div>
 			</div>

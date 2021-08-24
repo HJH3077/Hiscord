@@ -203,11 +203,12 @@ public class MyController {
 		return new ModelAndView("setting");
 	}
 	
-	@RequestMapping("set_font.do.do")
-	public ModelAndView set_fontCommand(HttpSession session) {
+	@RequestMapping("set_font.do")
+	public ModelAndView set_fontCommand(HttpSession session, @RequestParam("font")String font) {
 		try {
 			String id = (String)session.getAttribute("login_id");
-			myService.updateFont(id);
+			myService.updateFont(id, font);
+			session.setAttribute("font", font);
 			return new ModelAndView("redirect:main.do");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -258,11 +259,21 @@ public class MyController {
 		String id = (String)session.getAttribute("login_id");
 		String nickname = (String)session.getAttribute("login_nickname");
 		String font = (String)session.getAttribute("font");
-		System.out.println(font);
 		mv.addObject("id", id);
 		mv.addObject("nickname", nickname);
 		mv.addObject("font", font);
 		return mv;
+	}
+	
+	@RequestMapping(value = "chat_check.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<WVO> chat_checkCommand() {
+		try {
+			List<WVO> wvo = myService.selectTotalBanList();
+			return wvo;
+		} catch (Exception e) {
+		}
+		return null;		
 	}
 	
 	@RequestMapping("create_chatroom.do")
@@ -284,7 +295,7 @@ public class MyController {
 			crvo.setChat_user(id);
 			int result = myService.insertChatroom(crvo);
 			if (result > 0) {
-				if (!crvo.getRoom_logo().isEmpty()) { // DB에 넣을 파일 이름이 있으면 upload
+				if (!crvo.getRoom_logo().isEmpty()) {
 					byte[] in = file.getBytes();
 					File out = new File(path, crvo.getRoom_logo());
 					FileCopyUtils.copy(in, out);
@@ -309,6 +320,17 @@ public class MyController {
 		}
 		return null;
 	}
+	
+	@RequestMapping("personal_chat.do")
+	public ModelAndView personal_chatCommand(@ModelAttribute("room_id")String room_id) {
+		return new ModelAndView("chatroom");
+	}
+	
+	@RequestMapping("invite.do")
+	public ModelAndView inviteCommand() {
+		return new ModelAndView("invite");
+	}
+	
 	
 	// 관리자 페이지
 	@RequestMapping("user_mng.do")

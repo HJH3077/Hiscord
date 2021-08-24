@@ -13,20 +13,20 @@ body {
 	overflow-x: hidden;
 }
 
-#create_chatroom {
+#invite_chatroom {
 	position: absolute;
 	top: 0 !important;
 	left: 0 !important;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, .95);
+	background-color: rgba(255, 255, 255, 0.5);
 	vertical-align: middle;
 	align-items: center;
 	justify-content: center;
 	z-index: 9999;
 }
 
-#make {
+#invite_user {
 	background-color: #F5F5F5;
 	width: 450px;
 	position: absolute;
@@ -37,27 +37,21 @@ body {
 	border-radius: 0.5em;
 }
 
-#make h2 {
+#invite_user h2 {
 	text-align: center;
-	font-size: 35px;
+	font-size: 31px;
 	margin: 10px;
 	padding-bottom: 5px;
 }
 
-#make p {
-	font-size: 18px;
-	font-weight: bold;
-	margin: 5px auto;
-}
-
-#chat_make input[type="text"] {
+#invite_user input[type="text"] {
 	width: 440px;
-	height: 18px;
+	height: 20px;
 }
 
-#send{ margin-top: 15px; text-align: right;}
+#invite{ margin-top: 15px; text-align: right;}
 
-#send input{
+#invite input{
 	width: 80px;
 	border-radius: 0.3em;  
 	border: none;
@@ -65,40 +59,34 @@ body {
 	background-color: lightgray; 
 }
 
-#send input:hover {
+#invite input:hover {
 	background-color: black;
 	color: white;
 	text-decoration: underline;
 }
 </style> 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	function create(f) {
-		f.action = "create_chatroom_ok.do";
+	function invite(f) {
+		f.action = "invite_ok.do";
 		f.submit();
 	}
 	
 	function cancle(f) {
-		f.action = "main.do";
+		f.action = "personal_chat.do";
 		f.submit();
 	}
 </script>
 </head>
 <body>
-	<%@ include file="main.jsp"%>
-	<div id="create_chatroom">
-		<form method="post" enctype="multipart/form-data" >
-			<div id="make">
-				<h2>채팅방 개설</h2>
-				<div id="chat_make">
-					<p>채팅방 이름</p>
-					<input type="text" name="room_name">
-					<p>채팅방 로고</p>
-					<input type="file" name="r_logo">
-				</div>
-				<div id="send">
-					<input type="button" value="만들기" onclick="create(this.form)">
+	<%@ include file="chatroom.jsp"%>
+	<div id="invite_chatroom">
+		<form method="post">
+			<div id="invite_user">
+				<h2>초대하기</h2>
+				<input type="text" name="invited_user" placeholder="초대할 유저의 닉네임을 입력해주세요">
+				<div id="invite">
+					<input type="button" value="초대하기" onclick="invite(this.form)">
 					<input type="button" value="취소" onclick="cancle(this.form)">
 				</div>
 			</div>

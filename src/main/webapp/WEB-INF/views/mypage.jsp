@@ -27,18 +27,19 @@ body {
 }
 
 #profile {
-	background-color: #F5F5F5;
-	width: 450px;
+	background-color: #fff;
+	width: 400px;
 	position: absolute;
 	left: 40%;
 	top: 20%;
 	border: 1px solid black;
 	border-radius: 0.5em;
-	padding: 0 15px;
 }
 
+#profile_update{padding: 15px; padding-top: 0;}
+
 #profile_update>img {
-	width: 400px;
+	width: 380px;
 	height: 40px;
 }
 
@@ -54,7 +55,7 @@ body {
 }
 
 #p_email input {
-	width: 400px;
+	width: 360px;
 	height: 20px;
 	margin: 4px auto;
 }
@@ -72,9 +73,37 @@ body {
 	float: right;
 	margin: 20px 5px;
 }
+
+#sethead {
+	line-height: 1.3rem;
+	font-size: 1.4rem;
+	padding: 1.3rem 1.5rem;
+	border-bottom: 1px solid rgba(34, 36, 38, .15);
+}
+
+#setmenu {
+	background: 0 0;
+	margin-left: 0.4em;
+	margin-right: 0.4em;
+	margin-top: 5px;
+	padding: 10px;
+}
+
+#setmenu .menu {
+	border-bottom: 1px solid rgba(34, 36, 38, .15);
+	padding: 10px;
+}
+
+#setmenu a:hover {
+	background-color: silver;
+	opacity: 0.4;
+}
+
+#setmenu a:visited {
+	color: black;
+}
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	function check() {
 		var getCheck = RegExp(/^[a-zA-Z0-9]{6,16}$/);
@@ -105,7 +134,7 @@ body {
 	}
 
 	function cancle_go(f) {
-		f.action = "setting.do";
+		f.action = "main.do";
 	}
 
 	function adjust_go(f) {
@@ -121,35 +150,42 @@ body {
 	<div id="info_update">
 		<form method="post">
 			<div id="profile">
-				<div id="profile_update">
-					<div id="p_avatar">
-						<h4>프로필 수정</h4>
-						<img alt="avatar" src="resources/images/discord.png" /> <input
-							type="file" name="file_name" id="img_change"
-							style="margin-left: 15px;">
+				<div id="sethead">설정</div>
+				<div id="setcontent">
+					<div id="setmenu">
+						<a class="menu" href="setting.do">폰트설정</a>
+						<a class="menu" href="mypage.do">내정보</a>
 					</div>
-					<div id="p_nickname">
-						<h4>닉네임 수정</h4>
-						<p>
-							&nbsp;&nbsp;현재 닉네임 &nbsp;: <input type="text" name="before_name"
-								value="${nickname}" readonly style="background-color: #02E7FC;">
-						</p>
-						<p>
-							변경할 닉네임 : <input type="text" name="next_nickname"
-								id="next_nickname" value="${nickname}">
-						</p>
+					<div id="profile_update">
+						<!-- <div id="p_avatar">
+							<h4>프로필 수정</h4>
+							<img alt="avatar" src="resources/images/discord.png" /> <input
+								type="file" name="file_name" id="img_change"
+								style="margin-left: 15px;">
+						</div> -->
+						<div id="p_nickname">
+							<h4>닉네임 수정</h4>
+							<p>
+								&nbsp;현재 닉네임 &nbsp;&nbsp;: <input type="text" name="before_name"
+									value="${nickname}" readonly style="background-color: #02E7FC;">
+							</p>
+							<p>
+								변경할 닉네임 : <input type="text" name="next_nickname"
+									id="next_nickname" value="${nickname}">
+							</p>
+						</div>
+						<div id="p_email">
+							<h4>이메일 수정</h4>
+							<p style="font-size: 7px; margin: 0;">현재 이메일</p>
+							<input type="text" name="before_email" value="${email}" readonly
+								style="background-color: #02E7FC;">
+							<p style="font-size: 7px; margin: 0;">변경할 이메일</p>
+							<input type="text" name="next_email" id="next_email"
+								value="${email}">
+						</div>
+						<button id="cancle" onclick="cancle_go(this.form)">취소</button>
+						<button id="adjust" onclick="adjust_go(this.form)">적용</button>
 					</div>
-					<div id="p_email">
-						<h4>이메일 수정</h4>
-						<p style="font-size: 7px; margin: 0;">현재 이메일</p>
-						<input type="text" name="before_email" value="${email}" readonly
-							style="background-color: #02E7FC;">
-						<p style="font-size: 7px; margin: 0;">변경할 이메일</p>
-						<input type="text" name="next_email" id="next_email"
-							value="${email}">
-					</div>
-					<button id="cancle" onclick="cancle_go(this.form)">취소</button>
-					<button id="adjust" onclick="adjust_go(this.form)">적용</button>
 				</div>
 			</div>
 		</form>

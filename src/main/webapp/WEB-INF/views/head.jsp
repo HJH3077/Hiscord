@@ -10,7 +10,7 @@
 * { 
 	text-decoration: none;
 }
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@1&display=swap'); 
 
 /* 스크롤바 기능은 살리고 안보이게 하기 */
 ::-webkit-scrollbar {
@@ -26,7 +26,7 @@ body {
 	font-weight: 400;
 }
 
-#head * a:visited, a:link {
+* a:visited, a:link {
 	color: black;
 }
 
@@ -148,9 +148,9 @@ body {
 					$.each(data, function() {
 						rooms += "<div class='list'>";
 						rooms += "<div class='room'>";
-						rooms += "<a href='personal_chat.do?room_id=' + " + this["room_id"] +">";
+						rooms += "<a href='personal_chat.do?room_id=' " + this["room_id"] + ">";
 						console.log(this['room_id']);
-						rooms += "<img alt='dis' src='resources/images/" + this["room_logo"] +" style='width: 40px;'>";
+						rooms += "<img alt='dis' src='/resources/images/" + this["room_logo"] + "' style='width: 40px;'>";
 						console.log(this["room_logo"]);
 						rooms += "<span style='margin-left: 10px;'>" + this["room_name"] + "</span>";
 						rooms += "</a>";
@@ -163,7 +163,10 @@ body {
 			});
 		}
 		
-		chatList();
+		var login = '<%=(String)session.getAttribute("login")%>';
+		if(login == 1){
+			chatList();
+		}
 	});
 </script>
 </head>
@@ -214,7 +217,7 @@ body {
 					} else {
 						$(".visible_menu").css("display", "block");
 					}
-				})
+				});
 			</script>
 			<div id="open_list">
 				<div id="open_room">

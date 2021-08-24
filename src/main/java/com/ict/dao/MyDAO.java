@@ -24,7 +24,9 @@ public interface MyDAO {
 	// 유저 정보 업데이트
 	int updateUser(MVO mvo) throws Exception;
 	// 폰트 변경
-	int updateFont(String id) throws Exception;
+	int updateFont(String id, String font) throws Exception;
+	// 금지어 리스트(전체)
+	List<WVO> selectTotalBanList() throws Exception;
 	
 	// 채팅방 추가
 	int insertChatroom(ChatRVO crvo) throws Exception;

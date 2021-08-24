@@ -61,8 +61,13 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public int updateFont(String id) throws Exception {
-		return myDAO.updateFont(id);
+	public int updateFont(String id, String font) throws Exception {
+		return myDAO.updateFont(id, font);
+	}
+	
+	@Override
+	public List<WVO> selectTotalBanList() throws Exception {
+		return myDAO.selectTotalBanList();
 	}
 	
 	@Override
