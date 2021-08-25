@@ -19,13 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.email.EmailService;
+import com.ict.server.SocketHandler;
 import com.ict.service.MyService;
 import com.ict.service.Paging;
 import com.ict.service.Paging2;
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
-import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
  
 @Controller
@@ -285,7 +285,7 @@ public class MyController {
 	@RequestMapping(value = "create_chatroom_ok.do", method = RequestMethod.POST)
 	public ModelAndView create_chatOkCommand(ChatRVO crvo, HttpServletRequest request,HttpSession session) {
 		try {
-			String id = (String)session.getAttribute("login_id");
+			String nickname = (String)session.getAttribute("login_nickname");
 			String path = request.getSession().getServletContext().getRealPath("/resources/images");
 			MultipartFile file = crvo.getR_logo();
 			if (file.isEmpty()) { 
@@ -293,7 +293,7 @@ public class MyController {
 			} else {
 				crvo.setRoom_logo(file.getOriginalFilename());
 			}
-			crvo.setChat_user(id);
+			crvo.setChat_user(nickname);
 			int result = myService.insertChatroom(crvo);
 			if (result > 0) {
 				if (!crvo.getRoom_logo().isEmpty()) {
@@ -313,8 +313,8 @@ public class MyController {
 	@ResponseBody
 	public List<ChatRVO> chatListCommand(HttpSession session) {
 		try {
-			String id = (String)session.getAttribute("login_id");
-			List<ChatRVO> chatList = myService.selectChatList(id);
+			String nickname = (String)session.getAttribute("login_nickname");
+			List<ChatRVO> chatList = myService.selectChatList(nickname);
 			return chatList;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -340,8 +340,6 @@ public class MyController {
 	public List<ChatRVO> user_listCommand(HttpSession session, @ModelAttribute("room_id")String room_id) {
 		try {
 			List<ChatRVO> userList = myService.selectChatUserList(room_id);
-			System.out.println(room_id);
-			System.out.println("되고는 있니?");
 			return userList;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -350,10 +348,55 @@ public class MyController {
 	}
 	
 	@RequestMapping("invite.do")
-	public ModelAndView inviteCommand() {
-		return new ModelAndView("invite");
+	public ModelAndView inviteCommand(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("invite");
+		String room_id = request.getParameter("room_id");
+		mv.addObject("room_id", room_id);
+		return mv;
 	}
 	
+	@RequestMapping(value = "invite_ok.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String invite_okCommand(HttpServletRequest request, @ModelAttribute("room_id")String room_id,
+			HttpSession session) {
+		try {
+			String nickname = (String)session.getAttribute("login_nickname");
+			ChatRVO crvo = myService.selectChatroom(room_id, nickname);
+			String invited_user = myService.selectNickUser(request.getParameter("user"));
+			if(invited_user != null) {
+				crvo.setChat_user(request.getParameter("user"));
+				int result = myService.insertInviteChatroom(crvo);
+				System.out.println(result);
+				return String.valueOf(result);
+			} else {
+				int result = 0;
+				return String.valueOf(result);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "user_exit.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String user_exitCommand(@ModelAttribute("room_id")String room_id, HttpSession session) {
+		try {
+			String nickname = (String)session.getAttribute("login_nickname");
+			int result = myService.deleteExitChatroom(room_id, nickname);
+			return String.valueOf(result);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	 @RequestMapping(value = "open_list.do", produces =	"application/json; charset=utf-8")
+	 @ResponseBody
+	 public List<String> open_listCommand(HttpSession session) { 
+		 List<String> sessionList = SocketHandler.sessionList;
+		 return sessionList; 
+	 }
 	
 	// 관리자 페이지
 	@RequestMapping("user_mng.do")

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
-import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 public interface MyDAO {
@@ -22,6 +21,8 @@ public interface MyDAO {
 	String selectPwfind(String id, String name, String email) throws Exception;
 	// 유저 검색
 	MVO selectUser(String id) throws Exception; 
+	// 유저 닉네임으로 검색
+	String selectNickUser(String nickname) throws Exception; 
 	// 유저 정보 업데이트
 	int updateUser(MVO mvo) throws Exception;
 	// 폰트 변경
@@ -32,15 +33,15 @@ public interface MyDAO {
 	// 채팅방 추가
 	int insertChatroom(ChatRVO crvo) throws Exception;
 	// 채팅방 리스트
-	List<ChatRVO> selectChatList(String id) throws Exception;
+	List<ChatRVO> selectChatList(String nickname) throws Exception;
 	// 채팅방 유저 리스트
 	List<ChatRVO> selectChatUserList(String room_id) throws Exception;
-	// 오픈 채팅방 유저 검색
-	List<OpenVO> selectOpenChatList() throws Exception;
-	// 오픈 채팅방 유저 삽입
-	int insertOpenChat(String nickname) throws Exception;
-	// 오픈 채팅방 유저 삭제
-	int deleteOpenChat(String nickname) throws Exception;
+	// 채팅방 1개 검색
+	ChatRVO selectChatroom(String room_id, String nickname) throws Exception;
+	// 채팅방 초대
+	int insertInviteChatroom(ChatRVO crvo) throws Exception;
+	// 채팅방 나가기
+	int deleteExitChatroom(String room_id, String nickname) throws Exception;
 	
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;

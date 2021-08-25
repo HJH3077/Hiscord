@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.ict.dao.MyDAO;
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
-import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 @Service("MyServiceImpl")
@@ -52,6 +51,11 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
+	public String selectNickUser(String nickname) throws Exception {
+		return myDAO.selectNickUser(nickname);
+	}
+	
+	@Override
 	public int updateUser(MVO mvo) throws Exception {
 		return myDAO.updateUser(mvo);
 	}
@@ -77,8 +81,8 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public List<ChatRVO> selectChatList(String id) throws Exception {
-		return myDAO.selectChatList(id);
+	public List<ChatRVO> selectChatList(String nickname) throws Exception {
+		return myDAO.selectChatList(nickname);
 	}
 	
 	@Override
@@ -87,18 +91,18 @@ public class MyServiceImpl implements MyService{
 	}
 	
 	@Override
-	public List<OpenVO> selectOpenChatList() throws Exception {
-		return myDAO.selectOpenChatList();
+	public ChatRVO selectChatroom(String room_id, String nickname) throws Exception {
+		return myDAO.selectChatroom(room_id, nickname);
 	}
 	
 	@Override
-	public int insertOpenChat(String nickname) throws Exception {
-		return myDAO.insertOpenChat(nickname);
+	public int insertInviteChatroom(ChatRVO crvo) throws Exception {
+		return myDAO.insertInviteChatroom(crvo);
 	}
 	
 	@Override
-	public int deleteOpenChat(String nickname) throws Exception {
-		return myDAO.insertOpenChat(nickname);
+	public int deleteExitChatroom(String room_id, String nickname) throws Exception {
+		return myDAO.deleteExitChatroom(room_id, nickname);
 	}
 	
 	// 관리자

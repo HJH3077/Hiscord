@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
-import com.ict.vo.OpenVO;
 import com.ict.vo.WVO;
 
 @Repository("MyDAOImpl")
@@ -61,6 +60,11 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
+	public String selectNickUser(String nickname) throws Exception {
+		return sqlSessionTemplate.selectOne("hiscord.user_nick", nickname);
+	}
+	
+	@Override
 	public int updateUser(MVO mvo) throws Exception {
 		return sqlSessionTemplate.update("hiscord.user_update", mvo);
 	}
@@ -89,8 +93,8 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public List<ChatRVO> selectChatList(String id) throws Exception {
-		return sqlSessionTemplate.selectList("hiscord.chatroom_list", id);
+	public List<ChatRVO> selectChatList(String nickname) throws Exception {
+		return sqlSessionTemplate.selectList("hiscord.chatroom_list", nickname);
 	}
 	
 	@Override
@@ -99,18 +103,24 @@ public class MyDAOImpl implements MyDAO{
 	}
 	
 	@Override
-	public List<OpenVO> selectOpenChatList() throws Exception {
-		return sqlSessionTemplate.selectList("hiscord.open_list");
+	public ChatRVO selectChatroom(String room_id, String nickname) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname", nickname);
+		map.put("room_id", room_id);
+		return sqlSessionTemplate.selectOne("hiscord.chatroom_select", map);
 	}
 	
 	@Override
-	public int insertOpenChat(String nickname) throws Exception {
-		return sqlSessionTemplate.insert("hiscord.open_insert", nickname);
+	public int insertInviteChatroom(ChatRVO crvo) throws Exception {
+		return sqlSessionTemplate.insert("hiscord.chatroom_invite", crvo);
 	}
 	
 	@Override
-	public int deleteOpenChat(String nickname) throws Exception {
-		return sqlSessionTemplate.delete("hiscord.open_delete", nickname);
+	public int deleteExitChatroom(String room_id, String nickname) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("nickname", nickname);
+		map.put("room_id", room_id);
+		return sqlSessionTemplate.delete("hiscord.chatroom_exit", map);
 	}
 	
 	// 관리자
