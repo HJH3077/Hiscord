@@ -1,3 +1,4 @@
+<%@page import="com.ict.server.SocketHandler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -151,7 +152,7 @@ body {
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var ws;
-
+	
 	function wsOpen() {
 		ws = new WebSocket("ws://" + location.host + "/echo.do");
 		wsEvt();
@@ -189,6 +190,7 @@ body {
 				send();
 			}
 		});
+		
 	}
 
 	$(document).ready(function() {
@@ -235,6 +237,34 @@ body {
 			error : function() { alert("읽기실패");	}
 		});
 	}
+	
+	$(function() {
+		function open_list() {
+			$("#memberList").empty();
+			$("#memberList").append('<div id="memberHeader">참가자</div>');
+			$.ajax({
+				url : "open_list.do",
+				method : "post",
+				dataType : "json",
+				success : function(data) {
+					var list = "";
+					$.each(data, function(i) {
+						list += "<div class='memberSelect'>" + data[i] + "</div>"
+					});
+					$("#memberList").append(list);
+				},
+				error : function() { alert("읽기실패");	}
+			});
+		}
+		
+		open_list();
+		setInterval(function()
+		{
+			open_list();
+			console.log("10초 시간마다 계속 실행됩니다.");
+		}, 10000);
+
+	});
 </script>
 <body>
 	<%@ include file="head.jsp"%>
@@ -265,5 +295,6 @@ body {
 			</div>
 		</div>
 	</div>
-</body>
+    
+	</body>
 </html>

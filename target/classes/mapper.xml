@@ -40,6 +40,11 @@
 		select * from hiscord_member where id = #{id}
 	</select>
 	
+	<!-- 유저 1명 닉네임으로 검색 -->
+	<select id="user_nick" parameterType="String" resultType="String">
+		select nickname from hiscord_member where nickname = #{nickname}
+	</select>
+	
 	<update id="user_update" parameterType="com.ict.vo.MVO">
 		update hiscord_member set nickname = #{nickname}, email = #{email} where id=#{id}
 	</update>	
@@ -62,12 +67,25 @@
 	</insert>
 	
 	<select id="chatroom_list" parameterType="String" resultType="com.ict.vo.ChatRVO">
-		select * from hiscord_chat_room where chat_user = #{id} order by room_id desc
+		select * from hiscord_chat_room where chat_user = #{nickname} order by room_id desc
 	</select>
 	
 	<select id="user_list" parameterType="String" resultType="com.ict.vo.ChatRVO">
 		select * from hiscord_chat_room where room_id = #{room_id}
 	</select>
+	
+	<select id="chatroom_select" parameterType="Map" resultType="com.ict.vo.ChatRVO">
+		select * from hiscord_chat_room where room_id = #{room_id} and chat_user = #{nickname}
+	</select>
+	
+	<insert id="chatroom_invite" parameterType="com.ict.vo.ChatRVO">
+		insert into hiscord_chat_room
+		values(#{room_id}, #{room_name}, #{chat_user}, #{room_logo})
+	</insert>
+	
+	<delete id="chatroom_exit" parameterType="Map">
+		delete from hiscord_chat_room where room_id = #{room_id} and chat_user = #{nickname}
+	</delete>
 	
 	
 	<!-- 관리자 -->

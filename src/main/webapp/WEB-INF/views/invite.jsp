@@ -67,13 +67,30 @@ body {
 </style> 
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-	function invite(f) {
-		f.action = "invite_ok.do";
-		f.submit();
-	}
+	$(function() {
+		$("#invite").on("click", function() {
+			$.ajax({
+				url : "invite_ok.do",
+				method : "post",
+				data : "user="+$("#user").val() + "&room_id=${room_id}",
+				dataType : "text",
+				success : function(data) {
+					console.log(data);
+					if(data == "1"){
+						alert("초대하였습니다");
+						location.href = "personal_chat.do?room_id=${room_id}";
+					} else{
+						alert("존재하지 않는 유저입니다.");
+						location.href = "personal_chat.do?room_id=${room_id}";
+					}
+				},
+				error : function() { alert("읽기실패");	}
+			});
+		});
+	});
 	
 	function cancle(f) {
-		f.action = "personal_chat.do";
+		f.action = "personal_chat.do?room_id=${room_id}";
 		f.submit();
 	}
 </script>
@@ -84,10 +101,11 @@ body {
 		<form method="post">
 			<div id="invite_user">
 				<h2>초대하기</h2>
-				<input type="text" name="invited_user" placeholder="초대할 유저의 닉네임을 입력해주세요">
+				<input type="text" name="user" id="user" placeholder="초대할 유저의 닉네임을 입력해주세요">
 				<div id="invite">
-					<input type="button" value="초대하기" onclick="invite(this.form)">
+					<input type="button" value="초대하기" id="invite">
 					<input type="button" value="취소" onclick="cancle(this.form)">
+					<input type="hidden" value="${room_id }" name="room_id" id="room_id">
 				</div>
 			</div>
 		</form>

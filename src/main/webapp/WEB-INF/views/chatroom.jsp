@@ -240,15 +240,31 @@ body {
 	}
 	
 	function out_room() {
-		if (confirm("정말 채팅방을 나가시겠습니까??") == true){  
-			alert("나가셨습니다.");
-		}else{   
-		    return;
-		}
+		$.ajax({
+			url : "user_exit.do",
+			method : "post",
+			data : "room_id="+$(this).attr("room_id"),
+			dataType : "text",
+			success : function(data) {
+				if(data == '1'){
+					if (confirm("정말 채팅방을 나가시겠습니까??") == true){  
+						alert("채팅방을 나갔습니다.");
+						location.href = "main.do";
+					} else {   
+					    return;
+					}
+				}
+			},
+			error: function() {
+				alert("읽기실패");
+			}
+		});
 	}
 	
 	$(function() {
 		function userList() {
+			$("#memberList").empty();
+			$("#memberList").append('<div id="memberHeader">참가자</div>');
 			$.ajax({
 				url : "user_list.do",
 				method : "post",
@@ -271,6 +287,10 @@ body {
 	
 	var room_id = "${room_id}";
 	console.log(room_id);
+	
+	function invite() {
+		location.href = "invite.do?room_id=${room_id}";
+	}
 </script>
 <body>
 	<%@ include file="head.jsp"%>
@@ -279,7 +299,7 @@ body {
 		    <nav id="nav">
 		   		<h1 id="nav-header">채팅방</h1>
 		   		<div id="option">
-			   		<a href="invite.do">초대하기</a> / 
+			   		<a href='javascript:void(0);' onclick="invite();">초대하기</a> / 
 			  		<a href='javascript:void(0);' onclick="out_room();">나가기</a>
 		   		</div>
 		    </nav>   
