@@ -160,7 +160,10 @@ body {
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var ws;
-
+	var room_id = "${room_id}";
+	var room_name = "${room_name}";
+	console.log(room_name);
+	
 	function wsOpen() {
 		ws = new WebSocket("ws://" + location.host + "/echo.do");
 		wsEvt();
@@ -186,6 +189,17 @@ body {
 				}
 				$("#chatLog").scrollTop($("#chatLog")[0].scrollHeight - $("#chatLog")[0].clientHeight);
 			}
+			
+			$.ajax({
+				url : "msg_save.do",
+				method : "post",
+				data : "msg="+ msg + "&room_name=" + room_name,
+				dataType : "text",
+				success : function(data) { 
+					console.log("성공");
+				},
+				error : function() { alert("읽기실패");	}
+			});
 		}
 
 		document.addEventListener("keypress", function(e) {
@@ -197,6 +211,21 @@ body {
 
 	$(document).ready(function() {
 		wsOpen();
+	});
+	
+	$(document).ready(function() {
+		$.ajax({
+			url : "msg_list.do",
+			method : "post",
+			dataType : "text",
+			data : "room_name=" + room_name,
+			success : function(data) { 
+				if(data == 1){
+					console.log("읽기도 성공!");
+				}
+			},
+			error : function() { alert("읽기실패");	}
+		});
 	});
 	
 	$(document).ready(function() {
@@ -262,6 +291,8 @@ body {
 	}
 	
 	$(function() {
+		var room_id = "${room_id}";
+		
 		function userList() {
 			$("#memberList").empty();
 			$("#memberList").append('<div id="memberHeader">참가자</div>');
@@ -284,9 +315,6 @@ body {
 		
 		userList();
 	});
-	
-	var room_id = "${room_id}";
-	console.log(room_id);
 	
 	function invite() {
 		location.href = "invite.do?room_id=${room_id}";

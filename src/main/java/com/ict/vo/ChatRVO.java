@@ -3,7 +3,15 @@ package com.ict.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ChatRVO {
-	private String room_id, room_name, chat_user, room_logo;
+	private String room_id, room_name, chat_user, room_logo, file_signal;
+	public String getFile_signal() {
+		return file_signal;
+	}
+
+	public void setFile_signal(String file_signal) {
+		this.file_signal = file_signal;
+	}
+
 	private MultipartFile r_logo;
 	
 	public MultipartFile getR_logo() {

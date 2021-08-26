@@ -42,6 +42,10 @@ public interface MyDAO {
 	int insertInviteChatroom(ChatRVO crvo) throws Exception;
 	// 채팅방 나가기
 	int deleteExitChatroom(String room_id, String nickname) throws Exception;
+	// 개인 채팅방 txt파일 생성여부 검색
+	int selectChatroomFile(String room_id) throws Exception;
+	// 개인 채팅방 file_signal 0으로 만들기
+	int updateFileSignal(String room_id) throws Exception;
 	
 	// 유저 삭제
 	int deleteUser(String id) throws Exception;

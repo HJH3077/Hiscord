@@ -1,6 +1,10 @@
 package com.ict.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -324,7 +328,8 @@ public class MyController {
 	
 	
 	@RequestMapping("personal_chat.do")
-	public ModelAndView personal_chatCommand(@ModelAttribute("room_id")String room_id, HttpSession session) {
+	public ModelAndView personal_chatCommand(@ModelAttribute("room_id")String room_id, HttpSession session,
+			@ModelAttribute("room_name")String room_name) {
 		ModelAndView mv = new ModelAndView("chatroom");
 		String id = (String)session.getAttribute("login_id");
 		String nickname = (String)session.getAttribute("login_nickname");
@@ -344,6 +349,53 @@ public class MyController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		return null;
+	}
+	
+	@RequestMapping(value = "msg_save.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String msg_saveCommand(@RequestParam("msg")String msg, @RequestParam("room_name")String room_name) {
+		try {
+			File file = new File("D:\\tomcat9\\FileIO\\" + room_name + ".txt"); 
+			if(!file.exists()){ 
+				file.createNewFile();
+			}
+			FileWriter writer = null; 
+			BufferedWriter bWriter = null;
+			
+			writer = new FileWriter(file, true); 
+			bWriter = new BufferedWriter(writer);
+			
+			bWriter.write(msg);
+			bWriter.newLine();
+			bWriter.flush(); 
+			bWriter.close();
+			return String.valueOf(1);
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+		return null;
+	}
+	
+	@RequestMapping(value = "msg_list.do", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String msg_listCommand(@RequestParam("room_name")String room_name) {
+		try {
+			String filePath = "D:\\tomcat9\\FileIO\\" + room_name + ".txt"; 
+			File file = new File(filePath); 
+			if(file.exists()){
+				BufferedReader reader = new BufferedReader(new FileReader(file)); 
+				String line = null;
+				StringBuffer sb = new StringBuffer();
+				while ((line = reader.readLine()) != null){ 
+					sb.append(line) 
+				} 
+				reader.close();
+			}
+			return String.valueOf(1);
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
 		return null;
 	}
 	

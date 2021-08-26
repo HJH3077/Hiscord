@@ -63,7 +63,7 @@
 	
 	<insert id="chatroom_insert" parameterType="com.ict.vo.ChatRVO">
 		insert into hiscord_chat_room
-		values(hiscord_room_seq.nextval, #{room_name}, #{chat_user}, #{room_logo})
+		values(hiscord_room_seq.nextval, #{room_name}, #{chat_user}, #{room_logo}, 1)
 	</insert>
 	
 	<select id="chatroom_list" parameterType="String" resultType="com.ict.vo.ChatRVO">
@@ -80,12 +80,20 @@
 	
 	<insert id="chatroom_invite" parameterType="com.ict.vo.ChatRVO">
 		insert into hiscord_chat_room
-		values(#{room_id}, #{room_name}, #{chat_user}, #{room_logo})
+		values(#{room_id}, #{room_name}, #{chat_user}, #{room_logo}, 1)
 	</insert>
 	
 	<delete id="chatroom_exit" parameterType="Map">
 		delete from hiscord_chat_room where room_id = #{room_id} and chat_user = #{nickname}
 	</delete>
+	
+	<select id="chatroom_file" parameterType="String" resultType="int">
+		select file_signal from hiscord_chat_room where room_id = #{room_id}
+	</select>
+	
+	<update id="file_signal" parameterType="String">
+		update hiscord_chat_room set file_signal = 0 where room_id = #{room_id}
+	</update>
 	
 	
 	<!-- 관리자 -->

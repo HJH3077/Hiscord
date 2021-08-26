@@ -151,9 +151,8 @@ body {
 					$.each(data, function() {
 						rooms += "<div class='list'>";
 						rooms += "<div class='room'>";
-						rooms += "<div id='pesonal' room_id='" + this["room_id"] + "'>"
+						rooms += "<div id='pesonal' room_id='" + this["room_id"] + "' room_name='" + this["room_name"] + "'>"
 						rooms += "<img alt='dis' src='resources/images/" + this["room_logo"] + "' style='width: 40px;'>";
-						console.log(this["room_logo"]);
 						rooms += "<span style='margin-left: 10px;'>" + this["room_name"] + "</span>";
 						rooms += "</div>";
 						rooms += "</div>";
@@ -171,7 +170,7 @@ body {
 		}
 		
 		$("#listWrap").on("click","#pesonal",function() {
-			location.href="personal_chat.do?room_id="+$(this).attr("room_id");
+			location.href="personal_chat.do?room_id="+$(this).attr("room_id") + "&room_name=" + $(this).attr("room_name");
 		});
 	});
 	
