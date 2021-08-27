@@ -217,18 +217,21 @@ body {
 			dataType : "json",
 			data : "room_name=" + room_name,
 			success : function(data) {
-				$.each(data, function() {
+				$("#chatLog").empty();
+				$.each(data, function(i) {
 					var nickname = "${nickname}";
 					console.log(nickname);
 					var msg = this["msg"];
 					var m = msg.split(":"); 
 					var m0 = m[0];
 					var m1 = m[1];
-					if (msg != null && msg.trim() != '') {
-						if(m0.trim() == "${nickname}"){
-							$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
-						} else {
-							$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+					if(i%2 == 0){
+						if (msg != null && msg.trim() != '') {
+							if(m0.trim() == "${nickname}"){
+								$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
+							} else {
+								$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+							}
 						}
 					}
 				});

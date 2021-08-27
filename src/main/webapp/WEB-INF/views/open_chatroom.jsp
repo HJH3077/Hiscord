@@ -261,8 +261,8 @@ body {
 		setInterval(function()
 		{
 			open_list();
-			console.log("10초 시간마다 계속 실행됩니다.");
-		}, 10000);
+			console.log("15초마다 계속 실행됩니다.");
+		}, 15000);
 
 	});
 </script>

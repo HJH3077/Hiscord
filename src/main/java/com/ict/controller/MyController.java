@@ -458,7 +458,7 @@ public class MyController {
 	
 	 @RequestMapping(value = "open_list.do", produces =	"application/json; charset=utf-8")
 	 @ResponseBody
-	 public List<String> open_listCommand(HttpSession session) { 
+	 public List<String> open_listCommand() { 
 		 List<String> sessionList = SocketHandler.sessionList;
 		 return sessionList; 
 	 }
