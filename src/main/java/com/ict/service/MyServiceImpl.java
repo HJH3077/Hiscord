@@ -105,16 +105,6 @@ public class MyServiceImpl implements MyService{
 		return myDAO.deleteExitChatroom(room_id, nickname);
 	}
 	
-	@Override
-	public int selectChatroomFile(String room_id) throws Exception {
-		return myDAO.selectChatroomFile(room_id);
-	}
-	
-	@Override
-	public int updateFileSignal(String room_id) throws Exception {
-		return myDAO.updateFileSignal(room_id);
-	}
-	
 	// 관리자
 	@Override
 	public int selectCount() throws Exception {

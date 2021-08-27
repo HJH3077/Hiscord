@@ -5,11 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sound.sampled.Line;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ import com.ict.service.Paging2;
 import com.ict.vo.ChatRVO;
 import com.ict.vo.MVO;
 import com.ict.vo.MailVO;
+import com.ict.vo.MsgVO;
 import com.ict.vo.WVO;
  
 @Controller
@@ -356,7 +359,7 @@ public class MyController {
 	@ResponseBody
 	public String msg_saveCommand(@RequestParam("msg")String msg, @RequestParam("room_name")String room_name) {
 		try {
-			File file = new File("D:\\tomcat9\\FileIO\\" + room_name + ".txt"); 
+			File file = new File("C:\\tomcat9\\FileIO\\" + room_name + ".txt"); 
 			if(!file.exists()){ 
 				file.createNewFile();
 			}
@@ -377,22 +380,29 @@ public class MyController {
 		return null;
 	}
 	
-	@RequestMapping(value = "msg_list.do", produces = "text/html; charset=utf-8")
+	@RequestMapping(value = "msg_list.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String msg_listCommand(@RequestParam("room_name")String room_name) {
+	public List<MsgVO> msg_listCommand(@RequestParam("room_name")String room_name) {
 		try {
-			String filePath = "D:\\tomcat9\\FileIO\\" + room_name + ".txt"; 
+			String filePath = "C:\\tomcat9\\FileIO\\" + room_name + ".txt"; 
 			File file = new File(filePath); 
+			List<MsgVO> list = new ArrayList<MsgVO>();
 			if(file.exists()){
 				BufferedReader reader = new BufferedReader(new FileReader(file)); 
 				String line = null;
-				StringBuffer sb = new StringBuffer();
 				while ((line = reader.readLine()) != null){ 
-					sb.append(line) 
+					MsgVO msvo = new MsgVO();
+					msvo.setMsg(line);
+					list.add(msvo);
 				} 
 				reader.close();
+			} else {
+				String line = "";
+				MsgVO msvo = new MsgVO();
+				msvo.setMsg(line);
+				list.add(msvo);
 			}
-			return String.valueOf(1);
+			return list;
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
@@ -400,10 +410,14 @@ public class MyController {
 	}
 	
 	@RequestMapping("invite.do")
-	public ModelAndView inviteCommand(HttpServletRequest request) {
+	public ModelAndView inviteCommand(HttpServletRequest request, HttpSession session) {
 		ModelAndView mv = new ModelAndView("invite");
 		String room_id = request.getParameter("room_id");
+		String room_name = request.getParameter("room_name");
+		String nickname = (String)session.getAttribute("login_nickname");
 		mv.addObject("room_id", room_id);
+		mv.addObject("nickname", nickname);
+		mv.addObject("room_name", room_name);
 		return mv;
 	}
 	
@@ -418,7 +432,6 @@ public class MyController {
 			if(invited_user != null) {
 				crvo.setChat_user(request.getParameter("user"));
 				int result = myService.insertInviteChatroom(crvo);
-				System.out.println(result);
 				return String.valueOf(result);
 			} else {
 				int result = 0;

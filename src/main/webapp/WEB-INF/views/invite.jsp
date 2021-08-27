@@ -78,10 +78,10 @@ body {
 					console.log(data);
 					if(data == "1"){
 						alert("초대하였습니다");
-						location.href = "personal_chat.do?room_id=${room_id}";
+						location.href = "personal_chat.do?room_id=${room_id}&room_name=${room_name}";
 					} else{
 						alert("존재하지 않는 유저입니다.");
-						location.href = "personal_chat.do?room_id=${room_id}";
+						location.href = "personal_chat.do?room_id=${room_id}&room_name=${room_name}";
 					}
 				},
 				error : function() { alert("읽기실패");	}
@@ -90,7 +90,7 @@ body {
 	});
 	
 	function cancle(f) {
-		f.action = "personal_chat.do?room_id=${room_id}";
+		f.action = "personal_chat.do?room_id=${room_id}&room_name=${room_name}";
 		f.submit();
 	}
 </script>
@@ -103,9 +103,9 @@ body {
 				<h2>초대하기</h2>
 				<input type="text" name="user" id="user" placeholder="초대할 유저의 닉네임을 입력해주세요">
 				<div id="invite">
-					<input type="button" value="초대하기" id="invite">
+					<input type="button" value="초대하기" id="invite" style="text-align: center">
 					<input type="button" value="취소" onclick="cancle(this.form)">
-					<input type="hidden" value="${room_id }" name="room_id" id="room_id">
+					<input type="hidden" value="${room_id}" name="room_id" id="room_id">
 				</div>
 			</div>
 		</form>

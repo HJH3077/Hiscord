@@ -123,16 +123,6 @@ public class MyDAOImpl implements MyDAO{
 		return sqlSessionTemplate.delete("hiscord.chatroom_exit", map);
 	}
 	
-	@Override
-	public int selectChatroomFile(String room_id) throws Exception {
-		return sqlSessionTemplate.selectOne("hiscord.chatroom_file", room_id);
-	}
-	
-	@Override
-	public int updateFileSignal(String room_id) throws Exception {
-		return sqlSessionTemplate.update("hiscord.file_signal", room_id);
-	}
-	
 	// 관리자
 	@Override
 		public int selectCount() throws Exception {

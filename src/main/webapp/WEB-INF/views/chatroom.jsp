@@ -162,7 +162,6 @@ body {
 	var ws;
 	var room_id = "${room_id}";
 	var room_name = "${room_name}";
-	console.log(room_name);
 	
 	function wsOpen() {
 		ws = new WebSocket("ws://" + location.host + "/echo.do");
@@ -175,9 +174,7 @@ body {
 			var m = msg.split(":"); 
 			var m0 = m[0];
 			var m1 = m[1];
-			if(m0.trim() == "a"){
-				$("#chatLog").append("<p>" + m1 + "님을 초대하였습니다." + "</p>").css('text-align', 'center');
-			} else if(m0.trim() == "z"){
+			if(m0.trim() == "z"){
 				$("#chatLog").append("<p>" + m1 + "님이 나가셨습니다." + "</p>").css('text-align', 'center');
 			} else{
 				if (msg != null && msg.trim() != '') {
@@ -217,12 +214,24 @@ body {
 		$.ajax({
 			url : "msg_list.do",
 			method : "post",
-			dataType : "text",
+			dataType : "json",
 			data : "room_name=" + room_name,
-			success : function(data) { 
-				if(data == 1){
-					console.log("읽기도 성공!");
-				}
+			success : function(data) {
+				$.each(data, function() {
+					var nickname = "${nickname}";
+					console.log(nickname);
+					var msg = this["msg"];
+					var m = msg.split(":"); 
+					var m0 = m[0];
+					var m1 = m[1];
+					if (msg != null && msg.trim() != '') {
+						if(m0.trim() == "${nickname}"){
+							$("#chatLog").append("<div id='myChat'><span class='msg'>" + msg + "</span></div>")
+						} else {
+							$("#chatLog").append("<div id='yourChat'><span class='msg'>" + msg + "</span></div>")
+						}
+					}
+				});
 			},
 			error : function() { alert("읽기실패");	}
 		});
@@ -317,7 +326,7 @@ body {
 	});
 	
 	function invite() {
-		location.href = "invite.do?room_id=${room_id}";
+		location.href = "invite.do?room_id=${room_id}&room_name=${room_name}";
 	}
 </script>
 <body>
@@ -327,7 +336,7 @@ body {
 		    <nav id="nav">
 		   		<h1 id="nav-header">채팅방</h1>
 		   		<div id="option">
-			   		<a href='javascript:void(0);' onclick="invite();">초대하기</a> / 
+			   		<a href='javascript:void(0);' onclick="invite();">초대하기</a> /  
 			  		<a href='javascript:void(0);' onclick="out_room();">나가기</a>
 		   		</div>
 		    </nav>   
