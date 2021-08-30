@@ -11,7 +11,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: #fafafa;
+	background: #fafafa;  
 	overflow: hidden;
 }
 
@@ -258,6 +258,7 @@ body {
 		}
 		
 		open_list();
+		
 		setInterval(function()
 		{
 			open_list();

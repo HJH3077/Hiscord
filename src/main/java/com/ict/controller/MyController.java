@@ -359,7 +359,7 @@ public class MyController {
 	@ResponseBody
 	public String msg_saveCommand(@RequestParam("msg")String msg, @RequestParam("room_name")String room_name) {
 		try {
-			File file = new File("C:\\tomcat9\\FileIO\\" + room_name + ".txt"); 
+			File file = new File("D:\\tomcat9\\FileIO\\" + room_name + ".txt"); 
 			if(!file.exists()){ 
 				file.createNewFile();
 			}
@@ -384,7 +384,7 @@ public class MyController {
 	@ResponseBody
 	public List<MsgVO> msg_listCommand(@RequestParam("room_name")String room_name) {
 		try {
-			String filePath = "C:\\tomcat9\\FileIO\\" + room_name + ".txt"; 
+			String filePath = "D:\\tomcat9\\FileIO\\" + room_name + ".txt"; 
 			File file = new File(filePath); 
 			List<MsgVO> list = new ArrayList<MsgVO>();
 			if(file.exists()){

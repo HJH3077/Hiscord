@@ -37,12 +37,6 @@ body {
 	text-align: center;
 }
 
-iframe {
-	width: 90%;
-	height: 100%;
-	min-height: 550px;
-}
-
 * a:link, a:visited {
 	color: black;
 }
@@ -59,11 +53,7 @@ iframe {
 			</h4>
 		</div>
 		<div class="main_content">
-			<iframe
-				src="https://www.youtube.com/embed/1ttLx9MbrCI"
-				title="YouTube video player" frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-				allowfullscreen></iframe>
+			<img src="resources/images/main.gif" style="height: 550px; width: 90%">   
 		</div>
 	</div>
 </body>
